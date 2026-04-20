@@ -1,0 +1,605 @@
+/* ═══════════════════════════════════════════════════════
+   CRM — Table-First Lead Management
+   ═══════════════════════════════════════════════════════ */
+
+.crm-page {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: auto;
+}
+
+/* ── Filter Bar (matches Users Management pattern) ──── */
+.crm-filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.crm-search-input {
+    flex: 1;
+    min-width: 200px;
+    max-width: 320px;
+    padding: 8px 14px;
+    border: 2px solid var(--color-stroke-subtle);
+    border-radius: 8px;
+    background: var(--color-bg-base);
+    font-size: 14px;
+    color: var(--color-text-primary);
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.crm-search-input:focus {
+    border-color: var(--color-accent-primary);
+}
+
+.crm-search-input::placeholder {
+    color: var(--color-text-muted);
+}
+
+.crm-filter-select {
+    padding: 8px 12px;
+    border: 2px solid var(--color-stroke-subtle);
+    border-radius: 8px;
+    background: var(--color-bg-base);
+    font-size: 13px;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.crm-filter-count {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-secondary);
+    margin-left: auto;
+}
+
+/* ── CRM Table Extensions ─────────────────── */
+/* Extends the platform .docs-table base styles */
+
+.crm-table {
+    table-layout: auto;
+}
+
+.crm-table tbody tr {
+    cursor: pointer;
+}
+
+.crm-table thead th {
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.15s;
+}
+
+.crm-table thead th:hover {
+    color: var(--color-text-primary);
+}
+
+.crm-table thead th.active {
+    color: var(--color-accent-primary);
+}
+
+.crm-table th .sort-arrow {
+    margin-left: 4px;
+    font-size: 10px;
+}
+
+/* ── Cell Variants ────────────────────────── */
+.crm-lead-name {
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.crm-company-name {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    margin-top: 2px;
+}
+
+.crm-stage-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border: 2px solid var(--color-stroke-subtle);
+    background: var(--color-bg-base);
+}
+
+.crm-stage-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.crm-source-badge {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 2px 8px;
+    border: 2px solid var(--color-stroke-subtle);
+    color: var(--color-text-secondary);
+}
+
+.crm-owner-cell {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.crm-owner-avatar {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--color-bg-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+    flex-shrink: 0;
+}
+
+.crm-date-cell {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+}
+
+/* ── Pagination ──────────────────────────── */
+.crm-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    margin-top: 16px;
+    flex-shrink: 0;
+}
+
+.crm-pagination-info {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+}
+
+.crm-pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.crm-pagination-btn {
+    padding: 6px 14px;
+    border: 2px solid var(--color-stroke-subtle);
+    border-radius: 8px;
+    background: var(--color-bg-base);
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--color-text-primary);
+}
+
+.crm-pagination-btn:hover:not(:disabled) {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.crm-pagination-btn:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+.crm-pagination-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.crm-pagination-current {
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+}
+
+
+/* ── Empty State ─────────────────────────── */
+.crm-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+    gap: 16px;
+    text-align: center;
+    color: var(--color-text-tertiary);
+    flex: 1;
+}
+
+.crm-empty-icon {
+    opacity: 0.3;
+}
+
+.crm-empty h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+}
+
+.crm-empty p {
+    margin: 0;
+    font-size: 14px;
+    max-width: 400px;
+}
+
+/* ── Slide-Over Detail Panel ─────────────── */
+.crm-detail-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 50;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.crm-detail-panel {
+    width: 560px;
+    max-width: 90vw;
+    height: 100%;
+    background: var(--color-bg-base);
+    border-left: 2px solid var(--color-stroke-subtle);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: crm-slide-in 0.2s ease-out;
+}
+
+@keyframes crm-slide-in {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+.crm-detail-header {
+    padding: 20px 24px;
+    border-bottom: 2px solid var(--color-stroke-subtle);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.crm-detail-title {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.crm-detail-subtitle {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin-top: 4px;
+}
+
+.crm-detail-close {
+    padding: 4px 8px;
+    border: 2px solid var(--color-stroke-subtle);
+    background: var(--color-bg-base);
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    transition: all 0.15s;
+    color: var(--color-text-primary);
+}
+
+.crm-detail-close:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.crm-detail-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 24px;
+}
+
+.crm-detail-section {
+    margin-bottom: 24px;
+}
+
+.crm-detail-section-title {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-secondary);
+    margin: 0 0 12px 0;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--color-stroke-subtle);
+}
+
+.crm-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.crm-detail-field {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.crm-detail-field.full-width {
+    grid-column: 1 / -1;
+}
+
+.crm-detail-field label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-secondary);
+}
+
+.crm-detail-field-value {
+    font-size: 14px;
+    color: var(--color-text-primary);
+    word-break: break-word;
+}
+
+.crm-detail-field input,
+.crm-detail-field select,
+.crm-detail-field textarea {
+    padding: 6px 10px;
+    border: 2px solid var(--color-stroke-subtle);
+    border-radius: 8px;
+    background: var(--color-bg-base);
+    font-size: 13px;
+    color: var(--color-text-primary);
+    font-family: inherit;
+    outline: none;
+}
+
+.crm-detail-field input:focus,
+.crm-detail-field select:focus,
+.crm-detail-field textarea:focus {
+    border-color: var(--color-accent-primary);
+}
+
+.crm-detail-field textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+/* ── Actions row ─────────────────────────── */
+.crm-detail-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 2px solid var(--color-stroke-subtle);
+}
+
+/* ── Activity Timeline ───────────────────── */
+.crm-activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.crm-activity-item {
+    display: flex;
+    gap: 10px;
+    font-size: 13px;
+}
+
+.crm-activity-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-stroke-subtle);
+    margin-top: 5px;
+    flex-shrink: 0;
+}
+
+.crm-activity-dot.note { background: var(--color-accent-primary); }
+.crm-activity-dot.stage { background: #8B5CF6; }
+.crm-activity-dot.owner { background: #F59E0B; }
+.crm-activity-dot.imported { background: #10B981; }
+.crm-activity-dot.created { background: #10B981; }
+.crm-activity-dot.converted { background: #10B981; }
+.crm-activity-dot.lost { background: #EF4444; }
+
+.crm-activity-content {
+    flex: 1;
+}
+
+.crm-activity-text {
+    color: var(--color-text-primary);
+    line-height: 1.4;
+}
+
+.crm-activity-meta {
+    font-size: 11px;
+    color: var(--color-text-muted);
+    margin-top: 2px;
+}
+
+/* ── Note Input ──────────────────────────── */
+.crm-note-form {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.crm-note-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 2px solid var(--color-stroke-subtle);
+    border-radius: 8px;
+    background: var(--color-bg-base);
+    font-size: 13px;
+    color: var(--color-text-primary);
+    font-family: inherit;
+    outline: none;
+    resize: none;
+    min-height: 36px;
+}
+
+.crm-note-input:focus {
+    border-color: var(--color-accent-primary);
+}
+
+/* ── Modal (Add Lead) ────────────────────── */
+.crm-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.crm-modal {
+    background: var(--color-bg-base);
+    border: 2px solid var(--color-stroke-subtle);
+    width: 520px;
+    max-width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 24px;
+}
+
+.crm-modal h3 {
+    font-size: 18px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    margin: 0 0 20px 0;
+    color: var(--color-text-primary);
+}
+
+.crm-modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.crm-modal-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.crm-modal-field.full-width {
+    grid-column: 1 / -1;
+}
+
+.crm-modal-field label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-secondary);
+}
+
+.crm-modal-field input,
+.crm-modal-field select,
+.crm-modal-field textarea {
+    padding: 8px 10px;
+    border: 2px solid var(--color-stroke-subtle);
+    border-radius: 8px;
+    background: var(--color-bg-base);
+    font-size: 13px;
+    color: var(--color-text-primary);
+    font-family: inherit;
+    outline: none;
+}
+
+.crm-modal-field input:focus,
+.crm-modal-field select:focus,
+.crm-modal-field textarea:focus {
+    border-color: var(--color-accent-primary);
+}
+
+.crm-modal-field textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+.crm-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 2px solid var(--color-stroke-subtle);
+}
+
+/* ── Pipeline Settings ───────────────────── */
+.crm-pipeline-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.crm-pipeline-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border: 2px solid var(--color-stroke-subtle);
+    background: var(--color-bg-base);
+}
+
+.crm-pipeline-item .crm-stage-dot {
+    width: 12px;
+    height: 12px;
+}
+
+.crm-pipeline-item-name {
+    flex: 1;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.crm-pipeline-item-pos {
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    font-weight: 700;
+}
+
+/* ── Inline Stage Dropdown ───────────────── */
+.crm-inline-stage-select {
+    padding: 3px 8px;
+    border: 1px solid transparent;
+    background: transparent;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.crm-inline-stage-select:hover {
+    border-color: var(--color-stroke-subtle);
+}
+

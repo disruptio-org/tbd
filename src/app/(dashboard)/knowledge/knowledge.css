@@ -1,0 +1,300 @@
+/* ═══════════════════════════════════════════════════════
+   NOUSIO V2 — Knowledge Hub
+   Unified view of documents, knowledge, and insights
+   ═══════════════════════════════════════════════════════ */
+
+.knowledge-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+    padding-bottom: 64px;
+}
+
+/* ─── Header ─────────────────────────────────────────── */
+
+.knowledge-header {
+    margin-bottom: 32px;
+}
+
+.knowledge-header h1 {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    letter-spacing: -0.02em;
+    margin: 0 0 6px;
+}
+
+.knowledge-header-sub {
+    font-size: 14px;
+    color: var(--color-text-muted);
+}
+
+/* ─── Stats Row ──────────────────────────────────────── */
+
+.knowledge-stats {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+}
+
+.knowledge-stat-card {
+    flex: 1;
+    min-width: 140px;
+    padding: 16px 20px;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-stroke-subtle);
+    border-radius: var(--radius-card);
+    transition: border-color 0.15s;
+}
+
+.knowledge-stat-card:hover {
+    border-color: var(--color-stroke-medium);
+}
+
+.knowledge-stat-value {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    line-height: 1;
+    margin-bottom: 4px;
+    font-variant-numeric: tabular-nums;
+}
+
+.knowledge-stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+}
+
+/* ─── Toolbar ────────────────────────────────────────── */
+
+.knowledge-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.knowledge-search {
+    flex: 1;
+    min-width: 200px;
+    padding: 9px 14px 9px 34px;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-stroke-subtle);
+    border-radius: var(--radius-button);
+    font-size: 13px;
+    color: var(--color-text-primary);
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.knowledge-search:focus {
+    border-color: var(--color-accent-red);
+}
+
+.knowledge-search::placeholder {
+    color: var(--color-text-muted);
+}
+
+.knowledge-filter-select {
+    padding: 9px 14px;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-stroke-subtle);
+    border-radius: var(--radius-button);
+    font-size: 13px;
+    color: var(--color-text-primary);
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    min-width: 140px;
+    transition: border-color 0.15s;
+}
+
+/* ─── Tabs ───────────────────────────────────────────── */
+
+.knowledge-tabs {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 24px;
+    background: var(--color-bg-surface);
+    border-radius: var(--radius-button);
+    padding: 3px;
+    border: 1px solid var(--color-stroke-subtle);
+    width: fit-content;
+}
+
+.knowledge-tab {
+    padding: 8px 18px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: var(--color-text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+}
+
+.knowledge-tab:hover {
+    color: var(--color-text-primary);
+    background: var(--color-bg-surface2);
+}
+
+.knowledge-tab.active {
+    background: var(--color-accent-red);
+    color: #fff;
+}
+
+.knowledge-tab-count {
+    margin-left: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    opacity: 0.7;
+}
+
+/* ─── Document List ──────────────────────────────────── */
+
+.knowledge-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.knowledge-doc-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 20px;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-stroke-subtle);
+    border-radius: var(--radius-card);
+    transition: border-color 0.15s, background 0.15s;
+    text-decoration: none;
+    color: inherit;
+}
+
+.knowledge-doc-item:hover {
+    border-color: var(--color-stroke-medium);
+    background: var(--color-bg-surface2);
+}
+
+.knowledge-doc-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-button);
+    background: var(--color-bg-surface2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-secondary);
+    flex-shrink: 0;
+}
+
+.knowledge-doc-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.knowledge-doc-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.knowledge-doc-meta {
+    font-size: 11px;
+    color: var(--color-text-muted);
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.knowledge-doc-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: var(--radius-pill);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+}
+
+.knowledge-doc-badge.processed {
+    background: rgba(190, 255, 0, 0.12);
+    color: var(--v2-accent-lime);
+}
+
+.knowledge-doc-badge.pending {
+    background: rgba(255, 184, 0, 0.12);
+    color: var(--color-state-warning);
+}
+
+.knowledge-doc-badge.failed {
+    background: rgba(255, 68, 68, 0.12);
+    color: var(--color-state-error);
+}
+
+.knowledge-doc-badge.knowledge {
+    background: rgba(0, 212, 255, 0.12);
+    color: var(--v2-accent-cyan);
+}
+
+.knowledge-doc-size {
+    font-size: 11px;
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+}
+
+.knowledge-doc-date {
+    font-size: 11px;
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ─── Empty State ────────────────────────────────────── */
+
+.knowledge-empty {
+    text-align: center;
+    padding: 60px 24px;
+    color: var(--color-text-muted);
+}
+
+.knowledge-empty-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+    opacity: 0.4;
+}
+
+.knowledge-empty h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+    margin: 0 0 8px;
+}
+
+.knowledge-empty p {
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* ─── Loading ────────────────────────────────────────── */
+
+.knowledge-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 0;
+}

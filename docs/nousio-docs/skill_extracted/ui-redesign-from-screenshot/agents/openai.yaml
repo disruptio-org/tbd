@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI Redesign From Screenshot"
+  short_description: "Turn a screenshot into a cleaner, developer-ready redesigned screen."
+  category: "design"

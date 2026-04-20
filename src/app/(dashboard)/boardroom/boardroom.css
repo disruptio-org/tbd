@@ -1,0 +1,258 @@
+/* ═══════════════════════════════════════════════════════
+   BOARDROOM — Dark OS
+   ═══════════════════════════════════════════════════════ */
+
+/* ─── Buttons ────────────────────── */
+.boardroom-page .btn-brutalist { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; border-radius: 8px; border: 1px solid transparent; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.boardroom-page .btn-brutalist:active { transform: scale(0.98); }
+.boardroom-page .btn-brutalist:disabled { opacity: 0.4; cursor: not-allowed; }
+.boardroom-page .btn-brutalist-primary { background: #D2F000; color: #131313; }
+.boardroom-page .btn-brutalist-primary:hover:not(:disabled) { background: rgba(210, 240, 0, 0.8); }
+.boardroom-page .btn-brutalist-outline { background: rgba(255, 255, 255, 0.04); color: #e5e2e1; border-color: rgba(255, 255, 255, 0.1); }
+.boardroom-page .btn-brutalist-outline:hover:not(:disabled) { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.2); }
+.boardroom-page .btn-brutalist-danger { background: rgba(239, 68, 68, 0.1); color: #fca5a5; border-color: rgba(239, 68, 68, 0.2); }
+.boardroom-page .btn-brutalist-danger:hover:not(:disabled) { background: rgba(239, 68, 68, 0.2); }
+
+/* ─── Page Layout ──────────────────────────────────────── */
+.boardroom-page { max-width: 1100px; padding-top: 12px; font-family: 'Inter', sans-serif; color: #e5e2e1; }
+
+/* ─── Executive Command Bar ────────────────────────────── */
+.boardroom-command { background: #1c1b1b; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 20px 24px; margin-bottom: 20px; }
+.boardroom-command-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: #71717a; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.boardroom-command-row { display: flex; gap: 10px; align-items: stretch; }
+.boardroom-command-input { flex: 1; font-family: inherit; font-size: 14px; color: #e5e2e1; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 12px 16px; outline: none; transition: border-color 0.15s; }
+.boardroom-command-input:focus { border-color: rgba(210, 240, 0, 0.4); background: rgba(255, 255, 255, 0.04); }
+.boardroom-command-input::placeholder { color: #a1a1aa; }
+.boardroom-command-btn { padding: 12px 28px; background: #D2F000; color: #131313; border-radius: 8px; font-size: 11px; font-weight: 600; text-transform: uppercase; border: none; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; gap: 6px; }
+.boardroom-command-btn:hover { background: rgba(210, 240, 0, 0.8); transform: translateY(-1px); }
+.boardroom-command-btn:active { transform: scale(0.98); }
+.boardroom-command-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.boardroom-command-suggestions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.boardroom-suggestion-chip { padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 500; color: #a1a1aa; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); cursor: pointer; transition: all 0.15s; }
+.boardroom-suggestion-chip:hover { color: #e5e2e1; border-color: rgba(255, 255, 255, 0.15); background: rgba(255, 255, 255, 0.04); }
+
+/* ─── Summary Strip ────────────────────────────────────── */
+.boardroom-summary-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 20px; }
+.boardroom-summary-card { background: #1c1b1b; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
+.boardroom-summary-count { font-size: 28px; font-weight: 700; color: #e5e2e1; line-height: 1; }
+.boardroom-summary-label { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: #71717a; }
+.boardroom-summary-card.active .boardroom-summary-count { color: #00daf3; }
+.boardroom-summary-card.warning .boardroom-summary-count { color: #fbbf24; }
+.boardroom-summary-card.danger .boardroom-summary-count { color: #fca5a5; }
+.boardroom-summary-card.success .boardroom-summary-count { color: #4ade80; }
+
+/* ─── Section Header ───────────────────────────────────── */
+.boardroom-section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.boardroom-section-title { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; text-transform: uppercase; color: #e5e2e1; }
+.boardroom-section-actions { display: flex; align-items: center; gap: 8px; }
+
+/* ─── Initiative Table ─────────────────────────────────── */
+.boardroom-initiative-list { display: flex; flex-direction: column; gap: 0; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; background: #1c1b1b; overflow: hidden; }
+.boardroom-initiative-row { display: grid; grid-template-columns: 4px 1fr 120px 80px 120px 140px; align-items: center; gap: 0; padding: 14px 18px 14px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.04); cursor: pointer; transition: background 0.15s; color: inherit; text-decoration: none; }
+.boardroom-initiative-row:last-child { border-bottom: none; }
+.boardroom-initiative-row:hover { background: rgba(255, 255, 255, 0.02); }
+.boardroom-initiative-bar { width: 4px; border-radius: 2px; height: 32px; background: #52525b; flex-shrink: 0; align-self: center; margin-left: 2px; }
+.boardroom-initiative-main { padding-left: 16px; min-width: 0; }
+.boardroom-initiative-title { font-size: 13px; font-weight: 500; color: #e5e2e1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.boardroom-initiative-meta { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+.boardroom-initiative-project { font-size: 10px; font-weight: 500; color: #a1a1aa; }
+.boardroom-initiative-worktype { font-size: 9px; font-weight: 600; text-transform: uppercase; color: #a1a1aa; padding: 2px 6px; border-radius: 4px; background: rgba(255, 255, 255, 0.04); }
+
+/* Status Badge */
+.boardroom-status-badge { font-size: 9px; font-weight: 600; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; text-align: center; white-space: nowrap; border: 1px solid transparent; }
+
+/* Progress */
+.boardroom-progress { display: flex; flex-direction: column; gap: 4px; }
+.boardroom-progress-track { width: 100%; height: 4px; border-radius: 2px; background: rgba(255, 255, 255, 0.04); overflow: hidden; }
+.boardroom-progress-bar { height: 100%; background: #00daf3; transition: width 0.5s ease; min-width: 0; }
+.boardroom-progress-text { font-size: 10px; font-weight: 500; color: #a1a1aa; }
+
+/* Team Avatars */
+.boardroom-team { display: flex; gap: -6px; }
+.boardroom-team-avatar { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 600; color: #131313; background: #a1a1aa; border: 2px solid #1c1b1b; margin-left: -4px; text-transform: uppercase; }
+.boardroom-team-avatar:first-child { margin-left: 0; }
+.boardroom-team-more { font-size: 10px; font-weight: 600; color: #a1a1aa; margin-left: 4px; align-self: center; }
+
+/* Next Action */
+.boardroom-next-action { font-size: 11px; color: #a1a1aa; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.boardroom-next-action.approval-needed { color: #fbbf24; font-weight: 600; }
+
+/* Empty State */
+.boardroom-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 64px 20px; text-align: center; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; background: #1c1b1b; }
+.boardroom-empty-icon { color: #52525b; margin-bottom: 16px; }
+.boardroom-empty-title { font-size: 14px; font-weight: 600; color: #e5e2e1; margin-bottom: 6px; }
+.boardroom-empty-desc { font-size: 13px; color: #a1a1aa; max-width: 400px; line-height: 1.5; margin-bottom: 20px; }
+
+/* ─── Plan Preview Modal ───────────────────────────────── */
+.boardroom-plan-overlay { position: fixed; inset: 0; background: rgba(19, 19, 19, 0.8); backdrop-filter: blur(4px); z-index: 1000; display: flex; align-items: flex-start; justify-content: center; padding: 40px 20px; overflow-y: auto; animation: fadeIn 0.15s ease; }
+.boardroom-plan-card { background: #1c1b1b; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; width: 100%; max-width: 700px; padding: 0; box-shadow: 0 20px 40px rgba(0,0,0,0.4); animation: scaleIn 0.2s ease; }
+.boardroom-plan-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+.boardroom-plan-header h3 { font-size: 14px; font-weight: 600; color: #e5e2e1; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
+.boardroom-plan-body { padding: 24px; }
+.boardroom-plan-section { margin-bottom: 20px; }
+.boardroom-plan-section-label { font-size: 10px; font-weight: 600; text-transform: uppercase; color: #71717a; margin-bottom: 6px; }
+.boardroom-plan-section-value { font-size: 14px; color: #e5e2e1; line-height: 1.5; }
+.boardroom-plan-confidence { display: flex; align-items: center; gap: 10px; }
+.boardroom-plan-confidence-score { font-size: 22px; font-weight: 700; color: #e5e2e1; }
+.boardroom-plan-confidence-bar { flex: 1; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.04); overflow: hidden; }
+.boardroom-plan-confidence-fill { height: 100%; background: #00daf3; transition: width 0.5s ease; }
+
+/* Plan Team Members */
+.boardroom-plan-team { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+.boardroom-plan-member { padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.06); background: rgba(255, 255, 255, 0.02); }
+.boardroom-plan-member-name { font-size: 11px; font-weight: 600; color: #e5e2e1; }
+.boardroom-plan-member-role { font-size: 10px; color: #a1a1aa; margin-top: 2px; }
+
+/* Plan Workstreams */
+.boardroom-plan-workstreams { display: flex; flex-direction: column; gap: 6px; }
+.boardroom-plan-ws { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.06); background: rgba(255, 255, 255, 0.02); }
+.boardroom-plan-ws-number { font-size: 14px; font-weight: 700; color: #00daf3; min-width: 24px; }
+.boardroom-plan-ws-title { font-size: 12px; font-weight: 500; color: #e5e2e1; }
+
+/* Plan Approval Gates */
+.boardroom-plan-gates { display: flex; flex-wrap: wrap; gap: 8px; }
+.boardroom-plan-gate { padding: 5px 12px; border-radius: 6px; font-size: 10px; font-weight: 600; background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.2); color: #fbbf24; text-transform: uppercase; }
+
+/* Plan Footer Actions */
+.boardroom-plan-footer { display: flex; justify-content: flex-end; gap: 10px; padding: 16px 24px; border-top: 1px solid rgba(255, 255, 255, 0.06); }
+
+/* ─── Loading / Planning Overlay ────────────────────────── */
+.boardroom-generating { display: flex; flex-direction: column; align-items: center; padding: 0; text-align: center; }
+.boardroom-generating-card { background: #1c1b1b; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; box-shadow: 0 12px 32px rgba(0,0,0,0.5); width: 100%; max-width: 420px; animation: boardroomSlideIn 0.25s ease; }
+.boardroom-generating-header { padding: 18px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); display: flex; align-items: center; gap: 10px; }
+.boardroom-generating-header-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.06); color: #e5e2e1; }
+.boardroom-generating-header-text { font-size: 12px; font-weight: 600; color: #e5e2e1; text-transform: uppercase; }
+.boardroom-generating-body { padding: 28px 24px; display: flex; flex-direction: column; align-items: center; gap: 24px; animation: boardroomPulse 2.5s ease-in-out infinite; }
+.boardroom-generating-spinner { width: 40px; height: 40px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.1); border-top-color: #D2F000; animation: spin 0.8s linear infinite; }
+.boardroom-generating-text { font-size: 13px; font-weight: 600; color: #e5e2e1; text-transform: uppercase; }
+.boardroom-generating-substep { font-size: 11px; color: #a1a1aa; max-width: 300px; line-height: 1.4; }
+.boardroom-generating-steps { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 280px; }
+.boardroom-generating-step { display: flex; align-items: center; gap: 10px; font-size: 12px; color: #71717a; transition: all 0.3s; }
+.boardroom-generating-step.active { color: #e5e2e1; font-weight: 500; }
+.boardroom-generating-step.done { color: #4ade80; }
+.boardroom-generating-step-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); flex-shrink: 0; transition: all 0.3s; }
+.boardroom-generating-step.active .boardroom-generating-step-dot { background: #D2F000; }
+.boardroom-generating-step.done .boardroom-generating-step-dot { background: #4ade80; }
+.boardroom-generating-footer { padding: 12px 24px; border-top: 1px solid rgba(255, 255, 255, 0.06); text-align: center; }
+.boardroom-generating-time { font-size: 10px; color: #71717a; text-transform: uppercase; }
+
+@keyframes boardroomSlideIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes boardroomPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.85; } }
+
+/* ─── Plan Review Panel ────────────────────────────────── */
+.boardroom-review { border: 1px solid rgba(255, 255, 255, 0.08); background: #1c1b1b; border-radius: 12px; overflow: hidden; }
+.boardroom-review-header { padding: 16px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.boardroom-review-header-title { font-size: 11px; font-weight: 600; text-transform: uppercase; color: #e5e2e1; display: flex; align-items: center; gap: 8px; }
+.boardroom-review-body { padding: 20px; display: flex; flex-direction: column; gap: 20px; }
+.boardroom-review-section { display: flex; flex-direction: column; gap: 6px; }
+.boardroom-review-label { font-size: 9px; font-weight: 600; text-transform: uppercase; color: #00daf3; }
+.boardroom-review-value { font-size: 13px; color: #e5e2e1; line-height: 1.6; }
+.boardroom-review-task { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.06); background: rgba(255, 255, 255, 0.02); }
+.boardroom-review-task-num { font-size: 14px; font-weight: 700; color: #00daf3; min-width: 24px; padding-top: 2px; }
+.boardroom-review-task-body { flex: 1; min-width: 0; }
+.boardroom-review-task-title { font-size: 12px; font-weight: 600; color: #e5e2e1; }
+.boardroom-review-task-meta { font-size: 10px; color: #a1a1aa; margin-top: 4px; display: flex; gap: 12px; flex-wrap: wrap; }
+.boardroom-review-gate { display: flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 6px; border: 1px solid rgba(245, 158, 11, 0.2); background: rgba(245, 158, 11, 0.05); font-size: 11px; font-weight: 600; color: #fbbf24; }
+.boardroom-review-divider { border: none; border-top: 1px solid rgba(255, 255, 255, 0.06); margin: 4px 0; }
+
+/* ─── Inline Chat Widget ───────────────────────────────── */
+.boardroom-chat { border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; background: #1c1b1b; margin-top: 16px; overflow: hidden; }
+.boardroom-chat-header { padding: 14px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; text-transform: uppercase; color: #e5e2e1; }
+.boardroom-chat-header-icon { width: 24px; height: 24px; border-radius: 6px; background: rgba(255, 255, 255, 0.06); display: flex; align-items: center; justify-content: center; }
+.boardroom-chat-messages { max-height: 320px; overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; }
+.boardroom-chat-empty { padding: 24px; text-align: center; font-size: 12px; color: #71717a; }
+.boardroom-chat-msg { display: flex; gap: 10px; align-items: flex-start; }
+.boardroom-chat-msg-avatar { width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; }
+.boardroom-chat-msg-avatar.system { background: rgba(255, 255, 255, 0.1); color: #e5e2e1; }
+.boardroom-chat-msg-avatar.user { background: #00daf3; color: #131313; }
+.boardroom-chat-msg-body { flex: 1; min-width: 0; }
+.boardroom-chat-msg-name { font-size: 10px; font-weight: 600; text-transform: uppercase; color: #a1a1aa; margin-bottom: 4px; }
+.boardroom-chat-msg-text { font-size: 13px; color: #e5e2e1; line-height: 1.6; white-space: pre-wrap; background: rgba(255, 255, 255, 0.02); padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.04); }
+.boardroom-chat-input-row { display: flex; gap: 8px; padding: 12px 20px; border-top: 1px solid rgba(255, 255, 255, 0.06); }
+.boardroom-chat-input { flex: 1; font-size: 13px; color: #e5e2e1; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 14px; outline: none; transition: border-color 0.15s; }
+.boardroom-chat-input:focus { border-color: rgba(0, 218, 243, 0.4); }
+
+/* ─── Responsive ───────────────────────────────────────── */
+@media (max-width: 768px) {
+    .boardroom-initiative-row { grid-template-columns: 4px 1fr; gap: 8px; padding: 12px 14px 12px 0; }
+    .boardroom-initiative-row > :nth-child(n+3) { display: none; }
+    .boardroom-summary-strip { grid-template-columns: repeat(3, 1fr); }
+    .boardroom-command-row { flex-direction: column; }
+    .boardroom-plan-team { grid-template-columns: repeat(2, 1fr); }
+    .boardroom-review-task-meta { flex-direction: column; gap: 2px; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   INTERACTIVE IMAGE VIEWER
+   ═══════════════════════════════════════════════════════ */
+.boardroom-img-viewer { border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; background: #1c1b1b; margin-top: 12px; overflow: hidden; }
+.boardroom-img-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); gap: 8px; flex-wrap: wrap; }
+.boardroom-img-btn { display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 6px; font-size: 10px; font-weight: 600; text-transform: uppercase; background: transparent; border: 1px solid rgba(255, 255, 255, 0.1); color: #a1a1aa; cursor: pointer; transition: all 0.15s; }
+.boardroom-img-btn:hover { border-color: rgba(255, 255, 255, 0.3); color: #e5e2e1; }
+.boardroom-img-btn.active { background: rgba(0, 218, 243, 0.1); border-color: rgba(0, 218, 243, 0.3); color: #00daf3; }
+.boardroom-img-btn.generate { border-color: rgba(34, 197, 94, 0.3); color: #4ade80; }
+.boardroom-img-btn.generate:hover { background: rgba(34, 197, 94, 0.1); }
+.boardroom-img-counter { font-size: 10px; font-weight: 600; color: #71717a; min-width: 50px; text-align: center; }
+.boardroom-img-title { font-size: 11px; font-weight: 600; color: #e5e2e1; text-transform: uppercase; }
+
+/* Canvas Area */
+.boardroom-img-canvas { position: relative; display: flex; justify-content: center; align-items: center; background: #131313; min-height: 300px; overflow: hidden; user-select: none; }
+.boardroom-img-canvas.select-mode { cursor: crosshair; }
+.boardroom-img-image { max-width: 100%; max-height: 600px; object-fit: contain; }
+.boardroom-img-selection { position: absolute; border: 2px dashed #00daf3; background: rgba(0, 218, 243, 0.1); }
+.boardroom-img-loading { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(19, 19, 19, 0.8); backdrop-filter: blur(4px); color: #e5e2e1; gap: 10px; font-size: 12px; font-weight: 600; text-transform: uppercase; }
+
+/* Edit Bar */
+.boardroom-img-edit-bar { padding: 12px 14px; border-top: 1px solid rgba(0, 218, 243, 0.2); background: rgba(0, 218, 243, 0.02); display: flex; flex-direction: column; gap: 8px; }
+.boardroom-img-edit-info { display: flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 600; color: #00daf3; text-transform: uppercase; }
+.boardroom-img-input { flex: 1; padding: 10px 14px; border-radius: 8px; font-size: 12px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); color: #e5e2e1; outline: none; transition: border-color 0.15s; }
+.boardroom-img-input:focus { border-color: rgba(0, 218, 243, 0.4); }
+.boardroom-img-generate-form { padding: 12px 14px; border-bottom: 1px solid rgba(34, 197, 94, 0.2); background: rgba(34, 197, 94, 0.02); display: flex; flex-direction: column; gap: 8px; }
+
+/* Thumbnail Strip */
+.boardroom-img-thumbs { display: flex; gap: 6px; padding: 14px; border-top: 1px solid rgba(255, 255, 255, 0.06); overflow-x: auto; }
+.boardroom-img-thumb { flex: 0 0 auto; width: 80px; border-radius: 8px; overflow: hidden; cursor: pointer; border: 2px solid transparent; background: rgba(255, 255, 255, 0.02); transition: all 0.15s; }
+.boardroom-img-thumb:hover { border-color: rgba(255, 255, 255, 0.2); }
+.boardroom-img-thumb.active { border-color: #00daf3; }
+.boardroom-img-thumb img { width: 100%; height: 56px; object-fit: cover; }
+.boardroom-img-thumb span { display: block; font-size: 8px; font-weight: 600; text-transform: uppercase; padding: 4px; color: #a1a1aa; text-align: center; }
+
+/* Empty / Banners */
+.boardroom-img-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; color: #71717a; font-size: 13px; font-weight: 500; text-align: center; }
+.boardroom-img-auto-banner { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; background: rgba(0, 218, 243, 0.05); border-bottom: 1px solid rgba(0, 218, 243, 0.2); color: #00daf3; font-size: 11px; }
+.boardroom-img-auto-progress { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: rgba(0, 218, 243, 0.1); color: #e5e2e1; font-size: 11px; }
+
+/* ═══════════════════════════════════════════════════════
+   ARTIFACT CARD & MARKDOWN RENDERING
+   ═══════════════════════════════════════════════════════ */
+.boardroom-artifact-card { margin-top: 8px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; background: #1c1b1b; overflow: hidden; }
+.boardroom-artifact-card-header { padding: 14px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.boardroom-artifact-card-type { font-size: 9px; font-weight: 600; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; background: rgba(0, 218, 243, 0.1); color: #00daf3; }
+.boardroom-artifact-content { padding: 20px 24px; background: rgba(255, 255, 255, 0.02); max-height: 500px; overflow: auto; font-size: 13px; line-height: 1.7; color: #e5e2e1; }
+
+.boardroom-artifact-content .brd-md-h1 { font-size: 20px; font-weight: 700; text-transform: uppercase; margin: 0 0 16px 0; padding-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); color: #e5e2e1; font-family: 'Manrope', sans-serif; }
+.boardroom-artifact-content .brd-md-h2 { font-size: 14px; font-weight: 600; text-transform: uppercase; margin: 20px 0 10px 0; padding-bottom: 6px; border-bottom: 1px solid rgba(255, 255, 255, 0.04); color: #e5e2e1; }
+.boardroom-artifact-content .brd-md-h3 { font-size: 13px; font-weight: 600; text-transform: uppercase; margin: 16px 0 8px 0; color: #00daf3; }
+.boardroom-artifact-content .brd-md-h4 { font-size: 12px; font-weight: 600; margin: 12px 0 6px 0; color: #a1a1aa; }
+.boardroom-artifact-content .brd-md-p { margin: 0 0 8px 0; line-height: 1.7; }
+.boardroom-artifact-content .brd-md-p strong { font-weight: 600; color: #fff; }
+.boardroom-artifact-content .brd-md-p strong:first-child { color: #00daf3; }
+
+.boardroom-artifact-content .brd-md-ol, .boardroom-artifact-content .brd-md-ul { margin: 4px 0 12px 0; padding-left: 20px; }
+.boardroom-artifact-content .brd-md-ol li, .boardroom-artifact-content .brd-md-ul li { margin-bottom: 6px; padding-left: 4px; }
+.boardroom-artifact-content .brd-md-hr { border: none; height: 1px; background: rgba(255, 255, 255, 0.08); margin: 16px 0; }
+.boardroom-artifact-content .brd-md-inline-code { font-family: Monaco, monospace; font-size: 11px; padding: 2px 6px; border-radius: 4px; background: rgba(255, 255, 255, 0.06); color: #00daf3; }
+.boardroom-artifact-content .brd-md-code { font-family: Monaco, monospace; font-size: 11px; padding: 14px; border-radius: 8px; background: #131313; border: 1px solid rgba(255, 255, 255, 0.06); overflow-x: auto; margin: 8px 0 12px 0; color: #e5e2e1; }
+.boardroom-artifact-content > .brd-md-h1:first-child, .boardroom-artifact-content > .brd-md-h2:first-child, .boardroom-artifact-content > .brd-md-h3:first-child { margin-top: 0; }
+
+.boardroom-artifact-preview-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 6px; font-size: 10px; font-weight: 600; text-transform: uppercase; background: rgba(0, 218, 243, 0.05); color: #00daf3; border: 1px solid rgba(0, 218, 243, 0.2); cursor: pointer; transition: all 0.15s; }
+.boardroom-artifact-preview-btn:hover { background: rgba(0, 218, 243, 0.15); border-color: rgba(0, 218, 243, 0.4); }
+
+/* ═══════════════════════════════════════════════════════
+   FULLSCREEN ARTIFACT PREVIEW OVERLAY
+   ═══════════════════════════════════════════════════════ */
+.boardroom-preview-overlay { position: fixed; inset: 0; background: rgba(19, 19, 19, 0.8); backdrop-filter: blur(4px); z-index: 10000; display: flex; align-items: center; justify-content: center; animation: boardroomFadeIn 0.15s ease; }
+.boardroom-preview-modal { width: 90%; max-width: 860px; max-height: 90vh; display: flex; flex-direction: column; background: #1c1b1b; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; box-shadow: 0 24px 64px rgba(0,0,0,0.6); animation: boardroomSlideUp 0.2s ease; overflow: hidden; }
+@keyframes boardroomSlideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.boardroom-preview-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 20px; background: rgba(255, 255, 255, 0.02); border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+.boardroom-preview-body { flex: 1; overflow: auto; background: #1c1b1b; padding: 24px; }

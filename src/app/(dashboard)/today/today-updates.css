@@ -1,0 +1,337 @@
+/* ═══════════════════════════════════════════════════════
+   today-updates.css — Updates Feed (Dark OS)
+   ═══════════════════════════════════════════════════════ */
+
+.tu-container {
+    padding: 0 0 48px;
+    max-width: 920px;
+    margin: 0 auto;
+}
+
+/* ── Summary Bar ────────────────────────────────────── */
+
+.tu-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: var(--color-surface, #18181b);
+    border: 1px solid var(--color-border, #27272a);
+    border-radius: 14px;
+    margin-bottom: 20px;
+}
+
+.tu-summary-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.tu-summary-count {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--color-text-primary, #fafafa);
+    letter-spacing: -0.02em;
+    line-height: 1;
+}
+
+.tu-summary-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-secondary, #71717a);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.tu-summary-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.tu-summary-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--color-border, #27272a);
+    color: var(--color-text-secondary, #71717a);
+}
+
+.tu-summary-chip .chip-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+/* ── Filter Bar ─────────────────────────────────────── */
+
+.tu-filters {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 12px;
+}
+
+.tu-filter-pills {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.tu-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 20px;
+    border: 1px solid var(--color-border, #27272a);
+    background: transparent;
+    color: var(--color-text-secondary, #71717a);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.tu-pill:hover {
+    background: rgba(255,255,255,0.04);
+    border-color: #3f3f46;
+    color: var(--color-text-primary, #fafafa);
+}
+
+.tu-pill.active {
+    background: rgba(210,240,0,0.08);
+    border-color: rgba(210,240,0,0.3);
+    color: #D2F000;
+}
+
+.tu-range-select {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 10px;
+    border: 1px solid var(--color-border, #27272a);
+    background: var(--color-surface, #18181b);
+    color: var(--color-text-primary, #fafafa);
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.tu-range-select:focus {
+    outline: none;
+    border-color: rgba(210,240,0,0.3);
+}
+
+/* ── Timeline Feed ──────────────────────────────────── */
+
+.tu-timeline {
+    position: relative;
+}
+
+.tu-timeline::before {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--color-border, #27272a);
+}
+
+.tu-event {
+    position: relative;
+    display: flex;
+    gap: 16px;
+    padding: 14px 0;
+    padding-left: 44px;
+    transition: background 0.15s ease;
+    border-radius: 10px;
+    margin: 0 -8px;
+    padding-right: 8px;
+    cursor: default;
+}
+
+.tu-event:hover {
+    background: rgba(255,255,255,0.02);
+}
+
+.tu-event.clickable {
+    cursor: pointer;
+}
+
+.tu-event-dot {
+    position: absolute;
+    left: 12px;
+    top: 18px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--color-bg, #09090b);
+    z-index: 1;
+}
+
+.tu-event-dot.success { background: #22c55e; }
+.tu-event-dot.failed { background: #ef4444; }
+.tu-event-dot.blocked { background: #f59e0b; }
+.tu-event-dot.partial { background: #06b6d4; }
+.tu-event-dot.info { background: #6366f1; }
+
+.tu-event-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.tu-event-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 3px;
+}
+
+.tu-event-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text-primary, #fafafa);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tu-event-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: 800;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+}
+
+.tu-event-type.ai_action { background: rgba(99,102,241,0.12); color: #818cf8; }
+.tu-event-type.initiative_event { background: rgba(245,158,11,0.12); color: #fbbf24; }
+.tu-event-type.task_completed { background: rgba(34,197,94,0.12); color: #4ade80; }
+.tu-event-type.content_created { background: rgba(6,182,212,0.12); color: #22d3ee; }
+.tu-event-type.artifact_created { background: rgba(168,85,247,0.12); color: #c084fc; }
+
+.tu-event-desc {
+    font-size: 12px;
+    color: var(--color-text-secondary, #71717a);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.tu-event-project {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #a1a1aa;
+    background: rgba(255,255,255,0.04);
+    padding: 1px 7px;
+    border-radius: 6px;
+}
+
+.tu-event-time {
+    font-size: 11px;
+    color: #52525b;
+    font-weight: 600;
+    flex-shrink: 0;
+    margin-left: auto;
+    padding-top: 2px;
+}
+
+.tu-event-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #D2F000;
+    text-decoration: none;
+    margin-top: 4px;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+.tu-event:hover .tu-event-link { opacity: 1; }
+
+/* ── Date Dividers ─────────────────────────────────── */
+
+.tu-date-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0 4px;
+    margin: 4px 0;
+}
+
+.tu-date-divider span {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #52525b;
+    flex-shrink: 0;
+}
+
+.tu-date-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--color-border, #27272a);
+}
+
+/* ── Empty / Loading ───────────────────────────────── */
+
+.tu-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 0;
+    color: #52525b;
+}
+
+.tu-empty {
+    text-align: center;
+    padding: 80px 20px;
+    color: #52525b;
+}
+
+.tu-empty-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+    opacity: 0.3;
+}
+
+.tu-empty p {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* ── Responsive ────────────────────────────────────── */
+
+@media (max-width: 640px) {
+    .tu-summary { flex-direction: column; gap: 12px; align-items: flex-start; }
+    .tu-filters { flex-direction: column; align-items: flex-start; }
+    .tu-event { padding-left: 36px; }
+    .tu-timeline::before { left: 14px; }
+    .tu-event-dot { left: 8px; }
+}

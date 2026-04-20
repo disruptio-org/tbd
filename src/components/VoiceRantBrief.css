@@ -1,0 +1,376 @@
+/* ═══════════════════════════════════════════════════════
+   Voice Rant Brief — Dark OS Design System
+   ═══════════════════════════════════════════════════════ */
+
+.vrb-card {
+    background: #201f1f;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.75rem;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.vrb-card.recording {
+    border-color: rgba(239, 68, 68, 0.4);
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.08);
+}
+
+/* ─── Header ──────────────────────────────────────── */
+
+.vrb-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+}
+
+.vrb-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.vrb-header-icon {
+    font-size: 20px;
+}
+
+.vrb-header-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #e5e2e1;
+    letter-spacing: 0.03em;
+    font-family: 'Manrope', sans-serif;
+}
+
+.vrb-header-subtitle {
+    font-size: 11px;
+    color: #71717a;
+    margin-top: 1px;
+}
+
+.vrb-header-toggle {
+    font-size: 14px;
+    color: #71717a;
+    transition: transform 0.2s ease;
+}
+
+.vrb-card.collapsed .vrb-header-toggle {
+    transform: rotate(-90deg);
+}
+
+/* ─── Body (collapsible) ──────────────────────────── */
+
+.vrb-body {
+    margin-top: 16px;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    max-height: 500px;
+    opacity: 1;
+}
+
+.vrb-card.collapsed .vrb-body {
+    max-height: 0;
+    opacity: 0;
+    margin-top: 0;
+}
+
+/* ─── Record Button ───────────────────────────────── */
+
+.vrb-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.vrb-record-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: 1px solid rgba(210, 240, 0, 0.3);
+    background: rgba(210, 240, 0, 0.1);
+    color: #D2F000;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.vrb-record-btn:hover {
+    background: rgba(210, 240, 0, 0.15);
+    border-color: rgba(210, 240, 0, 0.4);
+}
+
+.vrb-record-btn:active {
+    transform: scale(0.98);
+}
+
+.vrb-record-btn.recording {
+    border-color: rgba(239, 68, 68, 0.5);
+    background: rgba(239, 68, 68, 0.12);
+    color: #fca5a5;
+}
+
+.vrb-record-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.vrb-record-btn.recording .vrb-record-dot {
+    animation: vrb-pulse 1s ease-in-out infinite;
+}
+
+@keyframes vrb-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+.vrb-timer {
+    font-size: 13px;
+    font-weight: 500;
+    color: #a1a1aa;
+    font-family: 'SF Mono', 'Menlo', monospace;
+    min-width: 42px;
+}
+
+/* ─── Waveform ────────────────────────────────────── */
+
+.vrb-waveform {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 28px;
+    margin-left: auto;
+}
+
+.vrb-waveform-bar {
+    width: 3px;
+    border-radius: 2px;
+    background: #D2F000;
+    animation: vrb-wave 0.8s ease-in-out infinite;
+}
+
+.vrb-waveform-bar:nth-child(1) { animation-delay: 0s; height: 8px; }
+.vrb-waveform-bar:nth-child(2) { animation-delay: 0.1s; height: 16px; }
+.vrb-waveform-bar:nth-child(3) { animation-delay: 0.2s; height: 12px; }
+.vrb-waveform-bar:nth-child(4) { animation-delay: 0.3s; height: 24px; }
+.vrb-waveform-bar:nth-child(5) { animation-delay: 0.15s; height: 18px; }
+.vrb-waveform-bar:nth-child(6) { animation-delay: 0.25s; height: 10px; }
+.vrb-waveform-bar:nth-child(7) { animation-delay: 0.05s; height: 20px; }
+.vrb-waveform-bar:nth-child(8) { animation-delay: 0.35s; height: 14px; }
+
+@keyframes vrb-wave {
+    0%, 100% { transform: scaleY(0.5); opacity: 0.5; }
+    50% { transform: scaleY(1); opacity: 1; }
+}
+
+/* ─── Transcript ──────────────────────────────────── */
+
+.vrb-transcript {
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: #131313;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #a1a1aa;
+    font-style: italic;
+    max-height: 120px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+}
+
+.vrb-transcript:empty::before {
+    content: 'Your speech will appear here...';
+    color: #3f3f46;
+}
+
+/* ─── Actions ─────────────────────────────────────── */
+
+.vrb-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.vrb-autofill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 22px;
+    border-radius: 8px;
+    border: none;
+    background: #D2F000;
+    color: #131313;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.vrb-autofill-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(210, 240, 0, 0.2);
+}
+
+.vrb-autofill-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.vrb-clear-btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
+    color: #71717a;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.vrb-clear-btn:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #e5e2e1;
+}
+
+/* ─── Processing State ────────────────────────────── */
+
+.vrb-processing {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: rgba(210, 240, 0, 0.04);
+    border: 1px solid rgba(210, 240, 0, 0.1);
+    border-radius: 8px;
+    font-size: 13px;
+    color: #a1a1aa;
+}
+
+.vrb-processing-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(210, 240, 0, 0.2);
+    border-top-color: #D2F000;
+    border-radius: 50%;
+    animation: vrb-spin 0.8s linear infinite;
+}
+
+@keyframes vrb-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ─── Done State ──────────────────────────────────── */
+
+.vrb-done {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 10px 16px;
+    background: rgba(74, 222, 128, 0.06);
+    border: 1px solid rgba(74, 222, 128, 0.15);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4ade80;
+}
+
+/* ─── Document Picker ─────────────────────────────── */
+
+.vrb-doc-picker {
+    margin-top: 12px;
+}
+
+.vrb-doc-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    background: transparent;
+    color: #71717a;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.vrb-doc-toggle:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #a1a1aa;
+}
+
+.vrb-doc-toggle.has-selection {
+    border-style: solid;
+    border-color: rgba(210, 240, 0, 0.3);
+    color: #e5e2e1;
+    background: rgba(210, 240, 0, 0.04);
+}
+
+.vrb-doc-list {
+    margin-top: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    background: #1c1b1b;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.vrb-doc-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    font-size: 12px;
+    color: #a1a1aa;
+}
+
+.vrb-doc-item:last-child {
+    border-bottom: none;
+}
+
+.vrb-doc-item:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.vrb-doc-item.selected {
+    background: rgba(210, 240, 0, 0.04);
+}
+
+.vrb-doc-item input[type="checkbox"] {
+    accent-color: #D2F000;
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+}
+
+.vrb-doc-name {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.vrb-doc-size {
+    color: #3f3f46;
+    font-size: 11px;
+    flex-shrink: 0;
+}

@@ -1,0 +1,51 @@
+/* ═══════════════════════════════════════════════════════
+   NOUSIO V2 — Dark OS Design Tokens
+   Evolved from Disruptio DNA · "Disruptio at night"
+   ═══════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Background Surfaces ── */
+  --v2-bg-base: #0F0F14;
+  --v2-bg-surface: #18181F;
+  --v2-bg-surface2: #1F1F28;
+  --v2-bg-surface3: #292933;
+  --v2-bg-dark-band: #000000;
+
+  /* ── Text ── */
+  --v2-text-primary: #E8E8EC;
+  --v2-text-secondary: #8B8D97;
+  --v2-text-muted: #555660;
+  --v2-text-on-dark: #FFFFFF;
+
+  /* ── Accent (Brand) ── */
+  --v2-accent-red: #D73A3A;
+  --v2-accent-red-dark: #B92F2F;
+
+  /* ── State Indicators (NOT brand) ── */
+  --v2-accent-lime: #BEFF00;
+  --v2-accent-cyan: #00D4FF;
+  --v2-accent-pink: #FF3D8E;
+
+  /* ── Stroke / Borders ── */
+  --v2-stroke-subtle: #2A2B35;
+  --v2-stroke-medium: #3A3B48;
+
+  /* ── Semantic States ── */
+  --v2-state-success: #BEFF00;
+  --v2-state-error: #FF4444;
+  --v2-state-warning: #FFB800;
+  --v2-state-running: #00D4FF;
+
+  /* ── Shape ── */
+  --v2-radius-button: 8px;
+  --v2-radius-card: 12px;
+  --v2-radius-pill: 999px;
+  --v2-radius-panel: 16px;
+
+  /* ── Shadows ── */
+  --v2-shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --v2-shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --v2-shadow-glow-lime: 0 0 20px rgba(190, 255, 0, 0.15);
+  --v2-shadow-glow-cyan: 0 0 20px rgba(0, 212, 255, 0.15);
+  --v2-shadow-glow-red: 0 0 20px rgba(215, 58, 58, 0.15);
+}

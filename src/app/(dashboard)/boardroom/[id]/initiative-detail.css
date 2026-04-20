@@ -1,0 +1,548 @@
+/* ═══════════════════════════════════════════════════════
+   INITIATIVE DETAIL — Dark OS
+   ═══════════════════════════════════════════════════════ */
+
+/* ─── Info Card ─────────────────────────────────────── */
+.id-info-card {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-stroke-subtle);
+    border-radius: var(--radius-card);
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    transition: border-color var(--transition-fast);
+}
+
+.id-info-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.id-priority-bar {
+    width: 4px;
+    height: 28px;
+    flex-shrink: 0;
+    border-radius: 2px;
+    margin-top: 2px;
+}
+
+.id-title {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    margin: 0;
+    flex: 1;
+    color: var(--color-text-primary);
+}
+
+.id-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.id-objective {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0 0 14px;
+    padding-left: 14px;
+}
+
+/* ─── Meta Row ──────────────────────────────────────── */
+.id-meta-row {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 11px;
+    padding-left: 14px;
+}
+
+.id-meta-item-label {
+    font-weight: 700;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 9px;
+}
+
+.id-meta-item-value {
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: 2px;
+    font-size: 12px;
+}
+
+/* ─── Progress ──────────────────────────────────────── */
+.id-progress-wrap {
+    margin-top: 14px;
+    padding-left: 14px;
+}
+
+.id-progress-track {
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--color-bg-surface2);
+    overflow: hidden;
+}
+
+.id-progress-bar {
+    height: 100%;
+    background: var(--color-accent-secondary);
+    border-radius: 2px;
+    transition: width 0.5s ease;
+    min-width: 0;
+}
+
+/* ─── Status Badge ──────────────────────────────────── */
+.id-status-badge {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    text-align: center;
+    white-space: nowrap;
+    border: 1px solid transparent;
+}
+
+/* ─── Buttons ───────────────────────────────────────── */
+.id-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-family);
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: var(--radius-button);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+    border: 1px solid transparent;
+}
+.id-btn:active { transform: scale(0.97); }
+.id-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.id-btn-primary {
+    background: var(--color-accent-primary);
+    color: #fff;
+    padding: 8px 18px;
+    border-color: var(--color-accent-primary);
+}
+.id-btn-primary:hover:not(:disabled) {
+    background: var(--color-accent-primary-dark);
+    border-color: var(--color-accent-primary-dark);
+    box-shadow: 0 0 20px rgba(215, 58, 58, 0.2);
+}
+
+.id-btn-secondary {
+    background: var(--color-bg-surface2);
+    color: var(--color-text-primary);
+    padding: 8px 18px;
+    border-color: var(--color-stroke-subtle);
+}
+.id-btn-secondary:hover:not(:disabled) {
+    background: var(--color-bg-surface3);
+    border-color: var(--color-stroke-medium);
+}
+
+.id-btn-ghost {
+    background: transparent;
+    color: var(--color-text-secondary);
+    padding: 6px 12px;
+    border: 1px solid transparent;
+}
+.id-btn-ghost:hover:not(:disabled) {
+    color: var(--color-text-primary);
+    background: var(--color-bg-surface2);
+    border-color: var(--color-stroke-subtle);
+}
+
+.id-btn-success {
+    background: rgba(190, 255, 0, 0.12);
+    color: var(--color-state-success);
+    padding: 8px 18px;
+    border-color: rgba(190, 255, 0, 0.2);
+}
+.id-btn-success:hover:not(:disabled) {
+    background: rgba(190, 255, 0, 0.2);
+    border-color: rgba(190, 255, 0, 0.35);
+}
+
+.id-btn-danger {
+    background: rgba(255, 68, 68, 0.08);
+    color: var(--color-state-error);
+    padding: 6px 10px;
+    border-color: rgba(255, 68, 68, 0.15);
+}
+.id-btn-danger:hover:not(:disabled) {
+    background: rgba(255, 68, 68, 0.15);
+    border-color: rgba(255, 68, 68, 0.3);
+}
+
+.id-btn-sm {
+    padding: 5px 12px;
+    font-size: 11px;
+}
+
+/* ─── Approval Alert Banner ─────────────────────────── */
+.id-approval-alert {
+    background: rgba(255, 184, 0, 0.06);
+    border: 1px solid rgba(255, 184, 0, 0.2);
+    border-radius: var(--radius-card);
+    padding: 12px 18px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-state-warning);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* ─── Tab Navigation ────────────────────────────────── */
+.id-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--color-stroke-subtle);
+    margin-bottom: 16px;
+}
+
+.id-tab {
+    padding: 10px 18px;
+    font-family: var(--font-family);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+    margin-bottom: -1px;
+}
+.id-tab:hover {
+    color: var(--color-text-secondary);
+}
+.id-tab.active {
+    color: var(--color-text-primary);
+    border-bottom-color: var(--color-accent-primary);
+}
+
+.id-tab-badge {
+    background: var(--color-state-warning);
+    color: var(--color-bg-base);
+    font-size: 9px;
+    font-weight: 900;
+    padding: 2px 6px;
+    border-radius: var(--radius-pill);
+    margin-left: 2px;
+}
+
+/* ─── Task Table ────────────────────────────────────── */
+.id-task-table {
+    border: 1px solid var(--color-stroke-subtle);
+    border-radius: var(--radius-card);
+    background: var(--color-bg-surface);
+    overflow: hidden;
+}
+
+.id-task-table-header {
+    display: grid;
+    grid-template-columns: minmax(200px, 2fr) 130px 110px 120px 70px minmax(140px, 1fr);
+    gap: 0;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--color-stroke-subtle);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+    background: var(--color-bg-surface2);
+}
+
+.id-task-row {
+    display: grid;
+    grid-template-columns: minmax(200px, 2fr) 130px 110px 120px 70px minmax(140px, 1fr);
+    gap: 0;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--color-stroke-subtle);
+    align-items: center;
+    font-size: 12px;
+    transition: background var(--transition-fast);
+}
+.id-task-row:last-child {
+    border-bottom: none;
+}
+.id-task-row:hover {
+    background: rgba(255, 255, 255, 0.015);
+}
+
+.id-task-title-link {
+    font-weight: 700;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition: color var(--transition-fast);
+}
+.id-task-title-link:hover {
+    color: var(--color-accent-secondary);
+}
+
+.id-task-output-tag {
+    color: var(--color-accent-secondary);
+    font-size: 9px;
+    font-weight: 700;
+    margin-left: 6px;
+}
+
+.id-task-skill {
+    font-size: 10px;
+    color: var(--color-state-warning);
+    margin-top: 2px;
+}
+
+.id-task-assigned {
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    font-weight: 600;
+}
+
+.id-task-dep {
+    font-size: 10px;
+    color: var(--color-text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.id-task-due {
+    font-size: 10px;
+    color: var(--color-text-muted);
+}
+
+.id-task-actions {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* ─── Task Status Badge (small) ─────────────────────── */
+.id-task-status {
+    display: inline-block;
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 3px 8px;
+    border-radius: var(--radius-pill);
+    text-align: center;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    line-height: 1.2;
+}
+
+/* ─── Task Empty State ──────────────────────────────── */
+.id-task-empty {
+    padding: 40px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--color-text-muted);
+}
+
+/* ─── Blocked / Running indicators ──────────────────── */
+.id-blocked-tag {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--color-state-warning);
+    padding: 2px 8px;
+    background: rgba(255, 184, 0, 0.08);
+    border-radius: var(--radius-pill);
+}
+
+.id-running-spinner {
+    animation: spin 1s linear infinite;
+    color: var(--color-accent-secondary);
+}
+
+/* ─── Plan Summary Section ──────────────────────────── */
+.id-plan-summary {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-stroke-subtle);
+    border-radius: var(--radius-card);
+    padding: 16px 20px;
+    margin-top: 16px;
+}
+
+.id-plan-summary-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+    margin-bottom: 8px;
+}
+
+.id-plan-summary-text {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+}
+
+/* ─── Modal Overrides (use boardroom-plan-* but with Dark OS surfaces) ───── */
+.id-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 40px 20px;
+    overflow-y: auto;
+    animation: fadeIn 0.15s ease;
+}
+
+.id-modal-card {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-stroke-subtle);
+    border-radius: var(--radius-card);
+    width: 90%;
+    max-width: 780px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    margin: 60px auto;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+    animation: scaleIn 0.2s ease;
+}
+
+.id-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--color-stroke-subtle);
+}
+
+.id-modal-body {
+    flex: 1;
+    overflow: auto;
+    padding: 24px;
+}
+
+.id-modal-close {
+    background: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    color: var(--color-text-muted);
+    padding: 6px;
+    border-radius: 6px;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.id-modal-close:hover {
+    color: var(--color-text-primary);
+    background: var(--color-bg-surface2);
+    border-color: var(--color-stroke-subtle);
+}
+
+/* ─── Delete Confirm Modal ──────────────────────────── */
+.id-delete-modal {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-stroke-subtle);
+    border-radius: var(--radius-card);
+    padding: var(--space-lg);
+    max-width: 420px;
+    width: 90%;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.id-delete-icon {
+    color: var(--color-state-error);
+    margin-bottom: 12px;
+}
+
+.id-delete-title {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.id-delete-desc {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.id-delete-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* ─── Chat Send Button ──────────────────────────────── */
+.id-chat-send {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 18px;
+    background: var(--color-accent-primary);
+    color: #fff;
+    border: 1px solid var(--color-accent-primary);
+    border-radius: var(--radius-button);
+    font-family: var(--font-family);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+.id-chat-send:hover:not(:disabled) {
+    background: var(--color-accent-primary-dark);
+    border-color: var(--color-accent-primary-dark);
+}
+.id-chat-send:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* ─── Dependency Chip ───────────────────────────────── */
+.id-dep-chip {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    background: var(--color-bg-surface2);
+    border: 1px solid var(--color-stroke-subtle);
+    border-radius: 6px;
+    color: var(--color-text-secondary);
+}
+
+/* ─── Responsive ────────────────────────────────────── */
+@media (max-width: 768px) {
+    .id-task-table-header,
+    .id-task-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+    .id-task-table-header > :nth-child(n+3) { display: none; }
+    .id-task-row > :nth-child(n+4) { display: none; }
+    .id-meta-row { gap: 12px; }
+    .id-actions { flex-wrap: wrap; }
+}

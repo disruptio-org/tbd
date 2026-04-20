@@ -1,0 +1,114 @@
+/* ═══════════════════════════════════════════════════════
+   AI Sales Assistant — Dark OS
+   ═══════════════════════════════════════════════════════ */
+
+.sal-page { width: 100%; box-sizing: border-box; animation: leadsPageIn 0.4s ease; display: flex; flex-direction: column; flex: 1; min-height: 0; }
+
+/* ─── Header ─────────────────────────────────────────── */
+.sal-header { display: none !important; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; gap: 16px; }
+.sal-title { font-size: 22px; font-weight: 700; color: var(--color-text-primary); letter-spacing: -0.02em; margin: 0; display: flex; align-items: center; gap: 10px; }
+.sal-subtitle { font-size: 13px; color: var(--color-text-secondary); margin: 4px 0 0; }
+
+/* ─── Tabs ───────────────────────────────────────────── */
+.sal-tabs { display: none !important; gap: 2px; margin-bottom: 24px; background: var(--color-bg-surface); border-radius: 8px; padding: 3px; width: fit-content; }
+.sal-tab { padding: 9px 20px; border-radius: 6px; font-size: 13px; font-weight: 600; color: var(--color-text-secondary); background: none; border: none; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; }
+.sal-tab:hover { color: var(--color-text-primary); background: rgba(255,255,255,0.04); }
+.sal-tab.active { color: var(--color-accent-red); background: rgba(215, 58, 58, 0.1); }
+
+/* ─── Task Type Selector ─────────────────────────────── */
+.sal-type-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-bottom: 24px; }
+.sal-type-card { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 10px; background: #1c1b1b; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; cursor: pointer; transition: all 0.15s ease; text-align: center; }
+.sal-type-card:hover { border-color: rgba(255, 255, 255, 0.2); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); }
+.sal-type-card.selected { border-color: var(--color-accent-red); background: var(--color-accent-red); color: #fff; }
+.sal-type-icon { font-size: 26px; }
+.sal-type-label { font-size: 13px; font-weight: 700; color: inherit; line-height: 1.3; text-transform: uppercase; }
+
+/* ─── Form ───────────────────────────────────────────── */
+.sal-create-layout { display: grid; grid-template-columns: 1fr 300px; gap: 24px; align-items: start; }
+@media (max-width: 960px) { .sal-create-layout { grid-template-columns: 1fr; } }
+
+.sal-form-panel { background: #1c1b1b; border-radius: 12px; padding: 24px; border: 1px solid rgba(255, 255, 255, 0.08); }
+.sal-form-title { font-size: 15px; font-weight: 700; color: var(--color-text-primary); margin: 0 0 20px; display: flex; align-items: center; gap: 8px; }
+.sal-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.sal-form-grid .full-width { grid-column: 1 / -1; }
+.sal-form-group { display: flex; flex-direction: column; }
+.sal-form-group label { font-size: 12px; font-weight: 600; color: var(--color-text-secondary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+.sal-form-group input, .sal-form-group textarea, .sal-form-group select {
+    font-family: var(--font-family); font-size: 14px; color: var(--color-text-primary);
+    background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 10px 12px;
+    outline: none; transition: border-color 0.15s ease; width: 100%;
+}
+.sal-form-group input:focus, .sal-form-group textarea:focus, .sal-form-group select:focus {
+    border-color: rgba(0, 212, 255, 0.4); box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+}
+.sal-form-group textarea { min-height: 72px; resize: vertical; }
+.sal-form-group input::placeholder, .sal-form-group textarea::placeholder { color: var(--color-text-muted); }
+.sal-form-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.06); }
+
+/* ─── Context Panel ──────────────────────────────────── */
+.sal-context-panel { background: #1c1b1b; border-radius: 12px; padding: 20px; border: 1px solid rgba(255, 255, 255, 0.08); position: sticky; top: 24px; }
+.sal-context-title { font-size: 13px; font-weight: 700; color: var(--color-text-primary); margin: 0 0 14px; display: flex; align-items: center; gap: 8px; }
+.sal-context-items { display: flex; flex-direction: column; gap: 10px; }
+.sal-context-item { display: flex; flex-direction: column; gap: 2px; }
+.sal-context-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-muted); }
+.sal-context-value { font-size: 13px; color: var(--color-text-primary); line-height: 1.4; word-break: break-word; }
+.sal-context-divider { border: none; border-top: 1px solid rgba(255, 255, 255, 0.06); margin: 4px 0; }
+.sal-context-hint { font-size: 11px; color: var(--color-text-muted); margin-top: 8px; line-height: 1.4; }
+
+/* ─── Loading ────────────────────────────────────────── */
+.sal-loading { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 24px; background: #1c1b1b; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08); animation: leadsLoadPulse 2s ease-in-out infinite; }
+.sal-loading-spinner { width: 40px; height: 40px; border: 3px solid rgba(255, 255, 255, 0.08); border-top-color: var(--color-accent-red); border-radius: 50%; animation: spin 700ms linear infinite; margin-bottom: 20px; }
+.sal-loading-text { font-size: 15px; font-weight: 600; color: var(--color-text-primary); margin-bottom: 16px; }
+.sal-loading-steps { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 320px; }
+.sal-loading-step { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--color-text-muted); transition: all 0.3s ease; }
+.sal-loading-step.active { color: var(--color-accent-red); font-weight: 600; }
+.sal-loading-step.done { color: var(--color-state-success); }
+.sal-loading-step-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.08); flex-shrink: 0; transition: all 0.3s ease; }
+.sal-loading-step.active .sal-loading-step-dot { background: var(--color-text-primary); }
+.sal-loading-step.done .sal-loading-step-dot { background: var(--color-state-success); }
+
+/* ─── Result Area ────────────────────────────────────── */
+.sal-result-panel { background: #1c1b1b; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08); overflow: hidden; animation: leadsPageIn 0.3s ease; }
+.sal-result-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); gap: 12px; }
+.sal-result-title { font-size: 17px; font-weight: 700; color: var(--color-text-primary); margin: 0; }
+.sal-result-badge { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: var(--radius-pill); background: rgba(74, 222, 128, 0.1); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.2); }
+.sal-result-content { padding: 24px; font-size: 14px; color: var(--color-text-primary); line-height: 1.7; word-wrap: break-word; }
+.sal-result-actions { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 24px; border-top: 1px solid rgba(255, 255, 255, 0.06); }
+.sal-result-actions .btn { font-size: 11px; padding: 6px 14px; }
+
+/* ─── Structured output sections ─────────────────────── */
+.sal-section { margin-bottom: 20px; }
+.sal-section:last-child { margin-bottom: 0; }
+.sal-section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-accent-red); margin-bottom: 6px; }
+.sal-section-content { font-size: 14px; color: var(--color-text-primary); line-height: 1.7; }
+
+/* ─── Empty State ────────────────────────────────────── */
+.sal-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 60px 24px; background: rgba(255, 255, 255, 0.02); border-radius: 12px; border: 1px dashed rgba(255, 255, 255, 0.1); }
+.sal-empty-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
+.sal-empty h3 { font-size: 17px; font-weight: 700; color: var(--color-text-primary); margin: 0 0 8px; }
+.sal-empty p { font-size: 13px; color: var(--color-text-secondary); max-width: 420px; line-height: 1.5; margin: 0 0 20px; }
+
+/* ─── Draft/History List ─────────────────────────────── */
+.sal-list-grid { display: flex; flex-direction: column; gap: 8px; }
+.sal-list-item { display: flex; align-items: center; justify-content: space-between; background: #1c1b1b; border-radius: 8px; padding: 14px 20px; border: 1px solid rgba(255, 255, 255, 0.06); transition: all 0.15s ease; }
+.sal-list-item:hover { border-color: rgba(255, 255, 255, 0.12); background: rgba(255, 255, 255, 0.02); }
+.sal-list-info { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+.sal-list-title { font-size: 14px; font-weight: 600; color: var(--color-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sal-list-meta { font-size: 12px; color: var(--color-text-secondary); display: flex; gap: 12px; flex-wrap: wrap; }
+.sal-list-type { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 6px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); color: var(--color-text-primary); margin-right: 12px; flex-shrink: 0; }
+.sal-list-actions { display: flex; gap: 6px; flex-shrink: 0; margin-left: 16px; }
+
+/* ─── Save/View Dialogs ──────────────────────────────── */
+.sal-dialog { background: var(--color-bg-surface); border-radius: 12px; max-width: 460px; width: 90%; padding: 28px; box-shadow: 0 24px 64px rgba(0,0,0,0.6); border: 1px solid rgba(255, 255, 255, 0.1); animation: scaleIn 200ms ease; }
+.sal-dialog h3 { font-size: 18px; font-weight: 700; color: var(--color-text-primary); margin: 0 0 20px; }
+.sal-dialog .sal-form-group { margin-bottom: 16px; }
+.sal-dialog-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+
+/* ─── Responsive ─────────────────────────────────────── */
+@media (max-width: 768px) {
+    .sal-header { flex-direction: column; }
+    .sal-form-grid { grid-template-columns: 1fr; }
+    .sal-type-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+    .sal-list-item { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .sal-list-actions { margin-left: 0; }
+}

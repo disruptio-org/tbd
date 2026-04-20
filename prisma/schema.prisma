@@ -1,0 +1,2266 @@
+// ═══════════════════════════════════════════════════════
+// DISRUPTIO — Prisma Schema
+// ═══════════════════════════════════════════════════════
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Company ───────────────────────────────────────────
+
+model Company {
+  id          String   @id @default(uuid())
+  name        String
+  email       String?
+  plan        String   @default("starter")
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  website     String? // Company website URL for web context seeding
+  linkedinUrl String? // LinkedIn company page URL
+  webContext  String? // AI-extracted and summarised company context from web
+  language    String   @default("en") // en | pt-PT | fr
+
+  users                     User[]
+  documents                 Document[]
+  docFolders                DocFolder[]
+  documentEmbeddings        DocumentEmbedding[]
+  diagnosticAssessments     DiagnosticAssessment[]
+  useCases                  UseCase[]
+  dataQualityJobs           DataQualityJob[]
+  governanceTemplates       GovernanceTemplate[]
+  workflows                 Workflow[]
+  usageMetrics              UsageMetric[]
+  supportTickets            SupportTicket[]
+  conversations             Conversation[]
+  features                  CompanyFeature[]
+  license                   License?
+  classificationTypes       ClassificationType[]
+  classificationResults     ClassificationResult[]
+  classificationHistory     ClassificationHistory[]
+  companyProfile            CompanyProfile?
+  onboardingGuide           CompanyOnboardingGuide?
+  leadSearchRuns            LeadSearchRun[]
+  leadResults               LeadResult[]
+  leadLists                 LeadList[]
+  marketingRuns             MarketingGenerationRun[]
+  marketingDrafts           MarketingDraft[]
+  salesRuns                 SalesGenerationRun[]
+  salesDrafts               SalesDraft[]
+  productRuns               ProductGenerationRun[]
+  productDrafts             ProductDraft[]
+  onboardingAssistantRuns   OnboardingGenerationRun[]
+  onboardingAssistantDrafts OnboardingDraft[]
+  advisorRuns               AdvisorGenerationRun[]
+  advisorDrafts             AdvisorDraft[]
+  generalAIRuns             GeneralAIGenerationRun[]
+  generalAIDrafts           GeneralAIDraft[]
+  onboardingState           CompanyOnboardingState?
+  brainProfiles             AIBrainProfile[]
+  brainTestRuns             AIBrainTestRun[]
+  projects                  Project[]
+  taskBoards                TaskBoard[]
+  tasks                     Task[]
+  accessGroups              AccessGroup[]
+  accessGroupMemberships    AccessGroupMembership[]
+  accessPermissionGrants    AccessPermissionGrant[]
+  crmLeads                  CrmLead[]
+  crmPipelineStages         CrmPipelineStage[]
+  assistantSkills            AssistantSkill[]
+  apiKeys                    CompanyApiKey[]
+  integrations               CompanyIntegration[]
+  externalActions            ExternalAction[]
+  externalDocuments          ExternalDocument[]
+  customers                  Customer[]
+  companyDNA                 CompanyDNA?
+  knowledgeNodes             KnowledgeNode[]
+  resources                  Resource[]
+  feedbackEvents             FeedbackEvent[]
+  initiatives                Initiative[]
+  planDrafts                 PlanDraft[]
+  virtualOffice              VirtualOffice?
+  dailyBriefs                DailyBrief[]
+}
+
+// ─── Company API Keys ─────────────────────────────────
+
+model CompanyApiKey {
+  id         String    @id @default(uuid())
+  companyId  String
+  label      String    // e.g. "MOBY Website Contact Form"
+  keyHash    String    @unique // SHA-256 hash of the full API key
+  keyPrefix  String    // First 8 chars for display: "nk_a1b2c3d4••••"
+  scopes     String[]  // e.g. ["crm:leads:write"]
+  isActive   Boolean   @default(true)
+  lastUsedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId])
+  @@index([keyHash])
+}
+
+// ─── Company Integrations ─────────────────────────────
+
+model CompanyIntegration {
+  id              String    @id @default(uuid())
+  companyId       String
+  provider        String    // ZAPIER_MCP | GOOGLE_DRIVE | NOTION | SHAREPOINT
+  label           String    @default("Integration") // Display name
+  config          Json      @default("{}") // { mcpEndpointUrl, selectedFolders, ... }
+  oauthTokens     Json?     // Encrypted OAuth2 tokens { accessToken, refreshToken, expiresAt }
+  isActive        Boolean   @default(true)
+  syncFrequency   String    @default("6h") // 1h | 6h | 12h | 24h | manual
+  lastSyncedAt    DateTime?
+  lastSyncStatus  String?   // SUCCESS | PARTIAL | FAILED
+  actionCount     Int       @default(0) // Zapier: action count. Drive: file count.
+  errorLog        String?   @db.Text
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  company           Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  externalActions   ExternalAction[]
+  externalDocuments ExternalDocument[]
+
+  @@unique([companyId, provider])
+  @@index([companyId])
+}
+
+// ─── External Actions (Tool Catalog) ──────────────────
+
+model ExternalAction {
+  id              String    @id @default(uuid())
+  companyId       String
+  integrationId   String
+  name            String    // "Send Email"
+  description     String?   @db.Text
+  toolName        String    // MCP tool name from Zapier
+  serviceApp      String    // "Gmail", "Google Sheets", "Slack"
+  inputSchema     Json?     // Parameter schema from MCP
+  isActive        Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  company     Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  integration CompanyIntegration @relation(fields: [integrationId], references: [id], onDelete: Cascade)
+
+  @@unique([companyId, toolName])
+  @@index([companyId])
+  @@index([integrationId])
+}
+
+// ─── Customer (External Client) ───────────────────────
+
+model Customer {
+  id            String   @id @default(uuid())
+  companyId     String
+  name          String
+  description   String?  @db.Text
+  industry      String?
+  website       String?
+  contactName   String?
+  contactEmail  String?
+  contextText   String?  @db.Text   // AI-extracted customer context
+  status        String   @default("active") // active | archived
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  company  Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  projects Project[]
+
+  @@index([companyId])
+  @@unique([companyId, name])
+}
+
+// ─── Project (Client/Workspace) ───────────────────────
+
+model Project {
+  id          String   @id @default(uuid())
+  companyId   String
+  customerId  String?
+  name        String
+  description String?  @db.Text
+  contextText String?  @db.Text
+  status      String   @default("active") // active | completed | archived
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  company    Company     @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  customer   Customer?   @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  documents  Document[]  @relation("ProjectDocuments")
+  taskBoards TaskBoard[]
+  initiatives Initiative[]
+
+  @@index([companyId])
+  @@index([customerId])
+}
+
+// ─── Company Feature (Backoffice FR-5, FR-6) ──────────
+
+model CompanyFeature {
+  id         String   @id @default(uuid())
+  companyId  String
+  featureKey String // e.g., "documents", "ocr", "search", "diagnostics", etc.
+  enabled    Boolean  @default(true)
+  updatedAt  DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([companyId, featureKey])
+  @@index([companyId])
+}
+
+// ─── License (Backoffice FR-7, FR-8, FR-9) ────────────
+
+model License {
+  id        String    @id @default(uuid())
+  companyId String    @unique
+  plan      String    @default("starter")
+  startsAt  DateTime  @default(now())
+  expiresAt DateTime?
+  isActive  Boolean   @default(true)
+  updatedAt DateTime  @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+}
+
+// ─── User ──────────────────────────────────────────────
+
+enum UserRole {
+  MEMBER
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum AuthProvider {
+  EMAIL
+  GOOGLE
+}
+
+model User {
+  id            String       @id @default(uuid())
+  companyId     String
+  name          String
+  email         String       @unique
+  role          UserRole     @default(MEMBER)
+  authProvider  AuthProvider @default(EMAIL)
+  avatarUrl     String?
+  timezone      String       @default("Europe/Lisbon")
+  status        String       @default("ACTIVE") // ACTIVE | INACTIVE | PENDING
+  deactivatedAt DateTime?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime?    @updatedAt
+
+  // ── Onboarding fields ──
+  mustChangePassword   Boolean   @default(false)
+  isProvisionedByAdmin Boolean   @default(false)
+  inviteSentAt         DateTime?
+  passwordChangedAt    DateTime?
+  firstLoginAt         DateTime?
+
+  company                       Company                   @relation(fields: [companyId], references: [id])
+  uploadedDocs                  Document[]                @relation("DocumentUploader")
+  diagnosticAssessments         DiagnosticAssessment[]
+  dataQualityJobs               DataQualityJob[]
+  workflows                     Workflow[]                @relation("WorkflowCreator")
+  workflowRuns                  WorkflowRun[]
+  usageMetrics                  UsageMetric[]
+  supportTickets                SupportTicket[]
+  conversations                 Conversation[]            @relation("ConversationCreator")
+  classificationTypes           ClassificationType[]      @relation("ClassificationTypeCreator")
+  classificationHistory         ClassificationHistory[]   @relation("ClassificationHistoryUser")
+  leadSearchRuns                LeadSearchRun[]           @relation("LeadSearchRunCreator")
+  leadLists                     LeadList[]                @relation("LeadListCreator")
+  marketingRuns                 MarketingGenerationRun[]  @relation("MarketingRunCreator")
+  marketingDrafts               MarketingDraft[]          @relation("MarketingDraftCreator")
+  salesRuns                     SalesGenerationRun[]      @relation("SalesRunCreator")
+  salesDrafts                   SalesDraft[]              @relation("SalesDraftCreator")
+  productRuns                   ProductGenerationRun[]    @relation("ProductRunCreator")
+  productDrafts                 ProductDraft[]            @relation("ProductDraftCreator")
+  onboardingAssistantRuns       OnboardingGenerationRun[] @relation("OnboardingRunCreator")
+  onboardingAssistantDrafts     OnboardingDraft[]         @relation("OnboardingDraftCreator")
+  advisorRuns                   AdvisorGenerationRun[]    @relation("AdvisorRunCreator")
+  advisorDrafts                 AdvisorDraft[]            @relation("AdvisorDraftCreator")
+  generalAIRuns                 GeneralAIGenerationRun[]  @relation("GeneralAIRunCreator")
+  generalAIDrafts               GeneralAIDraft[]          @relation("GeneralAIDraftCreator")
+  brainProfilesCreated          AIBrainProfile[]          @relation("BrainProfileCreator")
+  brainProfilesUpdated          AIBrainProfile[]          @relation("BrainProfileUpdater")
+  brainVersions                 AIBrainVersion[]          @relation("BrainVersionCreator")
+  brainTestRuns                 AIBrainTestRun[]          @relation("BrainTestRunCreator")
+  taskBoardsCreated             TaskBoard[]               @relation("TaskBoardCreator")
+  tasksAssigned                 Task[]                    @relation("TaskAssignee")
+  tasksReported                 Task[]                    @relation("TaskReporter")
+  taskComments                  TaskComment[]             @relation("TaskCommenter")
+  taskActivities                TaskActivity[]            @relation("TaskActivityActor")
+  // Access group relations
+  accessGroupMemberships        AccessGroupMembership[]   @relation("MembershipUser")
+  accessGroupMembershipsCreated AccessGroupMembership[]   @relation("MembershipCreator")
+  accessGroupsCreated           AccessGroup[]             @relation("AccessGroupCreator")
+  accessGroupsUpdated           AccessGroup[]             @relation("AccessGroupUpdater")
+  // CRM relations
+  crmLeadsOwned                 CrmLead[]                 @relation("CrmLeadOwner")
+  crmLeadsCreated               CrmLead[]                 @relation("CrmLeadCreator")
+  crmLeadActivities             CrmLeadActivity[]         @relation("CrmActivityActor")
+  dailyBriefs                   DailyBrief[]
+
+  @@index([companyId])
+}
+
+// ─── Access Group ─────────────────────────────────────
+
+model AccessGroup {
+  id              String    @id @default(uuid())
+  companyId       String
+  name            String
+  description     String?   @db.Text
+  isSystemManaged Boolean   @default(false)
+  createdById     String?
+  updatedById     String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @default(now())
+  archivedAt      DateTime?
+
+  company     Company                 @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  createdBy   User?                   @relation("AccessGroupCreator", fields: [createdById], references: [id], onDelete: SetNull)
+  updatedBy   User?                   @relation("AccessGroupUpdater", fields: [updatedById], references: [id], onDelete: SetNull)
+  memberships AccessGroupMembership[]
+  grants      AccessPermissionGrant[]
+
+  @@unique([companyId, name])
+  @@index([companyId])
+}
+
+// ─── Access Group Membership ──────────────────────────
+
+model AccessGroupMembership {
+  id            String   @id @default(uuid())
+  companyId     String
+  accessGroupId String
+  userId        String
+  createdAt     DateTime @default(now())
+  createdById   String?
+
+  company     Company     @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  accessGroup AccessGroup @relation(fields: [accessGroupId], references: [id], onDelete: Cascade)
+  user        User        @relation("MembershipUser", fields: [userId], references: [id], onDelete: Cascade)
+  createdBy   User?       @relation("MembershipCreator", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@unique([accessGroupId, userId])
+  @@index([companyId])
+  @@index([userId])
+  @@index([accessGroupId])
+}
+
+// ─── Access Permission Grant ──────────────────────────
+
+model AccessPermissionGrant {
+  id            String   @id @default(uuid())
+  companyId     String
+  accessGroupId String
+  resourceType  String // 'FEATURE' | 'SUB_FEATURE' | 'PROJECT_SCOPE'
+  resourceKey   String // e.g. 'marketing', 'documents.upload', 'project:<id>'
+  accessLevel   String   @default("USE") // 'VIEW' | 'USE' | 'MANAGE'
+  createdAt     DateTime @default(now())
+
+  company     Company     @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  accessGroup AccessGroup @relation(fields: [accessGroupId], references: [id], onDelete: Cascade)
+
+  @@unique([accessGroupId, resourceType, resourceKey])
+  @@index([companyId])
+  @@index([accessGroupId])
+}
+
+// ─── Company Onboarding State ─────────────────────────
+
+model CompanyOnboardingState {
+  id             String    @id @default(uuid())
+  companyId      String    @unique
+  primaryUserId  String
+  status         String    @default("NOT_STARTED") // NOT_STARTED | IN_PROGRESS | COMPLETED
+  currentStep    Int       @default(1)
+  completedSteps Json? // e.g. [1, 2, 3]
+  stepDrafts     Json? // e.g. { "2": {...}, "3": {...} }
+  startedAt      DateTime?
+  completedAt    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId])
+}
+
+// ─── Document ──────────────────────────────────────────
+
+model Document {
+  id                   String   @id @default(uuid())
+  companyId            String
+  folderId             String?
+  filename             String
+  mimeType             String
+  size                 Int
+  storageKey           String
+  uploadedById         String
+  extractedText        String?  @db.Text
+  ocrProcessed         Boolean  @default(false)
+  ocrStatus            String   @default("PENDING") // PENDING | PROCESSING | PROCESSED | ERROR
+  ocrError             String?  @db.Text
+  version              Int      @default(1)
+  knowledgeCategory    String?
+  useAsKnowledgeSource Boolean  @default(false)
+  knowledgePriority    String?  @default("normal")
+  language             String?
+  hash                 String?
+  projectId            String?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  company               Company                @relation(fields: [companyId], references: [id])
+  folder                DocFolder?             @relation(fields: [folderId], references: [id])
+  project               Project?               @relation("ProjectDocuments", fields: [projectId], references: [id], onDelete: Cascade)
+  uploadedBy            User                   @relation("DocumentUploader", fields: [uploadedById], references: [id])
+  embeddings            DocumentEmbedding[]
+  classificationResults ClassificationResult[]
+  taskDocuments         TaskDocument[]
+
+  @@index([companyId, createdAt])
+  @@index([folderId])
+  @@index([projectId])
+}
+
+// ─── Document Folder ───────────────────────────────────
+
+model DocFolder {
+  id        String   @id @default(uuid())
+  companyId String
+  name      String
+  parentId  String?
+  createdAt DateTime @default(now())
+
+  company   Company     @relation(fields: [companyId], references: [id])
+  parent    DocFolder?  @relation("FolderTree", fields: [parentId], references: [id])
+  children  DocFolder[] @relation("FolderTree")
+  documents Document[]
+
+  @@index([companyId, parentId])
+}
+
+// ─── Document Embedding (pgvector) ─────────────────────
+
+model DocumentEmbedding {
+  id                 String  @id @default(uuid())
+  companyId          String
+  documentId         String
+  externalDocumentId String?
+  chunkIndex         Int
+  chunkText          String  @db.Text
+  embedding          String  @db.Text // Stored as JSON; pgvector column created via raw migration
+
+  company          Company           @relation(fields: [companyId], references: [id])
+  document         Document          @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  externalDocument ExternalDocument? @relation(fields: [externalDocumentId], references: [id], onDelete: Cascade)
+
+  @@index([companyId])
+  @@index([documentId])
+  @@index([externalDocumentId])
+}
+
+// ─── External Document (Synced from Providers) ─────────
+
+model ExternalDocument {
+  id                   String    @id @default(uuid())
+  companyId            String
+  integrationId        String
+  externalId           String    // Google Drive fileId, Notion pageId, etc.
+  externalUrl          String?   // Direct link to source
+  filename             String
+  mimeType             String?
+  size                 Int?
+  externalPath         String?   // /folder/subfolder/file.pdf
+  extractedText        String?   @db.Text
+  contentHash          String?   // SHA-256 of content — skip re-processing if unchanged
+  lastExternalMod      DateTime?
+  syncStatus           String    @default("PENDING") // PENDING | SYNCED | CHANGED | DELETED | ERROR
+  knowledgeCategory    String?
+  useAsKnowledgeSource Boolean   @default(true)
+  knowledgePriority    String?   @default("normal")
+  language             String?
+  projectId            String?
+  ocrProcessed         Boolean   @default(false)
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  company     Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  integration CompanyIntegration @relation(fields: [integrationId], references: [id], onDelete: Cascade)
+  embeddings  DocumentEmbedding[]
+
+  @@unique([integrationId, externalId])
+  @@index([companyId])
+  @@index([integrationId, syncStatus])
+}
+
+// ─── Diagnostic Assessment (FR-8, FR-9) ────────────────
+
+enum AssessmentStatus {
+  IN_PROGRESS
+  COMPLETED
+}
+
+model DiagnosticAssessment {
+  id        String           @id @default(uuid())
+  userId    String
+  companyId String
+  answers   Json
+  score     Float?
+  report    String?          @db.Text
+  status    AssessmentStatus @default(IN_PROGRESS)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id])
+  company Company @relation(fields: [companyId], references: [id])
+
+  @@index([userId])
+  @@index([companyId])
+}
+
+// ─── Use Case (FR-10, FR-11) ───────────────────────────
+
+model UseCase {
+  id           String   @id @default(uuid())
+  companyId    String?
+  industry     String
+  title        String
+  summary      String   @db.Text
+  challenge    String?  @db.Text
+  solution     String?  @db.Text
+  results      String?  @db.Text
+  caseStudyUrl String?
+  isGlobal     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  company Company? @relation(fields: [companyId], references: [id])
+
+  @@index([industry])
+}
+
+// ─── Data Quality Job (FR-12, FR-13) ───────────────────
+
+enum DataQualityStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+model DataQualityJob {
+  id          String            @id @default(uuid())
+  companyId   String
+  userId      String
+  sourceType  String
+  sourceName  String
+  metrics     Json?
+  status      DataQualityStatus @default(PENDING)
+  report      String?           @db.Text
+  createdAt   DateTime          @default(now())
+  completedAt DateTime?
+
+  company Company @relation(fields: [companyId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+
+  @@index([companyId])
+}
+
+// ─── Governance Template (FR-14, FR-15) ────────────────
+
+model GovernanceTemplate {
+  id        String   @id @default(uuid())
+  companyId String?
+  name      String
+  category  String
+  content   String   @db.Text
+  isGlobal  Boolean  @default(false)
+  isCustom  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company Company? @relation(fields: [companyId], references: [id])
+
+  @@index([category])
+}
+
+// ─── Workflow / Automation (FR-16) ─────────────────────
+
+enum WorkflowStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  ARCHIVED
+}
+
+model Workflow {
+  id          String         @id @default(uuid())
+  companyId   String
+  createdById String
+  name        String
+  description String?
+  trigger     String?
+  steps       Json
+  status      WorkflowStatus @default(DRAFT)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  company   Company       @relation(fields: [companyId], references: [id])
+  createdBy User          @relation("WorkflowCreator", fields: [createdById], references: [id])
+  runs      WorkflowRun[]
+
+  @@index([companyId])
+}
+
+model WorkflowRun {
+  id         String    @id @default(uuid())
+  workflowId String
+  userId     String
+  status     String    @default("running")
+  logs       Json?
+  startedAt  DateTime  @default(now())
+  endedAt    DateTime?
+
+  workflow Workflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id])
+
+  @@index([workflowId])
+}
+
+// ─── Usage Metric (FR-17, FR-18) ──────────────────────
+
+model UsageMetric {
+  id        String   @id @default(uuid())
+  companyId String
+  userId    String
+  event     String
+  module    String
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  company Company @relation(fields: [companyId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+
+  @@index([companyId, createdAt])
+  @@index([module])
+}
+
+// ─── Support Ticket (FR-19) ───────────────────────────
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum TicketChannel {
+  CHAT
+  EMAIL
+  PHONE
+  SELF_SERVICE
+}
+
+model SupportTicket {
+  id        String        @id @default(uuid())
+  companyId String
+  userId    String
+  channel   TicketChannel @default(CHAT)
+  subject   String
+  body      String        @db.Text
+  status    TicketStatus  @default(OPEN)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+
+  @@index([companyId])
+  @@index([userId])
+}
+
+// ─── Conversation / Chat Support ──────────────────────
+
+enum MessageRole {
+  USER
+  ASSISTANT
+  SYSTEM
+}
+
+model Conversation {
+  id             String   @id @default(uuid())
+  companyId      String
+  createdById    String
+  title          String?
+  assistantType  String   @default("GENERAL")
+  onboardingRole String? // 'general'|'sales'|'marketing'|'operations'|'product'|'finance'|'hr'
+  brainProfileId String? // AI Brain used for this conversation
+  brainVersionId String? // AI Brain version used
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  company   Company   @relation(fields: [companyId], references: [id])
+  createdBy User      @relation("ConversationCreator", fields: [createdById], references: [id])
+  messages  Message[]
+
+  @@index([companyId])
+}
+
+model Message {
+  id             String      @id @default(uuid())
+  conversationId String
+  role           MessageRole
+  content        String      @db.Text
+  createdAt      DateTime    @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId, createdAt])
+}
+
+// ─── Classification Type ──────────────────────────────
+
+model ClassificationType {
+  id               String   @id @default(uuid())
+  companyId        String
+  createdById      String
+  name             String
+  description      String?
+  aiPrompt         String   @db.Text
+  fieldDefinitions Json
+  isTemplate       Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  company   Company                 @relation(fields: [companyId], references: [id])
+  createdBy User                    @relation("ClassificationTypeCreator", fields: [createdById], references: [id])
+  results   ClassificationResult[]
+  history   ClassificationHistory[]
+
+  @@index([companyId])
+}
+
+// ─── Classification Result ────────────────────────────
+
+model ClassificationResult {
+  id                   String   @id @default(uuid())
+  companyId            String
+  documentId           String
+  classificationTypeId String
+  extractedFields      Json
+  confidence           Float?
+  status               String   @default("completed")
+  createdAt            DateTime @default(now())
+
+  company            Company                 @relation(fields: [companyId], references: [id])
+  document           Document                @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  classificationType ClassificationType      @relation(fields: [classificationTypeId], references: [id])
+  history            ClassificationHistory[]
+
+  @@index([companyId])
+  @@index([documentId])
+  @@index([classificationTypeId])
+}
+
+// ─── Classification History ───────────────────────────
+
+model ClassificationHistory {
+  id                     String   @id @default(uuid())
+  companyId              String
+  userId                 String
+  classificationTypeId   String
+  classificationResultId String?
+  action                 String
+  feedback               String?
+  metadata               Json?
+  createdAt              DateTime @default(now())
+
+  company            Company               @relation(fields: [companyId], references: [id])
+  user               User                  @relation("ClassificationHistoryUser", fields: [userId], references: [id])
+  classificationType ClassificationType    @relation(fields: [classificationTypeId], references: [id])
+  result             ClassificationResult? @relation(fields: [classificationResultId], references: [id])
+
+  @@index([companyId])
+  @@index([userId])
+}
+
+// ─── Company Profile (AI Context) ─────────────────────
+
+model CompanyProfile {
+  id        String  @id @default(uuid())
+  companyId String  @unique
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  companyName String
+  description String  @db.Text
+  industry    String?
+  website     String?
+  foundedYear Int?
+
+  productsServices String? @db.Text
+  mainOfferings    String? @db.Text
+  valueProposition String? @db.Text
+
+  targetCustomers  String? @db.Text
+  targetIndustries String? @db.Text
+  markets          String? @db.Text
+
+  departments   String? @db.Text
+  internalTools String? @db.Text
+  keyProcesses  String? @db.Text
+
+  competitors    String? @db.Text
+  strategicGoals String? @db.Text
+  brandTone      String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ─── Company Onboarding Guide ──────────────────────────
+
+model CompanyOnboardingGuide {
+  id        String  @id @default(uuid())
+  companyId String  @unique
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  summary              String   @db.Text
+  recommendedDocIds    Json?
+  generatedFromProfile Boolean  @default(false)
+  generatedAt          DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+// ─── Knowledge Gap Detection ───────────────────────────
+
+model AssistantQuestionLog {
+  id              String   @id @default(uuid())
+  companyId       String
+  conversationId  String?
+  userId          String
+  question        String   @db.Text
+  assistantType   String
+  groundingStatus String // VERIFIED | PARTIAL | NOT_FOUND | GENERAL
+  createdAt       DateTime @default(now())
+
+  @@index([companyId, createdAt])
+  @@index([companyId, groundingStatus])
+}
+
+model KnowledgeGap {
+  id               String   @id @default(uuid())
+  companyId        String
+  topic            String
+  exampleQuestions Json // string[]
+  suggestion       String?  @db.Text
+  frequency        Int      @default(1)
+  groundingRate    Float    @default(1.0) // 1.0 = 100% failed
+  score            Float    @default(0)
+  status           String   @default("open") // open | resolved | ignored
+  lastSeenAt       DateTime
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([companyId, status])
+}
+
+// ─── Action Assistant ─────────────────────────────────
+
+model UserAssistantPreference {
+  id           String   @id @default(uuid())
+  userId       String   @unique
+  companyId    String
+  displayName  String   @default("Nousio")
+  voiceEnabled Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([companyId])
+}
+
+model AssistantSession {
+  id                 String    @id @default(uuid())
+  userId             String
+  companyId          String
+  brainProfileId     String?   // FK to AIBrainProfile — scopes session to an AI member
+  currentRoute       String?
+  currentContextJson Json?
+  status             String    @default("ACTIVE") // ACTIVE | COMPLETED | ABANDONED
+  startedAt          DateTime  @default(now())
+  endedAt            DateTime?
+
+  messages   AssistantMessage[]
+  actionRuns AssistantActionRun[]
+
+  @@index([brainProfileId])
+  @@index([userId, status])
+  @@index([companyId])
+}
+
+model AssistantMessage {
+  id        String   @id @default(uuid())
+  sessionId String
+  role      String // USER | ASSISTANT | SYSTEM
+  content   String   @db.Text
+  inputMode String   @default("TEXT") // TEXT | VOICE
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  session AssistantSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId, createdAt])
+}
+
+model AssistantActionRun {
+  id                   String   @id @default(uuid())
+  sessionId            String
+  companyId            String
+  userId               String
+  intentType           String // generate_content | create_task | search_leads | query_knowledge | navigate | summarize
+  targetModule         String // marketing | sales | product | leads | knowledge | tasks | navigation
+  targetAction         String?
+  confidenceScore      Float?
+  requiresConfirmation Boolean  @default(false)
+  status               String   @default("PENDING") // PENDING | WAITING_CLARIFICATION | WAITING_CONFIRMATION | RUNNING | SUCCESS | PARTIAL_SUCCESS | FAILED | BLOCKED
+  requestPayloadJson   Json?
+  resultPayloadJson    Json?
+  resultLink           String?
+  groundingStatus      String? // VERIFIED | PARTIAL | NOT_FOUND
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  session AssistantSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@index([companyId])
+  @@index([userId])
+}
+
+// ─── Artifacts (Generated Assets) ─────────────────────
+
+model Artifact {
+  id               String   @id @default(uuid())
+  companyId        String
+  sessionId        String
+  agentId          String   // brainProfileId
+  artifactType     String   // wireframe | presentation | document
+  title            String
+  summary          String?  @db.Text
+  currentVersionId String?
+  status           String   @default("DRAFT") // DRAFT | GENERATED | ARCHIVED
+  metadata         Json?    // audience, goal, contentType, platform
+  createdBy        String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  versions ArtifactVersion[]
+
+  @@index([sessionId])
+  @@index([companyId])
+  @@index([agentId])
+}
+
+model ArtifactVersion {
+  id              String   @id @default(uuid())
+  artifactId      String
+  parentVersionId String?
+  versionNumber   Int
+  prompt          String   @db.Text
+  scopeType       String   @default("initial") // initial | global | scoped
+  selectedArea    String?
+  outputPayload   Json?    // full generated content
+  previewPayload  Json?    // rendering data for preview canvas
+  specPayload     Json?    // structured spec data
+  status          String   @default("PENDING") // PENDING | GENERATING | SUCCESS | FAILED
+  createdAt       DateTime @default(now())
+
+  artifact Artifact @relation(fields: [artifactId], references: [id], onDelete: Cascade)
+
+  @@index([artifactId, versionNumber])
+}
+
+// ─── Lead Discovery ───────────────────────────────────
+
+model LeadSearchRun {
+  id            String   @id @default(uuid())
+  companyId     String
+  userId        String
+  title         String?
+  query         String   @db.Text
+  searchContext Json?
+  status        String   @default("running") // running | completed | failed
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  company Company      @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  user    User         @relation("LeadSearchRunCreator", fields: [userId], references: [id])
+  results LeadResult[]
+
+  @@index([companyId, createdAt])
+}
+
+model LeadResult {
+  id                 String   @id @default(uuid())
+  searchRunId        String
+  companyId          String
+  companyName        String
+  website            String?
+  industry           String?
+  location           String?
+  summary            String?  @db.Text
+  whyFit             String?  @db.Text
+  suggestedApproach  String?  @db.Text
+  likelyContactRoles Json?
+  sourceLinks        Json?
+  relevanceScore     Float?
+  status             String?  @default("active")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  searchRun     LeadSearchRun  @relation(fields: [searchRunId], references: [id], onDelete: Cascade)
+  company       Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  leadListItems LeadListItem[]
+
+  @@index([searchRunId])
+  @@index([companyId])
+}
+
+model LeadList {
+  id                String   @id @default(uuid())
+  companyId         String
+  userId            String
+  name              String
+  description       String?  @db.Text
+  sourceSearchRunId String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  company Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  user    User           @relation("LeadListCreator", fields: [userId], references: [id])
+  items   LeadListItem[]
+
+  @@index([companyId])
+}
+
+model LeadListItem {
+  id           String   @id @default(uuid())
+  leadListId   String
+  leadResultId String
+  notes        String?  @db.Text
+  createdAt    DateTime @default(now())
+
+  leadList   LeadList   @relation(fields: [leadListId], references: [id], onDelete: Cascade)
+  leadResult LeadResult @relation(fields: [leadResultId], references: [id], onDelete: Cascade)
+
+  @@unique([leadListId, leadResultId])
+  @@index([leadListId])
+}
+
+// ─── Marketing Assistant ──────────────────────────────
+
+model MarketingGenerationRun {
+  id                String   @id @default(uuid())
+  companyId         String
+  userId            String
+  contentType       String
+  title             String?
+  inputPrompt       String   @db.Text
+  generationContext Json?
+  outputText        String?  @db.Text
+  language          String?
+  tone              String?
+  audience          String?
+  status            String   @default("completed")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  user    User    @relation("MarketingRunCreator", fields: [userId], references: [id])
+
+  @@index([companyId, createdAt])
+}
+
+model MarketingDraft {
+  id          String   @id @default(uuid())
+  companyId   String
+  userId      String
+  contentType String
+  title       String
+  content     String   @db.Text
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  user    User    @relation("MarketingDraftCreator", fields: [userId], references: [id])
+
+  @@index([companyId])
+}
+
+// ─── Sales Assistant ──────────────────────────────────
+
+model SalesGenerationRun {
+  id                  String   @id @default(uuid())
+  companyId           String
+  userId              String
+  taskType            String
+  title               String?
+  inputPrompt         String   @db.Text
+  generationContext   Json?
+  outputText          String?  @db.Text
+  language            String?
+  tone                String?
+  buyerRole           String?
+  prospectCompanyName String?
+  sourceLeadResultId  String?
+  status              String   @default("completed")
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  user    User    @relation("SalesRunCreator", fields: [userId], references: [id])
+
+  @@index([companyId, createdAt])
+}
+
+model SalesDraft {
+  id        String   @id @default(uuid())
+  companyId String
+  userId    String
+  taskType  String
+  title     String
+  content   String   @db.Text
+  metadata  Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  user    User    @relation("SalesDraftCreator", fields: [userId], references: [id])
+
+  @@index([companyId])
+}
+
+// ─── Product Assistant ────────────────────────────────
+
+model ProductGenerationRun {
+  id                String   @id @default(uuid())
+  companyId         String
+  userId            String
+  outputType        String
+  title             String?
+  inputPrompt       String   @db.Text
+  structuredInput   Json?
+  generationContext Json?
+  outputText        String?  @db.Text
+  audienceType      String?
+  detailLevel       String?
+  sourceDocumentIds Json?
+  status            String   @default("completed")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  user    User    @relation("ProductRunCreator", fields: [userId], references: [id])
+
+  @@index([companyId, createdAt])
+}
+
+model ProductDraft {
+  id         String   @id @default(uuid())
+  companyId  String
+  userId     String
+  outputType String
+  title      String
+  content    String   @db.Text
+  metadata   Json?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  user    User    @relation("ProductDraftCreator", fields: [userId], references: [id])
+
+  @@index([companyId])
+}
+
+// ─── Onboarding Assistant ─────────────────────────────
+
+model OnboardingGenerationRun {
+  id                String   @id @default(uuid())
+  companyId         String
+  userId            String
+  contentType       String
+  title             String?
+  inputPrompt       String   @db.Text
+  generationContext Json?
+  outputText        String?  @db.Text
+  language          String?
+  status            String   @default("completed")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  user    User    @relation("OnboardingRunCreator", fields: [userId], references: [id])
+
+  @@index([companyId, createdAt])
+}
+
+model OnboardingDraft {
+  id          String   @id @default(uuid())
+  companyId   String
+  userId      String
+  contentType String
+  title       String
+  content     String   @db.Text
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  user    User    @relation("OnboardingDraftCreator", fields: [userId], references: [id])
+
+  @@index([companyId])
+}
+
+// ─── Company Advisor Assistant ────────────────────────
+
+model AdvisorGenerationRun {
+  id                String   @id @default(uuid())
+  companyId         String
+  userId            String
+  contentType       String
+  title             String?
+  inputPrompt       String   @db.Text
+  generationContext Json?
+  outputText        String?  @db.Text
+  language          String?
+  status            String   @default("completed")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  user    User    @relation("AdvisorRunCreator", fields: [userId], references: [id])
+
+  @@index([companyId, createdAt])
+}
+
+model AdvisorDraft {
+  id          String   @id @default(uuid())
+  companyId   String
+  userId      String
+  contentType String
+  title       String
+  content     String   @db.Text
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  user    User    @relation("AdvisorDraftCreator", fields: [userId], references: [id])
+
+  @@index([companyId])
+}
+
+// ─── General AI Assistant ─────────────────────────────
+
+model GeneralAIGenerationRun {
+  id                String   @id @default(uuid())
+  companyId         String
+  userId            String
+  contentType       String
+  title             String?
+  inputPrompt       String   @db.Text
+  generationContext Json?
+  outputText        String?  @db.Text
+  language          String?
+  status            String   @default("completed")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  user    User    @relation("GeneralAIRunCreator", fields: [userId], references: [id])
+
+  @@index([companyId, createdAt])
+}
+
+model GeneralAIDraft {
+  id          String   @id @default(uuid())
+  companyId   String
+  userId      String
+  contentType String
+  title       String
+  content     String   @db.Text
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  user    User    @relation("GeneralAIDraftCreator", fields: [userId], references: [id])
+
+  @@index([companyId])
+}
+
+// ─── Task Board ───────────────────────────────────────
+
+model TaskBoard {
+  id          String   @id @default(uuid())
+  companyId   String
+  projectId   String?
+  name        String
+  description String?  @db.Text
+  createdById String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  company   Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  project   Project?          @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  createdBy User              @relation("TaskBoardCreator", fields: [createdById], references: [id])
+  columns   TaskBoardColumn[]
+  tasks     Task[]
+
+  @@index([companyId])
+  @@index([projectId])
+}
+
+model TaskBoardColumn {
+  id        String  @id @default(uuid())
+  boardId   String
+  name      String
+  position  Int
+  color     String?
+  isDone    Boolean @default(false)
+  isDefault Boolean @default(false)
+
+  board TaskBoard @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  tasks Task[]
+
+  @@index([boardId])
+}
+
+// ─── Task ─────────────────────────────────────────────
+
+model Task {
+  id              String    @id @default(uuid())
+  companyId       String
+  boardId         String
+  columnId        String
+  projectId       String?
+  aiMemberId      String?   // FK to AIBrainProfile — assigns task to an AI member
+  title           String
+  description     String?   @db.Text
+  priority        String    @default("medium") // low | medium | high | urgent
+  position        Int       @default(0)
+  startDate       DateTime?
+  dueDate         DateTime?
+  isCompleted     Boolean   @default(false)
+  isHighlighted   Boolean   @default(false)
+  estimatedEffort String?
+  coverColor      String?
+  coverImage      String?
+  executionState  String   @default("NOT_STARTED") // NOT_STARTED | QUEUED | RUNNING | WAITING_ON_HUMAN | BLOCKED | READY_FOR_REVIEW | COMPLETED
+  labels          Json? // string[]
+  assigneeId      String?
+  reporterId      String?
+  sourceType      String? // MANUAL | CHAT_MESSAGE | DOCUMENT | KNOWLEDGE_GAP | PRODUCT_RUN | MARKETING_DRAFT | SALES_DRAFT | ONBOARDING_GUIDE | PROJECT | VOICE_AI | AI_MEMBER
+  sourceEntityId  String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  company       Company         @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  board         TaskBoard       @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  column        TaskBoardColumn @relation(fields: [columnId], references: [id])
+  assignee      User?           @relation("TaskAssignee", fields: [assigneeId], references: [id])
+  reporter      User?           @relation("TaskReporter", fields: [reporterId], references: [id])
+  comments      TaskComment[]
+  activity      TaskActivity[]
+  links         TaskLink[]
+  checklists    TaskChecklist[]
+  watchers      TaskWatcher[]
+  taskDocuments TaskDocument[]
+
+  @@index([companyId])
+  @@index([boardId])
+  @@index([columnId])
+  @@index([assigneeId])
+  @@index([aiMemberId])
+}
+
+model TaskComment {
+  id        String   @id @default(uuid())
+  taskId    String
+  userId    String
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  user User @relation("TaskCommenter", fields: [userId], references: [id])
+
+  @@index([taskId])
+}
+
+model TaskActivity {
+  id        String   @id @default(uuid())
+  taskId    String
+  actorId   String
+  action    String // created | moved | assigned | priority_changed | commented | linked | updated | completed | checklist_added | label_changed | cover_changed | watched | copied
+  metadata  Json? // e.g. { from: "To Do", to: "In Progress" }
+  createdAt DateTime @default(now())
+
+  task  Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  actor User @relation("TaskActivityActor", fields: [actorId], references: [id])
+
+  @@index([taskId, createdAt])
+}
+
+model TaskLink {
+  id        String   @id @default(uuid())
+  taskId    String
+  linkType  String // document | conversation | message | knowledge_gap | product_run | marketing_draft | sales_draft | project | url
+  entityId  String?
+  url       String?
+  label     String?
+  createdAt DateTime @default(now())
+
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@index([taskId])
+}
+
+// ─── Task Checklist ───────────────────────────────────
+
+model TaskChecklist {
+  id        String   @id @default(uuid())
+  taskId    String
+  title     String
+  position  Int      @default(0)
+  createdAt DateTime @default(now())
+
+  task  Task                @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  items TaskChecklistItem[]
+
+  @@index([taskId])
+}
+
+model TaskChecklistItem {
+  id          String    @id @default(uuid())
+  checklistId String
+  title       String
+  isChecked   Boolean   @default(false)
+  position    Int       @default(0)
+  assigneeId  String?
+  dueDate     DateTime?
+  createdAt   DateTime  @default(now())
+
+  checklist TaskChecklist @relation(fields: [checklistId], references: [id], onDelete: Cascade)
+
+  @@index([checklistId])
+}
+
+// ─── Task Watcher ─────────────────────────────────────
+
+model TaskWatcher {
+  id        String   @id @default(uuid())
+  taskId    String
+  userId    String
+  createdAt DateTime @default(now())
+
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@unique([taskId, userId])
+  @@index([taskId])
+}
+
+// ─── Task Document (join table) ───────────────────────
+
+model TaskDocument {
+  id         String   @id @default(uuid())
+  taskId     String
+  documentId String
+  createdAt  DateTime @default(now())
+
+  task     Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@unique([taskId, documentId])
+  @@index([taskId])
+  @@index([documentId])
+}
+
+// ─── AI Brain Profile ─────────────────────────────────
+
+model AIBrainProfile {
+  id                   String   @id @default(uuid())
+  companyId            String
+  brainType            String // COMPANY | COMPANY_ADVISOR | SALES | MARKETING | ONBOARDING | LEAD_DISCOVERY
+  name                 String
+  description          String?  @db.Text
+  parentBrainId        String?
+  status               String   @default("DRAFT") // DRAFT | ACTIVE | ARCHIVED
+  isEnabled            Boolean  @default(true)
+  configJson           Json // BrainConfig structured settings
+  advancedInstructions Json? // BrainAdvancedInstructions
+  createdById          String
+  updatedById          String
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  company     Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  createdBy   User              @relation("BrainProfileCreator", fields: [createdById], references: [id])
+  updatedBy   User              @relation("BrainProfileUpdater", fields: [updatedById], references: [id])
+  parentBrain AIBrainProfile?   @relation("BrainParent", fields: [parentBrainId], references: [id])
+  childBrains AIBrainProfile[]  @relation("BrainParent")
+  versions    AIBrainVersion[]
+  overrides   AIBrainOverride[]
+  testRuns    AIBrainTestRun[]
+  skills      BrainProfileSkill[]
+
+  @@unique([companyId, brainType])
+  @@index([companyId])
+  @@index([parentBrainId])
+}
+
+// ─── AI Brain Version ─────────────────────────────────
+
+model AIBrainVersion {
+  id                           String    @id @default(uuid())
+  brainProfileId               String
+  versionNumber                Int
+  status                       String    @default("DRAFT") // DRAFT | ACTIVE | ROLLED_BACK
+  configSnapshotJson           Json // Full BrainConfig snapshot
+  advancedInstructionsSnapshot Json? // Full BrainAdvancedInstructions snapshot
+  changeSummary                String?   @db.Text
+  publishedAt                  DateTime?
+  createdById                  String
+  createdAt                    DateTime  @default(now())
+
+  brainProfile AIBrainProfile   @relation(fields: [brainProfileId], references: [id], onDelete: Cascade)
+  createdBy    User             @relation("BrainVersionCreator", fields: [createdById], references: [id])
+  testRuns     AIBrainTestRun[]
+
+  @@index([brainProfileId, versionNumber])
+  @@index([brainProfileId, status])
+}
+
+// ─── AI Brain Override (field-level tracking) ─────────
+
+model AIBrainOverride {
+  id                String   @id @default(uuid())
+  brainProfileId    String
+  fieldPath         String // e.g. "identity.formality" or "reasoning.depth"
+  overrideValueJson Json // The override value
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  brainProfile AIBrainProfile @relation(fields: [brainProfileId], references: [id], onDelete: Cascade)
+
+  @@unique([brainProfileId, fieldPath])
+  @@index([brainProfileId])
+}
+
+// ─── AI Brain Test Run ────────────────────────────────
+
+model AIBrainTestRun {
+  id              String   @id @default(uuid())
+  companyId       String
+  brainProfileId  String
+  brainVersionId  String?
+  assistantType   String
+  inputPrompt     String   @db.Text
+  responseText    String   @db.Text
+  groundingStatus String?
+  usedSourcesJson Json?
+  metadataJson    Json?
+  createdById     String
+  createdAt       DateTime @default(now())
+
+  company      Company         @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  brainProfile AIBrainProfile  @relation(fields: [brainProfileId], references: [id], onDelete: Cascade)
+  brainVersion AIBrainVersion? @relation(fields: [brainVersionId], references: [id])
+  createdBy    User            @relation("BrainTestRunCreator", fields: [createdById], references: [id])
+
+  @@index([companyId])
+  @@index([brainProfileId])
+}
+
+// ─── AI Brain Template ────────────────────────────────
+
+model AIBrainTemplate {
+  id                   String   @id @default(uuid())
+  name                 String
+  description          String?  @db.Text
+  scope                String   @default("SYSTEM") // SYSTEM | PLAN | COMPANY
+  brainType            String // COMPANY | COMPANY_ADVISOR | etc.
+  configJson           Json // BrainConfig
+  advancedInstructions Json? // BrainAdvancedInstructions
+  isLocked             Boolean  @default(false)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+// ─── CRM Pipeline Stage ───────────────────────────────
+
+model CrmPipelineStage {
+  id         String   @id @default(uuid())
+  companyId  String
+  name       String
+  position   Int
+  color      String?
+  isDefault  Boolean  @default(false)
+  isArchived Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  company Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  leads   CrmLead[]
+
+  @@index([companyId])
+}
+
+// ─── CRM Lead ─────────────────────────────────────────
+
+enum CrmLeadSourceType {
+  MANUAL
+  LEAD_DISCOVERY
+  API
+  IMPORT
+}
+
+enum CrmLeadLifecycleStatus {
+  ACTIVE
+  CONVERTED
+  LOST
+  ARCHIVED
+}
+
+model CrmLead {
+  id              String                 @id @default(uuid())
+  companyId       String
+  ownerUserId     String?
+  createdByUserId String
+  pipelineStageId String
+  sourceType      CrmLeadSourceType      @default(MANUAL)
+  sourceReference String?
+  leadName        String
+  companyName     String?
+  website         String?
+  industry        String?
+  location        String?
+  email           String?
+  phone           String?
+  jobTitle        String?
+  lifecycleStatus CrmLeadLifecycleStatus @default(ACTIVE)
+  lostReason      String?
+  notes           String?                @db.Text
+  tags            Json?
+  convertedAt     DateTime?
+  archivedAt      DateTime?
+  lastActivityAt  DateTime?
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
+
+  company       Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  owner         User?             @relation("CrmLeadOwner", fields: [ownerUserId], references: [id], onDelete: SetNull)
+  createdBy     User              @relation("CrmLeadCreator", fields: [createdByUserId], references: [id])
+  pipelineStage CrmPipelineStage  @relation(fields: [pipelineStageId], references: [id])
+  contacts      CrmLeadContact[]
+  activities    CrmLeadActivity[]
+
+  @@index([companyId])
+  @@index([pipelineStageId])
+  @@index([ownerUserId])
+  @@index([companyId, lifecycleStatus])
+}
+
+// ─── CRM Lead Contact ─────────────────────────────────
+
+model CrmLeadContact {
+  id        String   @id @default(uuid())
+  crmLeadId String
+  name      String
+  email     String?
+  phone     String?
+  jobTitle  String?
+  isPrimary Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  lead CrmLead @relation(fields: [crmLeadId], references: [id], onDelete: Cascade)
+
+  @@index([crmLeadId])
+}
+
+// ─── CRM Lead Activity ────────────────────────────────
+
+model CrmLeadActivity {
+  id        String   @id @default(uuid())
+  crmLeadId String
+  actorId   String
+  action    String // note_added | stage_changed | owner_changed | created | updated | imported | lost | converted
+  content   String?  @db.Text
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  lead  CrmLead @relation(fields: [crmLeadId], references: [id], onDelete: Cascade)
+  actor User    @relation("CrmActivityActor", fields: [actorId], references: [id])
+
+  @@index([crmLeadId, createdAt])
+}
+
+// ─── Assistant Skill ──────────────────────────────────
+
+model AssistantSkill {
+  id                 String   @id @default(uuid())
+  companyId          String
+  assistantType      String?  // @deprecated — kept for migration compat; use SkillAssignment instead
+  key                String   // Unique slug: "linkedin_post", "prd", etc.
+  name               String   // Display name: "LinkedIn Post"
+  description        String?  @db.Text
+  icon               String?  // Lucide icon name: "briefcase"
+  category           String?  // Optional grouping: "social_media", "documentation"
+  status             String   @default("ACTIVE") // ACTIVE | DRAFT | ARCHIVED
+  executionType      String   @default("NATIVE") // NATIVE | ZAPIER_MCP | N8N_WORKFLOW | WEBHOOK
+  executionConfig    Json?    // { mcpEndpoint, toolName } | { webhookUrl } | null for NATIVE
+  sortOrder          Int      @default(0)
+  isDefault          Boolean  @default(true) // System-provided vs user-created
+  version            Int      @default(1)
+  instructionPrompt  String?  @db.Text // Skill-specific AI instructions (the "program.md")
+  outputSchema       Json?    // Structured output field definitions
+  trainingMaterials  Json?    // Array of { id, filename, textContent, uploadedAt }
+  requiredInputs     Json?    // What the user must provide
+  defaultParams      Json?    // Default tone, length, etc.
+  enabledActions     String[] @default([]) // IDs of ExternalAction records this skill can use
+  outputActions      String[] @default(["preview", "copy", "regenerate"]) // Which output buttons to show: preview, copy, regenerate, render_ui, export_zip, export_md, export_pdf
+
+  // ── ChatGPT-Compatible Runtime Metadata ──────────────
+  importMode            String   @default("LEGACY")                 // LEGACY | PRESERVED | COMPATIBLE | DEGRADED
+  runtimeCategory       String   @default("content-generation")     // content-generation | tool-orchestrated | artifact-generation | ui-rendering | connector-workflow | hybrid
+  responseMode          String   @default("chat")                   // chat | artifact_first | artifact_plus_chat | ui_rendered | action_result | multi_output
+  requiredCapabilities  String[] @default([])                       // slide_generation, image_generation, browsing, etc.
+  requiredConnectors    String[] @default([])                       // IDs or slugs of required ExternalAction/Integration
+  artifactContracts     Json?                                       // Expected artifact outputs: [{ type, mimeType, description }]
+  uiContracts           Json?                                       // Expected UI behaviors: [{ intent, params }]
+  compatibilityState    String   @default("UNKNOWN")                // FULLY_COMPATIBLE | COMPATIBLE_DEGRADED | INCOMPATIBLE | UNKNOWN
+  degradationNotes      String?  @db.Text                           // What was lost during import/adaptation
+  rawPackageRef         String?                                     // Storage path to original imported .zip/.md
+  parsedManifest        Json?                                       // Full parsed manifest from import analysis
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  company     Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  assignments SkillAssignment[]
+  brainProfiles BrainProfileSkill[]
+  artifacts   SkillArtifact[]
+
+  @@unique([companyId, key])
+  @@index([companyId])
+}
+
+// ─── Skill Artifact (first-class runtime output) ──────
+
+model SkillArtifact {
+  id             String   @id @default(uuid())
+  companyId      String
+  skillId        String?  // FK to AssistantSkill (optional — may be ad-hoc)
+  skillRunId     String   // ID from SkillRun table
+  chainStepIndex Int?     // If produced during a chain step
+  type           String   // presentation | document | spreadsheet | pdf | image | zip | chart | structured_ui
+  mimeType       String   // application/vnd.openxmlformats-officedocument.presentationml.presentation, etc.
+  filename       String   // my_deck.pptx
+  storagePath    String   // Supabase Storage path
+  sizeBytes      Int?
+  previewUrl     String?  // Generated preview image URL
+  metadata       Json?    // Extra artifact-specific metadata
+  createdAt      DateTime @default(now())
+
+  skill   AssistantSkill? @relation(fields: [skillId], references: [id], onDelete: SetNull)
+
+  @@index([companyId])
+  @@index([skillRunId])
+  @@index([skillId])
+}
+
+// ─── Skill Assignment (many-to-many: Skill ↔ Team Member) ─
+
+model SkillAssignment {
+  id            String   @id @default(uuid())
+  skillId       String
+  assistantType String   // MARKETING | SALES | PRODUCT_ASSISTANT | ONBOARDING | COMPANY_ADVISOR | GENERAL_AI
+  createdAt     DateTime @default(now())
+
+  skill AssistantSkill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@unique([skillId, assistantType])
+  @@index([assistantType])
+}
+
+// ─── Skill Rating ─────────────────────────────────────
+
+model SkillRating {
+  id              String   @id @default(uuid())
+  companyId       String
+  skillKey        String   // Links to AssistantSkill.key
+  assistantType   String   // MARKETING, SALES, etc. — context where rating was given
+  generationRunId String   // ID from *GenerationRun table
+  userId          String
+  rating          Int      // 1 = thumbs down, 5 = thumbs up
+  feedback        String?  @db.Text
+  createdAt       DateTime @default(now())
+
+  @@index([companyId, skillKey])
+  @@index([companyId, assistantType])
+}
+
+// ─── Skill Version Log ────────────────────────────────
+
+model SkillVersionLog {
+  id                String   @id @default(uuid())
+  skillId           String   // FK to AssistantSkill.id
+  version           Int
+  instructionPrompt String?  @db.Text
+  changedBy         String?  // userId
+  changeSummary     String?
+  createdAt         DateTime @default(now())
+
+  @@index([skillId])
+}
+
+// ═══════════════════════════════════════════════════════
+// COMPANY DNA — Structured Intelligence Layer
+// ═══════════════════════════════════════════════════════
+
+// ─── Company DNA ──────────────────────────────────────
+
+model CompanyDNA {
+  id              String    @id @default(uuid())
+  companyId       String    @unique
+  version         Int       @default(1)
+  coverageScore   Float     @default(0)
+  lastProcessedAt DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  company Company         @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  nodes   KnowledgeNode[]
+}
+
+// ─── Knowledge Node ───────────────────────────────────
+
+model KnowledgeNode {
+  id                String   @id @default(uuid())
+  companyId         String
+  dnaId             String
+  projectId         String?  // null = company-global knowledge
+  customerId        String?  // null = not customer-specific
+  type              String   // product | persona | process | competitor | messaging | policy
+  title             String
+  content           Json     // structured key-value pairs
+  summary           String?  @db.Text // markdown for display
+  confidenceScore   Float    @default(0.5)
+  sourceDocumentIds String[] // Document / ExternalDocument IDs
+  status            String   @default("active") // active | draft | archived
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  company   Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  dna       CompanyDNA     @relation(fields: [dnaId], references: [id], onDelete: Cascade)
+  edgesFrom KnowledgeEdge[] @relation("EdgeFrom")
+  edgesTo   KnowledgeEdge[] @relation("EdgeTo")
+
+  @@index([companyId, type])
+  @@index([dnaId])
+  @@index([projectId])
+  @@index([customerId])
+}
+
+// ─── Knowledge Edge ───────────────────────────────────
+
+model KnowledgeEdge {
+  id           String   @id @default(uuid())
+  fromNodeId   String
+  toNodeId     String
+  relationType String   // targets | belongs_to | competes_with | requires | informs
+  strength     Float    @default(0.5)
+  createdAt    DateTime @default(now())
+
+  fromNode KnowledgeNode @relation("EdgeFrom", fields: [fromNodeId], references: [id], onDelete: Cascade)
+  toNode   KnowledgeNode @relation("EdgeTo", fields: [toNodeId], references: [id], onDelete: Cascade)
+
+  @@index([fromNodeId])
+  @@index([toNodeId])
+}
+
+// ─── Resource (Domain Grouping) ───────────────────────
+
+model Resource {
+  id          String   @id @default(uuid())
+  companyId   String
+  name        String
+  description String?
+  icon        String?  // lucide icon name
+  nodeTypes   String[] // which node types belong here
+  isDefault   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId])
+}
+
+// ─── Feedback Event ───────────────────────────────────
+
+model FeedbackEvent {
+  id              String    @id @default(uuid())
+  companyId       String
+  sourceType      String    // output_edit | manual_correction | approval | rejection
+  originalContent String?   @db.Text
+  editedContent   String?   @db.Text
+  affectedNodeIds String[]
+  status          String    @default("pending") // pending | processed | dismissed
+  processedAt     DateTime?
+  createdAt       DateTime  @default(now())
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId, status])
+}
+
+// ═══════════════════════════════════════════════════════
+// BOARDROOM — AI Team Orchestration Layer
+// ═══════════════════════════════════════════════════════
+
+// ─── Brain Profile ↔ Skill (per-member mapping) ──────
+
+model BrainProfileSkill {
+  id             String   @id @default(uuid())
+  brainProfileId String
+  skillId        String
+  createdAt      DateTime @default(now())
+
+  brain AIBrainProfile @relation(fields: [brainProfileId], references: [id], onDelete: Cascade)
+  skill AssistantSkill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@unique([brainProfileId, skillId])
+  @@index([brainProfileId])
+  @@index([skillId])
+}
+
+// ─── Plan Draft (editable before lock) ────────────────
+
+model PlanDraft {
+  id              String   @id @default(uuid())
+  companyId       String
+  projectId       String?
+  command         String   @db.Text
+  title           String
+  objective       String   @db.Text
+  successCriteria String?  @db.Text
+  businessGoal    String?  @db.Text
+  requestedOutcome String? @db.Text
+  workType        String?
+  confidenceScore Float?
+  planSummary     String?  @db.Text
+  workstreams     Json     // [{title, description}]
+  tasks           Json     // [{title, description, purpose, deliverables, memberId, skillId, ...}]
+  approvalGates   Json     // [{gateType, title, description, taskIndex}]
+  executionMode   String   @default("MANUAL") // AUTO_CHAIN | MANUAL
+  status          String   @default("DRAFT") // DRAFT | IN_REVIEW | REVISION | APPROVED | DISCARDED
+  version         Int      @default(1)
+  createdById     String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  company  Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  versions PlanDraftVersion[]
+
+  @@index([companyId])
+  @@index([companyId, status])
+}
+
+model PlanDraftVersion {
+  id          String   @id @default(uuid())
+  planDraftId String
+  version     Int
+  snapshot    Json     // full draft JSON blob at this point
+  changeNote  String?  // "User edited task 3", "AI re-planned"
+  createdAt   DateTime @default(now())
+
+  planDraft PlanDraft @relation(fields: [planDraftId], references: [id], onDelete: Cascade)
+
+  @@index([planDraftId])
+}
+
+// ─── Initiative ───────────────────────────────────────
+
+model Initiative {
+  id               String    @id @default(uuid())
+  companyId        String
+  projectId        String?
+  planDraftId      String?   // FK → PlanDraft — trace back to original draft
+  title            String
+  objective        String    @db.Text
+  businessGoal     String?   @db.Text
+  requestedOutcome String?   @db.Text
+  successCriteria  String?   @db.Text
+  workType         String?   // website | campaign | lead_discovery | feature | content | custom
+  confidenceScore  Float?
+  status           String    @default("PLAN_DRAFT")
+  // PLAN_DRAFT | PLAN_IN_REVIEW | PLAN_REVISION | PLAN_APPROVED | READY_FOR_EXECUTION | IN_PROGRESS | WAITING_HUMAN_INPUT | REVIEW_READY | COMPLETED | CANCELLED
+  priority         String    @default("medium") // low | medium | high | urgent
+  executionMode    String    @default("MANUAL") // AUTO_CHAIN | MANUAL — switchable mid-execution
+  approvalMode     String    @default("MANUAL") // MANUAL | SEMI_AUTO | AUTO_LIMITED
+  sourceCommand    String?   @db.Text // original user command
+  planSummary      String?   @db.Text // AI-generated plan summary
+  createdById      String
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  completedAt      DateTime?
+
+  company     Company                @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  project     Project?               @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  workstreams InitiativeWorkstream[]
+  tasks       InitiativeTask[]
+  approvals   ApprovalRequest[]
+  events      InitiativeEvent[]
+  artifacts   InitiativeArtifact[]
+
+  @@index([companyId])
+  @@index([companyId, status])
+  @@index([projectId])
+}
+
+// ─── Initiative Workstream ────────────────────────────
+
+model InitiativeWorkstream {
+  id           String   @id @default(uuid())
+  initiativeId String
+  title        String
+  description  String?  @db.Text
+  position     Int      @default(0)
+  status       String   @default("NOT_STARTED")
+  // NOT_STARTED | IN_PROGRESS | COMPLETED | BLOCKED
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  initiative Initiative       @relation(fields: [initiativeId], references: [id], onDelete: Cascade)
+  tasks      InitiativeTask[]
+
+  @@index([initiativeId])
+}
+
+// ─── Initiative Task ──────────────────────────────────
+
+model InitiativeTask {
+  id               String    @id @default(uuid())
+  initiativeId     String
+  workstreamId     String?
+  title            String
+  description      String?   @db.Text
+  purpose          String?   @db.Text  // why this task matters
+  inputs           Json?     // what context/data is needed
+  deliverables     Json?     // expected output description [{type, description}]
+  acceptanceCriteria String? @db.Text  // what success looks like
+  assignedBrainType String?  // MARKETING | SALES | PRODUCT_ASSISTANT | etc.
+  assignedBrainId  String?   // FK to AIBrainProfile
+  selectedSkillId  String?   // FK to AssistantSkill — the specific skill used for execution
+  requiredSkill    String?   // @deprecated — use selectedSkillId
+  status           String    @default("PLANNED")
+  // PLANNED | READY_FOR_REVIEW | APPROVED_TO_RUN | RUNNING | OUTPUT_READY | NEEDS_REVISION | VALIDATED | BLOCKED | SKIPPED | CANCELLED
+  position         Int       @default(0)
+  dueTarget        DateTime?
+  deliveredAt      DateTime?
+  outputSummary    String?   @db.Text
+  dependsOnTaskIds String[]  // array of InitiativeTask IDs
+  executionModeOverride String? // AUTO_CHAIN | MANUAL | null (inherit from initiative)
+  requiresApprovalBeforeRun Boolean @default(true)
+  requiresApprovalAfterRun  Boolean @default(true)
+  revisionCount    Int       @default(0)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  initiative Initiative            @relation(fields: [initiativeId], references: [id], onDelete: Cascade)
+  workstream InitiativeWorkstream? @relation(fields: [workstreamId], references: [id], onDelete: SetNull)
+  approvals  ApprovalRequest[]
+  artifacts  InitiativeArtifact[]
+
+  @@index([initiativeId])
+  @@index([workstreamId])
+  @@index([initiativeId, status])
+}
+
+// ─── Approval Request ─────────────────────────────────
+
+model ApprovalRequest {
+  id           String    @id @default(uuid())
+  initiativeId String
+  taskId       String?   // null = initiative-level approval
+  gateType     String    // plan_approval | design_review | publish | deploy | outbound | budget | crm_import | destructive | client_facing | custom
+  title        String
+  description  String?   @db.Text
+  status       String    @default("PENDING")
+  // PENDING | APPROVED | REJECTED | REVISION_REQUESTED
+  decidedById  String?
+  decidedAt    DateTime?
+  decisionNote String?   @db.Text
+  createdAt    DateTime  @default(now())
+
+  initiative Initiative      @relation(fields: [initiativeId], references: [id], onDelete: Cascade)
+  task       InitiativeTask? @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@index([initiativeId])
+  @@index([initiativeId, status])
+  @@index([taskId])
+}
+
+// ─── Initiative Event (Activity Log) ──────────────────
+
+model InitiativeEvent {
+  id           String   @id @default(uuid())
+  initiativeId String
+  actorType    String   // user | system | ai_member
+  actorLabel   String?  // "Company DNA" | "Product Lead" | user name
+  action       String   // created | planned | approved | rejected | started | completed | blocked | comment | artifact_added | revision_requested
+  description  String?  @db.Text
+  metadata     Json?
+  createdAt    DateTime @default(now())
+
+  initiative Initiative @relation(fields: [initiativeId], references: [id], onDelete: Cascade)
+
+  @@index([initiativeId, createdAt])
+}
+
+// ─── Initiative Artifact ──────────────────────────────
+
+model InitiativeArtifact {
+  id            String   @id @default(uuid())
+  initiativeId  String
+  taskId        String?
+  artifactType  String   // prd | wireframe | content_draft | lead_list | campaign_plan | technical_plan | website_structure | implementation_plan | code | custom
+  title         String
+  content       String?  @db.Text
+  contentUrl    String?  // link to external document/draft
+  storageKey    String?  // Supabase storage path for uploaded files (images, etc.)
+  sourceRunId   String?  // FK to *GenerationRun tables for traceability
+  sourceRunType String?  // marketing_run | sales_run | product_run | etc.
+  status        String   @default("DRAFT") // DRAFT | READY | APPROVED | SUPERSEDED
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  initiative Initiative      @relation(fields: [initiativeId], references: [id], onDelete: Cascade)
+  task       InitiativeTask? @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@index([initiativeId])
+  @@index([taskId])
+}
+
+// ─── Virtual Office ───────────────────────────────────
+
+model VirtualOffice {
+  id           String         @id @default(uuid())
+  companyId    String         @unique
+  name         String         @default("Office")
+  layoutConfig Json?          // room positions, grid layout metadata
+  template     String         @default("startup") // startup | team_pod | enterprise
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  company      Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  rooms        VirtualRoom[]
+}
+
+model VirtualRoom {
+  id           String         @id @default(uuid())
+  officeId     String
+  name         String
+  type         String         // PRIVATE_OFFICE | MEETING_ROOM | CONFERENCE_ROOM | OPEN_WORKSPACE | LOUNGE | KITCHEN
+  capacity     Int            @default(8)
+  privacy      String         @default("public") // public | team_only | invite_only | private_locked
+  position     Json?          // { x, y, w, h } for grid layout
+  isActive     Boolean        @default(true)
+  createdBy    String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  office       VirtualOffice  @relation(fields: [officeId], references: [id], onDelete: Cascade)
+  occupants    OfficePresence[]
+  assignments  OfficeAssignment[]
+  messages     RoomMessage[]
+
+  @@index([officeId])
+}
+
+model OfficePresence {
+  id           String         @id @default(uuid())
+  userId       String
+  companyId    String
+  roomId       String?
+  status       String         @default("online") // offline | online | in_office | in_room | in_call | dnd | away
+  audioState   String         @default("muted")  // muted | unmuted
+  videoState   String         @default("off")     // off | on
+  lastSeenAt   DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  room         VirtualRoom?   @relation(fields: [roomId], references: [id], onDelete: SetNull)
+
+  @@unique([userId, companyId])
+  @@index([companyId])
+  @@index([roomId])
+}
+
+model OfficeAssignment {
+  id           String         @id @default(uuid())
+  userId       String
+  roomId       String
+  role         String         @default("occupant") // occupant | owner
+  teamId       String?
+  createdAt    DateTime       @default(now())
+
+  room         VirtualRoom    @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roomId])
+}
+
+model RoomMessage {
+  id           String         @id @default(uuid())
+  roomId       String
+  userId       String
+  content      String
+  createdAt    DateTime       @default(now())
+
+  room         VirtualRoom    @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@index([roomId, createdAt])
+}
+
+// ─── Daily Brief ──────────────────────────────────────
+
+model DailyBrief {
+  id            String   @id @default(uuid())
+  companyId     String
+  userId        String
+  date          DateTime @db.Date
+  briefText     String   @db.Text
+  podcastScript String?  @db.Text
+  audioUrl      String?
+  audioDuration Int?
+  sections      Json
+  generatedAt   DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([companyId, userId, date])
+  @@index([companyId])
+  @@index([userId])
+}

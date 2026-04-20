@@ -1,0 +1,98 @@
+﻿node.exe : C:\Users\iag
+os\Desktop\Disruptio\Ap
+ps\Disruptio\node_modul
+es\@prisma\client\src\r
+untime\getPrismaClient.
+ts:260
+At C:\Program Files\nod
+ejs\npx.ps1:29 char:3
++   & $NODE_EXE 
+$NPX_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (C:\Users\iago   
+ s\...maClient.ts:2    
+60:String) [], Rem    
+oteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+        throw new Prism
+aClientInitializationEr
+ror(
+              ^
+
+
+PrismaClientInitializat
+ionError: 
+`PrismaClient` needs 
+to be constructed with 
+a non-empty, valid 
+`PrismaClientOptions`:
+
+```
+new PrismaClient({
+  ...
+})
+```
+
+or
+
+```
+constructor() {
+  super({ ... });
+}
+```
+          
+    at new t (C:\Users\
+iagos\Desktop\Disruptio
+\Apps\Disruptio\node_mo
+dules\@prisma\client\sr
+c\runtime\getPrismaClie
+nt.ts:260:15)
+    at <anonymous> (C:\
+Users\iagos\Desktop\Dis
+ruptio\Apps\Disruptio\s
+cripts\set_super_admin.
+ts:4:16)
+    at 
+Object.<anonymous> (C:\
+Users\iagos\Desktop\Dis
+ruptio\Apps\Disruptio\s
+cripts\set_super_admin.
+ts:43:40)
+    at Module._compile 
+(node:internal/modules/
+cjs/loader:1730:14)
+    at 
+Object.transformer (C:\
+Users\iagos\AppData\Loc
+al\npm-cache\_npx\fd45a
+72a545557e9\node_module
+s\tsx\dist\register-D46
+fvsV_.cjs:3:1104)
+    at Module.load (nod
+e:internal/modules/cjs/
+loader:1465:32)
+    at Function._load (
+node:internal/modules/c
+js/loader:1282:12)
+    at TracingChannel.t
+raceSync (node:diagnost
+ics_channel:322:14)
+    at wrapModuleLoad (
+node:internal/modules/c
+js/loader:235:24)
+    at cjsLoader (node:
+internal/modules/esm/tr
+anslators:266:5) {
+  clientVersion: 
+'7.4.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+
+Node.js v22.17.1

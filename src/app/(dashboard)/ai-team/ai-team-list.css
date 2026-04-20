@@ -1,0 +1,184 @@
+/* ═══════════════════════════════════════════════════════════════
+   AI Team List — Dark OS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Page Shell ──────────────────────────────────────── */
+
+.atl-page {
+    max-width: 960px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.atl-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+
+/* ─── Header ──────────────────────────────────────────── */
+
+.atl-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+}
+
+.atl-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    margin: 0 0 6px;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+}
+
+.atl-subtitle {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* ─── Grid ──────────────────────────────────────────── */
+
+.atl-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 16px;
+}
+
+/* ─── Member Card ───────────────────────────────────── */
+
+.atl-member-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    background: #1c1b1b;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-align: left;
+    width: 100%;
+    color: inherit;
+}
+.atl-member-card:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+.atl-member-card:active {
+    transform: scale(0.99);
+}
+
+.atl-member-avatar {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 800;
+    color: white;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    position: relative;
+}
+.atl-member-avatar::after {
+    display: none;
+}
+
+.atl-member-dot {
+    position: absolute;
+    bottom: -4px;
+    right: -4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid #1c1b1b;
+    z-index: 1;
+}
+.atl-member-dot.active {
+    background: #4ade80;
+    box-shadow: 0 0 6px rgba(74, 222, 128, 0.4);
+}
+.atl-member-dot.inactive {
+    background: var(--color-text-muted);
+}
+
+.atl-member-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.atl-member-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.atl-member-role {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.atl-member-type-icon {
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+}
+
+.atl-member-arrow {
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+    transition: transform 0.15s;
+}
+.atl-member-card:hover .atl-member-arrow {
+    transform: translateX(3px);
+    color: var(--color-text-primary);
+}
+
+/* ─── Empty State ───────────────────────────────────── */
+
+.atl-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 80px 24px;
+    text-align: center;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.02);
+}
+.atl-empty h3 {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    margin: 0;
+    text-transform: uppercase;
+}
+.atl-empty p {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+/* ─── Responsive ────────────────────────────────────── */
+
+@media (max-width: 640px) {
+    .atl-grid { grid-template-columns: 1fr; }
+}

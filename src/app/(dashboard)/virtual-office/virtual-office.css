@@ -1,0 +1,148 @@
+/* ═══════════════════════════════════════════════════════
+   VIRTUAL OFFICE — Dark OS
+   ═══════════════════════════════════════════════════════ */
+
+/* ─── Page Layout ─── */
+.vo-page { display: grid; grid-template-columns: 280px 1fr 300px; grid-template-rows: auto 1fr auto; gap: 0; min-height: calc(100vh - 62px); }
+
+.vo-header { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+.vo-header-title { font-size: 28px; font-weight: 800; text-transform: uppercase; letter-spacing: -0.03em; color: var(--color-text-primary); }
+.vo-header-subtitle { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; color: var(--color-text-secondary); margin-top: 2px; }
+.vo-header-actions { display: flex; gap: 8px; align-items: center; }
+
+/* ─── Left Panel ─── */
+.vo-left { grid-row: 2 / 3; border-right: 1px solid rgba(255, 255, 255, 0.06); background: #1c1b1b; overflow-y: auto; display: flex; flex-direction: column; }
+.vo-search-box { padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+.vo-search-input { width: 100%; padding: 8px 12px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; background: rgba(255, 255, 255, 0.04); color: var(--color-text-primary); outline: none; transition: border-color 0.15s; }
+.vo-search-input:focus { border-color: rgba(0, 212, 255, 0.4); }
+.vo-search-input::placeholder { color: var(--color-text-muted); }
+.vo-section-label { padding: 10px 14px 6px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-muted); }
+
+/* Room list */
+.vo-room-list { list-style: none; padding: 0; margin: 0; }
+.vo-room-list-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; cursor: pointer; border-bottom: 1px solid rgba(255, 255, 255, 0.04); transition: background 0.15s; font-size: 13px; font-weight: 700; color: var(--color-text-primary); }
+.vo-room-list-item:hover { background: rgba(255, 255, 255, 0.04); }
+.vo-room-list-item.active { background: rgba(215, 58, 58, 0.15); color: var(--color-text-primary); border-color: rgba(215, 58, 58, 0.2); }
+.vo-room-list-item.active .vo-room-count, .vo-room-list-item.active .vo-room-type-badge { color: var(--color-text-secondary); }
+.vo-room-count { margin-left: auto; font-size: 11px; font-weight: 700; color: var(--color-text-muted); }
+.vo-room-type-badge { font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; color: var(--color-text-muted); padding: 2px 6px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 4px; background: rgba(255, 255, 255, 0.03); }
+.vo-room-dot { width: 8px; height: 8px; flex-shrink: 0; border-radius: 50%; }
+
+/* Member list */
+.vo-member-list { list-style: none; padding: 0; margin: 0; }
+.vo-member-item { display: flex; align-items: center; gap: 10px; padding: 8px 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.04); font-size: 12px; font-weight: 700; color: var(--color-text-primary); }
+.vo-member-avatar { width: 28px; height: 28px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; background: rgba(255, 255, 255, 0.04); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; text-transform: uppercase; flex-shrink: 0; position: relative; overflow: hidden; }
+.vo-member-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.vo-member-info { flex: 1; min-width: 0; }
+.vo-member-name { font-weight: 700; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vo-member-status { font-size: 10px; font-weight: 700; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.vo-presence-dot { width: 7px; height: 7px; flex-shrink: 0; border-radius: 50%; }
+
+/* ─── Center: Office Map ─── */
+.vo-center { grid-row: 2 / 3; overflow: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+.vo-tabs { display: flex; gap: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+.vo-tab-btn { padding: 10px 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; border: none; background: none; cursor: pointer; color: var(--color-text-muted); border-bottom: 2px solid transparent; transition: all 0.15s; }
+.vo-tab-btn:hover { color: var(--color-text-primary); }
+.vo-tab-btn.active { color: var(--color-accent-red); border-bottom-color: var(--color-accent-red); }
+
+/* Office grid map */
+.vo-map { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; flex: 1; }
+
+.vo-room-card { background: #1c1b1b; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px; cursor: pointer; transition: all 0.15s; min-height: 140px; position: relative; }
+.vo-room-card:hover { border-color: rgba(255, 255, 255, 0.2); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); }
+.vo-room-card.active-room { border-color: rgba(215, 58, 58, 0.4); box-shadow: 0 0 16px rgba(215, 58, 58, 0.15); }
+.vo-room-card.current-room { border-color: rgba(74, 222, 128, 0.4); box-shadow: 0 0 16px rgba(74, 222, 128, 0.1); background: rgba(74, 222, 128, 0.04); }
+.vo-room-card.occupied { border-color: rgba(255, 255, 255, 0.15); }
+.vo-room-card.locked { opacity: 0.5; cursor: not-allowed; }
+
+.vo-room-card-header { display: flex; justify-content: space-between; align-items: flex-start; }
+.vo-room-card-name { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: -0.01em; color: var(--color-text-primary); }
+.vo-room-card-type { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 8px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 4px; background: rgba(255, 255, 255, 0.03); color: var(--color-text-muted); white-space: nowrap; }
+.vo-room-card-body { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; }
+
+.vo-room-avatars { display: flex; gap: -6px; }
+.vo-room-avatars > * { margin-left: -4px; }
+.vo-room-avatars > *:first-child { margin-left: 0; }
+.vo-room-avatar-small { width: 24px; height: 24px; border: 2px solid #1c1b1b; border-radius: 50%; background: var(--color-accent-red); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; text-transform: uppercase; flex-shrink: 0; overflow: hidden; }
+.vo-room-avatar-small img { width: 100%; height: 100%; object-fit: cover; }
+.vo-room-avatar-overflow { background: rgba(255, 255, 255, 0.1); color: var(--color-text-secondary); font-size: 9px; }
+
+.vo-room-card-footer { display: flex; justify-content: space-between; align-items: center; }
+.vo-room-capacity { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-muted); }
+
+.vo-room-status-badge { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 8px; border-radius: 4px; }
+.vo-room-status-badge.available { background: rgba(74, 222, 128, 0.1); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.2); }
+.vo-room-status-badge.occupied { background: rgba(96, 165, 250, 0.1); color: #60a5fa; border: 1px solid rgba(96, 165, 250, 0.2); }
+.vo-room-status-badge.in-meeting { background: rgba(167, 139, 250, 0.1); color: #a78bfa; border: 1px solid rgba(167, 139, 250, 0.2); }
+.vo-room-status-badge.locked { background: rgba(239, 68, 68, 0.1); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.2); }
+
+/* Room card buttons */
+.vo-join-btn { padding: 6px 14px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; border: none; border-radius: 6px; background: var(--color-accent-red); color: #fff; cursor: pointer; transition: all 0.15s; }
+.vo-join-btn:hover { background: var(--color-accent-red-dark, #c53030); box-shadow: 0 2px 8px rgba(215, 58, 58, 0.3); }
+.vo-join-btn:active { transform: scale(0.98); }
+
+.vo-leave-btn { padding: 6px 14px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; border: none; border-radius: 6px; background: #ef4444; color: #fff; cursor: pointer; transition: all 0.15s; }
+.vo-leave-btn:hover { background: #dc2626; }
+.vo-leave-btn:active { transform: scale(0.98); }
+
+/* ─── Right Panel ─── */
+.vo-right { grid-row: 2 / 3; border-left: 1px solid rgba(255, 255, 255, 0.06); background: #1c1b1b; overflow-y: auto; display: flex; flex-direction: column; }
+.vo-context-card { padding: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+.vo-context-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-muted); margin-bottom: 10px; }
+.vo-context-item { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.04); font-size: 12px; font-weight: 700; color: var(--color-text-primary); }
+
+/* ─── Bottom Bar ─── */
+.vo-bottom-bar { grid-column: 1 / -1; grid-row: 3 / 4; display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; border-top: 1px solid rgba(255, 255, 255, 0.08); background: #1c1b1b; gap: 12px; }
+.vo-bar-left, .vo-bar-center, .vo-bar-right { display: flex; align-items: center; gap: 8px; }
+
+.vo-bar-btn { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; background: rgba(255, 255, 255, 0.04); cursor: pointer; transition: all 0.15s; color: var(--color-text-primary); }
+.vo-bar-btn:hover { background: var(--color-accent-red); color: #fff; border-color: var(--color-accent-red); }
+.vo-bar-btn.active { background: var(--color-accent-red); color: #fff; border-color: var(--color-accent-red); }
+.vo-bar-btn.danger { border-color: rgba(239, 68, 68, 0.3); color: #fca5a5; }
+.vo-bar-btn.danger:hover { background: #ef4444; color: #fff; border-color: #ef4444; }
+
+.vo-bar-status { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; display: flex; align-items: center; gap: 6px; color: var(--color-text-primary); }
+.vo-bar-room-label { font-size: 12px; font-weight: 700; padding: 4px 12px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; background: rgba(255, 255, 255, 0.04); color: var(--color-text-primary); }
+
+/* Buttons */
+.vo-btn-primary { padding: 8px 18px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; border: none; border-radius: 8px; background: var(--color-accent-red); color: #fff; cursor: pointer; box-shadow: 0 2px 8px rgba(215, 58, 58, 0.2); transition: all 0.15s; }
+.vo-btn-primary:hover { background: var(--color-accent-red-dark, #c53030); box-shadow: 0 4px 12px rgba(215, 58, 58, 0.3); }
+.vo-btn-primary:active { transform: scale(0.98); }
+
+.vo-btn-secondary { padding: 8px 18px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; background: rgba(255, 255, 255, 0.04); color: var(--color-text-primary); cursor: pointer; transition: all 0.15s; }
+.vo-btn-secondary:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.2); }
+.vo-btn-secondary:active { transform: scale(0.98); }
+
+/* ─── Chat panel ─── */
+.vo-chat-panel { flex: 1; display: flex; flex-direction: column; border-top: 1px solid rgba(255, 255, 255, 0.06); }
+.vo-chat-messages { flex: 1; overflow-y: auto; padding: 10px 14px; display: flex; flex-direction: column; gap: 6px; max-height: 260px; }
+.vo-chat-msg { display: flex; gap: 8px; font-size: 12px; }
+.vo-chat-msg-author { font-weight: 700; font-size: 11px; color: var(--color-text-primary); flex-shrink: 0; }
+.vo-chat-msg-text { font-weight: 500; color: var(--color-text-secondary); }
+.vo-chat-msg-time { font-size: 10px; color: var(--color-text-muted); margin-left: auto; flex-shrink: 0; }
+
+.vo-chat-input-row { display: flex; border-top: 1px solid rgba(255, 255, 255, 0.06); padding: 8px; gap: 8px; }
+.vo-chat-input { flex: 1; padding: 8px 10px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; font-size: 12px; font-weight: 600; outline: none; background: rgba(255, 255, 255, 0.04); color: var(--color-text-primary); }
+.vo-chat-input:focus { border-color: rgba(0, 212, 255, 0.4); }
+.vo-chat-input::placeholder { color: var(--color-text-muted); }
+.vo-chat-send-btn { padding: 8px 14px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; border: none; border-radius: 8px; background: var(--color-accent-red); color: #fff; cursor: pointer; transition: all 0.15s; }
+.vo-chat-send-btn:hover { background: var(--color-accent-red-dark, #c53030); }
+
+/* ─── Admin Modal ─── */
+.vo-admin-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 1000; display: flex; align-items: center; justify-content: center; }
+.vo-admin-modal { background: var(--color-bg-surface); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6); width: 600px; max-height: 80vh; overflow-y: auto; padding: 28px; }
+.vo-admin-title { font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 20px; color: var(--color-text-primary); }
+.vo-admin-field { margin-bottom: 16px; }
+.vo-admin-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-muted); margin-bottom: 4px; display: block; }
+.vo-admin-input { width: 100%; padding: 8px 12px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; font-size: 13px; font-weight: 700; outline: none; background: rgba(255, 255, 255, 0.04); color: var(--color-text-primary); }
+.vo-admin-input:focus { border-color: rgba(0, 212, 255, 0.4); }
+.vo-admin-select { width: 100%; padding: 8px 12px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; font-size: 13px; font-weight: 700; outline: none; background: rgba(255, 255, 255, 0.04); color: var(--color-text-primary); }
+.vo-admin-actions { display: flex; gap: 8px; margin-top: 20px; }
+
+/* ─── Empty State ─── */
+.vo-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 40px; text-align: center; color: var(--color-text-muted); }
+.vo-empty-icon { opacity: 0.3; }
+
+/* ─── Responsive ─── */
+@media (max-width: 1200px) { .vo-page { grid-template-columns: 240px 1fr 260px; } }
+@media (max-width: 1024px) { .vo-page { grid-template-columns: 1fr; } .vo-left, .vo-right { display: none; } }

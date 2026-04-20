@@ -1,0 +1,364 @@
+/* ═══════════════════════════════════════════════════════
+   today-analytics.css — Analytics Dashboard (Dark OS)
+   ═══════════════════════════════════════════════════════ */
+
+.ta-container {
+    padding: 0 0 48px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* ── Period Selector ─────────────────────────────────── */
+
+.ta-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.ta-header-title {
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-secondary, #71717a);
+}
+
+.ta-period-pills {
+    display: flex;
+    gap: 4px;
+    background: var(--color-surface, #18181b);
+    border: 1px solid var(--color-border, #27272a);
+    border-radius: 10px;
+    padding: 3px;
+}
+
+.ta-period-pill {
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--color-text-secondary, #71717a);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.ta-period-pill:hover {
+    color: var(--color-text-primary, #fafafa);
+}
+
+.ta-period-pill.active {
+    background: rgba(210,240,0,0.1);
+    color: #D2F000;
+}
+
+/* ── KPI Cards Grid ──────────────────────────────────── */
+
+.ta-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.ta-kpi-card {
+    background: var(--color-surface, #18181b);
+    border: 1px solid var(--color-border, #27272a);
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: border-color 0.15s ease;
+}
+
+.ta-kpi-card:hover {
+    border-color: #3f3f46;
+}
+
+.ta-kpi-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-secondary, #71717a);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ta-kpi-value {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--color-text-primary, #fafafa);
+    letter-spacing: -0.02em;
+    line-height: 1;
+}
+
+.ta-kpi-trend {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 2px;
+}
+
+.ta-kpi-trend.up { color: #22c55e; }
+.ta-kpi-trend.down { color: #ef4444; }
+.ta-kpi-trend.flat { color: #71717a; }
+
+.ta-kpi-trend .trend-prev {
+    font-size: 11px;
+    opacity: 0.5;
+    font-weight: 600;
+}
+
+/* ── Activity Chart ──────────────────────────────────── */
+
+.ta-section {
+    background: var(--color-surface, #18181b);
+    border: 1px solid var(--color-border, #27272a);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 16px;
+}
+
+.ta-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.ta-section-title {
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-primary, #fafafa);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ta-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 100px;
+    padding: 4px 0;
+}
+
+.ta-chart-bar-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    min-width: 0;
+}
+
+.ta-chart-bar {
+    width: 100%;
+    max-width: 16px;
+    border-radius: 3px 3px 0 0;
+    min-height: 2px;
+    transition: height 0.3s ease;
+}
+
+.ta-chart-bar.actions { background: #818cf8; }
+.ta-chart-bar.tasks { background: #22c55e; }
+.ta-chart-bar.content { background: #22d3ee; }
+
+.ta-chart-bar-group:hover .ta-chart-bar {
+    opacity: 0.8;
+    filter: brightness(1.2);
+}
+
+.ta-chart-label {
+    font-size: 9px;
+    font-weight: 600;
+    color: #52525b;
+    margin-top: 4px;
+    white-space: nowrap;
+}
+
+.ta-chart-legend {
+    display: flex;
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.ta-chart-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-text-secondary, #71717a);
+}
+
+.ta-chart-legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+}
+
+/* ── Two Column Layout ───────────────────────────────── */
+
+.ta-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+/* ── Agent Utilization Bars ──────────────────────────── */
+
+.ta-agent-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ta-agent-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ta-agent-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-text-primary, #fafafa);
+    min-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ta-agent-bar-bg {
+    flex: 1;
+    height: 10px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.ta-agent-bar-fill {
+    height: 100%;
+    border-radius: 5px;
+    transition: width 0.4s ease;
+    background: linear-gradient(90deg, #6366f1, #818cf8);
+}
+
+.ta-agent-count {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--color-text-secondary, #71717a);
+    min-width: 32px;
+    text-align: right;
+}
+
+/* ── Project Health ──────────────────────────────────── */
+
+.ta-project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ta-project-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.ta-project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ta-project-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-text-primary, #fafafa);
+}
+
+.ta-project-stats {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-text-secondary, #71717a);
+}
+
+.ta-progress-bar-bg {
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.ta-progress-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.4s ease;
+    background: linear-gradient(90deg, #D2F000, #a3e635);
+}
+
+/* ── Knowledge Score ─────────────────────────────────── */
+
+.ta-knowledge-ring {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 0;
+}
+
+.ta-ring-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ta-ring-label {
+    position: absolute;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--color-text-primary, #fafafa);
+}
+
+.ta-ring-sublabel {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-text-secondary, #71717a);
+    margin-top: 8px;
+}
+
+/* ── Loading / Empty ─────────────────────────────────── */
+
+.ta-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 0;
+    color: #52525b;
+}
+
+/* ── Responsive ──────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .ta-kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .ta-two-col { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+    .ta-kpi-grid { grid-template-columns: 1fr; }
+}

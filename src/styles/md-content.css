@@ -1,0 +1,236 @@
+/* ═══════════════════════════════════════════════════════
+   GLOBAL MARKDOWN CONTENT STYLES
+   Applied to all AI-generated content rendered via ReactMarkdown.
+   Wrap content containers with class "md-content" to enable.
+   ═══════════════════════════════════════════════════════ */
+
+.md-content {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--color-text-primary);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* ── Headings ────────────────────────────────────────── */
+
+.md-content h1 {
+    font-size: 1.4em;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--color-stroke-subtle);
+    letter-spacing: -0.01em;
+}
+
+.md-content h2 {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 20px 0 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.md-content h3 {
+    font-size: 1.05em;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 16px 0 8px;
+}
+
+.md-content h4 {
+    font-size: 1em;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    margin: 14px 0 6px;
+}
+
+.md-content h5,
+.md-content h6 {
+    font-size: 0.95em;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    margin: 12px 0 6px;
+}
+
+/* Remove top margin from first heading */
+.md-content > h1:first-child,
+.md-content > h2:first-child,
+.md-content > h3:first-child,
+.md-content > h4:first-child,
+.md-content > p:first-child {
+    margin-top: 0;
+}
+
+/* ── Paragraphs ──────────────────────────────────────── */
+
+.md-content p {
+    margin: 0 0 12px;
+    line-height: 1.7;
+}
+
+.md-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* ── Strong / Emphasis ───────────────────────────────── */
+
+.md-content strong {
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.md-content em {
+    font-style: italic;
+    color: var(--color-text-secondary);
+}
+
+/* ── Lists ───────────────────────────────────────────── */
+
+.md-content ul,
+.md-content ol {
+    margin: 8px 0 16px;
+    padding-left: 24px;
+}
+
+.md-content li {
+    margin-bottom: 4px;
+    line-height: 1.6;
+}
+
+.md-content li > p {
+    margin-bottom: 4px;
+}
+
+.md-content ul {
+    list-style-type: disc;
+}
+
+.md-content ol {
+    list-style-type: decimal;
+}
+
+.md-content li > ul,
+.md-content li > ol {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+/* ── Horizontal Rule ─────────────────────────────────── */
+
+.md-content hr {
+    border: none;
+    border-top: 1px solid var(--color-stroke-subtle);
+    margin: 20px 0;
+}
+
+/* ── Inline Code ─────────────────────────────────────── */
+
+.md-content code {
+    background: rgba(0, 0, 0, 0.05);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 0.88em;
+    color: var(--color-text-primary);
+}
+
+/* ── Code Blocks ─────────────────────────────────────── */
+
+.md-content pre {
+    background: #1e1e2e;
+    color: #cdd6f4;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 12px 0 16px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.md-content pre code {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    font-size: inherit;
+    color: inherit;
+}
+
+/* ── Blockquote ──────────────────────────────────────── */
+
+.md-content blockquote {
+    border-left: 3px solid var(--color-accent-red, #6337ff);
+    background: rgba(99, 55, 255, 0.03);
+    margin: 12px 0 16px;
+    padding: 10px 16px;
+    border-radius: 0 8px 8px 0;
+    color: var(--color-text-secondary);
+}
+
+.md-content blockquote p {
+    margin: 0;
+}
+
+/* ── Tables ──────────────────────────────────────────── */
+
+.md-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 16px;
+    font-size: 13px;
+    border: 1px solid var(--color-stroke-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.md-content thead {
+    background: var(--color-bg-surface);
+}
+
+.md-content thead th {
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    border-bottom: 2px solid var(--color-stroke-subtle);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.md-content tbody td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--color-stroke-subtle);
+    color: var(--color-text-primary);
+    vertical-align: top;
+}
+
+.md-content tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.md-content tbody tr:hover {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+/* ── Links ───────────────────────────────────────────── */
+
+.md-content a {
+    color: var(--color-accent-red, #6337ff);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.md-content a:hover {
+    text-decoration: underline;
+}
+
+/* ── Images ──────────────────────────────────────────── */
+
+.md-content img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin: 8px 0;
+}

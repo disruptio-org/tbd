@@ -1,0 +1,286 @@
+/* ═══════════════════════════════════════════════════
+   LinkedIn Preview Modal — Dark OS Shell
+   ═══════════════════════════════════════════════════ */
+
+.li-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    animation: li-fade-in 0.15s ease;
+}
+
+@keyframes li-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.li-modal {
+    background: var(--color-bg-surface, #1c1b1b);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    width: 100%;
+    max-width: 560px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+    animation: li-slide-up 0.15s ease;
+    overflow: hidden;
+}
+
+@keyframes li-slide-up {
+    from { transform: translateY(12px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* Header */
+.li-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    flex-shrink: 0;
+}
+
+.li-modal-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-text-primary, #e8e8ed);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.li-logo {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.li-modal-close {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--color-text-muted, #5a5a6e);
+    font-size: 12px;
+    transition: all 0.15s;
+}
+
+.li-modal-close:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--color-text-primary, #e8e8ed);
+}
+
+.li-modal-close:active {
+    transform: scale(0.95);
+}
+
+/* Scrollable body — LinkedIn light preview area */
+.li-modal-body {
+    overflow-y: auto;
+    padding: 18px;
+    background: #f3f2ef;
+    flex: 1;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0,0,0,0.1) transparent;
+}
+.li-modal-body::-webkit-scrollbar { width: 4px; }
+.li-modal-body::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 2px; }
+
+/* The card itself — stays LinkedIn-authentic (light) */
+.li-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Author row */
+.li-author-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 16px 16px 0;
+}
+
+.li-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, #0A66C2, #004182);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.li-avatar svg {
+    width: 28px;
+    height: 28px;
+}
+
+.li-author-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.li-author-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.3;
+}
+
+.li-author-badge {
+    font-weight: 400;
+    color: rgba(0,0,0,0.5);
+    font-size: 12px;
+}
+
+.li-author-headline {
+    font-size: 11px;
+    color: rgba(0,0,0,0.5);
+    margin-top: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.li-author-meta {
+    font-size: 11px;
+    color: rgba(0,0,0,0.45);
+    margin-top: 2px;
+}
+
+.li-follow-btn {
+    margin-left: auto;
+    flex-shrink: 0;
+    background: none;
+    border: 1.5px solid #0A66C2;
+    border-radius: 16px;
+    cursor: pointer;
+    color: #0A66C2;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    transition: all 0.15s;
+    white-space: nowrap;
+}
+
+.li-follow-btn:hover {
+    background: #0A66C2;
+    color: #fff;
+}
+
+.li-follow-btn:active {
+    transform: scale(0.97);
+}
+
+/* Post body */
+.li-post-body {
+    padding: 12px 16px 8px;
+    font-size: 13px;
+    color: #0f172a;
+    line-height: 1.65;
+}
+
+.li-para {
+    margin: 0 0 10px;
+}
+
+.li-para:last-child {
+    margin-bottom: 0;
+}
+
+/* Hashtags */
+.li-hashtags {
+    padding: 4px 16px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.li-hashtag {
+    font-size: 12px;
+    color: #0A66C2;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.li-hashtag:hover {
+    text-decoration: underline;
+}
+
+/* Reactions bar */
+.li-reactions-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-top: 1px solid #e0e0e0;
+    font-size: 11px;
+    color: rgba(0,0,0,0.5);
+}
+
+.li-reaction-icons {
+    display: flex;
+    gap: 2px;
+    font-size: 14px;
+}
+
+/* Action buttons */
+.li-actions {
+    display: flex;
+    border-top: 1px solid #e0e0e0;
+    padding: 0;
+}
+
+.li-action-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 10px 4px;
+    background: none;
+    border: none;
+    border-right: 1px solid #e0e0e0;
+    cursor: pointer;
+    color: #666;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    border-radius: 0;
+    transition: background 0.15s;
+}
+
+.li-action-btn:last-child {
+    border-right: none;
+}
+
+.li-action-btn:hover {
+    background: rgba(0,0,0,0.04);
+}
+
+.li-action-btn:active {
+    background: rgba(0,0,0,0.08);
+}

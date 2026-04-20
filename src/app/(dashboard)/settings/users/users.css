@@ -1,0 +1,195 @@
+/* ═══════════════════════════════════════════════════════
+   Users Management Page — Dark OS
+   ═══════════════════════════════════════════════════════ */
+
+.users-page {
+    padding: 32px 48px;
+    animation: leadsPageIn 0.4s ease;
+}
+
+.users-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+    gap: 16px;
+}
+.users-header h1 { font-size: 22px; font-weight: 700; margin: 0 0 4px; color: var(--color-text-primary); }
+.users-header p { margin: 0; color: var(--color-text-secondary); font-size: 14px; }
+
+/* ─── Filters ─────────────────────────── */
+.users-filters {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+.users-search {
+    flex: 1;
+    min-width: 200px;
+    padding: 8px 14px;
+    border: 1px solid var(--color-stroke-subtle);
+    border-radius: var(--radius-button);
+    background: var(--color-bg-base);
+    color: var(--color-text-primary);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.15s;
+}
+.users-search:focus {
+    border-color: var(--color-stroke-medium);
+}
+.users-filters select {
+    padding: 8px 12px;
+    border: 1px solid var(--color-stroke-subtle);
+    border-radius: var(--radius-button);
+    background: var(--color-bg-base);
+    color: var(--color-text-primary);
+    font-size: 13px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.15s;
+}
+.users-filters select:focus {
+    border-color: var(--color-stroke-medium);
+}
+
+/* ─── Table ──────────────────────────── */
+.users-table-wrapper {
+    border: 1px solid var(--color-stroke-subtle);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    background: var(--color-bg-base);
+}
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.users-table th {
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    background: var(--color-bg-surface);
+    border-bottom: 1px solid var(--color-stroke-subtle);
+}
+.users-table td {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--color-stroke-subtle);
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    vertical-align: middle;
+}
+.users-table tbody tr:last-child td { border-bottom: none; }
+.users-table tbody tr:hover { background: var(--color-bg-surface); }
+
+.users-cell-user { display: flex; align-items: center; gap: 12px; }
+.users-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+.users-avatar-placeholder {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff; font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+}
+.users-name { font-weight: 600; color: var(--color-text-primary); font-size: 14px; }
+.users-email { font-size: 12px; color: var(--color-text-muted); }
+
+.users-role-badge {
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    font-size: 12px;
+    font-weight: 600;
+    background: var(--color-bg-surface2);
+    color: var(--color-text-secondary);
+}
+
+.users-status-badge {
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    font-size: 12px;
+    font-weight: 600;
+}
+.status-active { background: rgba(34, 197, 94, 0.12); color: #16a34a; }
+.status-inactive { background: rgba(239, 68, 68, 0.12); color: #dc2626; }
+.status-pending { background: rgba(245, 158, 11, 0.12); color: #d97706; }
+
+.users-groups-cell { display: flex; flex-wrap: wrap; gap: 4px; }
+.users-group-tag {
+    padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 600;
+    background: rgba(99, 102, 241, 0.1); color: #6366f1;
+}
+.users-no-groups { font-size: 12px; color: var(--color-text-muted); font-style: italic; }
+
+.users-date { font-size: 13px; white-space: nowrap; }
+
+.users-actions { display: flex; gap: 6px; }
+
+/* ─── Modal ──────────────────────────── */
+.users-modal {
+    background: var(--color-bg-surface);
+    border-radius: var(--radius-card);
+    border: 1px solid var(--color-stroke-subtle);
+    padding: 32px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    animation: slideUpFade 0.3s ease;
+}
+.users-modal-wide { max-width: 640px; }
+.users-modal h3 {
+    font-size: 18px; font-weight: 700;
+    margin: 0 0 20px; color: var(--color-text-primary);
+}
+.users-form-group { margin-bottom: 16px; }
+.users-form-group label {
+    display: block; margin-bottom: 6px;
+    font-size: 13px; font-weight: 600; color: var(--color-text-secondary);
+}
+.users-form-group input, .users-form-group select {
+    width: 100%; padding: 10px 14px;
+    border: 1px solid var(--color-stroke-subtle);
+    border-radius: var(--radius-button); background: var(--color-bg-surface2);
+    color: var(--color-text-primary); font-size: 14px;
+    outline: none;
+    transition: border-color 0.15s;
+}
+.users-form-group input:focus, .users-form-group select:focus {
+    border-color: var(--color-stroke-medium);
+}
+.users-modal-footer {
+    display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px;
+}
+.users-empty-msg { color: var(--color-text-muted); font-size: 14px; text-align: center; padding: 20px 0; }
+
+/* ─── Group Checklist ────────────────── */
+.users-group-checklist { display: flex; flex-direction: column; gap: 8px; max-height: 300px; overflow-y: auto; }
+.users-group-check-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 12px; border-radius: var(--radius-button);
+    cursor: pointer; transition: background 0.2s;
+    font-size: 14px; color: var(--color-text-primary);
+}
+.users-group-check-item:hover { background: var(--color-bg-surface2); }
+
+/* ─── Effective Access ───────────────── */
+.users-access-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-height: 400px; overflow-y: auto; }
+.users-access-section h4 {
+    font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--color-text-muted); margin: 0 0 8px; font-weight: 600;
+}
+.users-access-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 6px 10px; border-radius: 6px; font-size: 13px;
+}
+.users-access-row.granted { background: rgba(34, 197, 94, 0.06); }
+.users-access-row.denied { background: rgba(239, 68, 68, 0.04); }
+.access-yes { font-size: 14px; }
+.access-no { font-size: 14px; opacity: 0.5; }
+
+@keyframes slideUpFade {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,104 @@
+/* ═══════════════════════════════════════════════════════
+   SmartInput — wrapper with STT + AI Rewrite buttons
+   ═══════════════════════════════════════════════════════ */
+
+.smart-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    width: 100%;
+}
+
+/* ─── Field ─────────────────────────────────────────── */
+
+.smart-input-field {
+    flex: 1;
+    width: 100%;
+    padding-right: 72px; /* space for action buttons */
+}
+
+/* ─── Action buttons container ────────────────────── */
+
+.smart-input-actions {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    display: flex;
+    gap: 2px;
+    z-index: 2;
+}
+
+/* ─── Buttons ──────────────────────────────────────── */
+
+.smart-input-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: var(--radius-sm, 6px);
+    background: var(--color-surface-elevated, rgba(255, 255, 255, 0.08));
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    opacity: 0.5;
+    padding: 0;
+    line-height: 1;
+}
+
+.smart-input-wrapper:hover .smart-input-btn,
+.smart-input-wrapper:focus-within .smart-input-btn {
+    opacity: 1;
+}
+
+.smart-input-btn:hover:not(:disabled) {
+    background: var(--color-surface-hover, rgba(255, 255, 255, 0.15));
+    transform: scale(1.1);
+}
+
+.smart-input-btn:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ─── Voice recording state ─────────────────────── */
+
+.smart-btn-voice.recording {
+    opacity: 1 !important;
+    background: rgba(255, 60, 60, 0.2);
+    animation: smart-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes smart-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 60, 60, 0.4); }
+    50% { box-shadow: 0 0 0 6px rgba(255, 60, 60, 0); }
+}
+
+/* ─── AI rewriting state ────────────────────────── */
+
+.smart-btn-ai.rewriting {
+    opacity: 1 !important;
+    animation: smart-spin 1s linear infinite;
+}
+
+@keyframes smart-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ─── Responsive ──────────────────────────────────── */
+
+@media (max-width: 600px) {
+    .smart-input-field {
+        padding-right: 64px;
+    }
+
+    .smart-input-btn {
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Today Workspace | Nousio AI OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#1c1b1b",
+                        "secondary-container": "#ff4a8d",
+                        "on-secondary": "#65002e",
+                        "secondary": "#ffb1c4",
+                        "primary-container": "#d2f000",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container": "#201f1f",
+                        "on-secondary-fixed": "#3f001a",
+                        "on-primary-fixed-variant": "#414c00",
+                        "surface-container-high": "#2a2a2a",
+                        "primary-fixed-dim": "#b8d300",
+                        "inverse-on-surface": "#313030",
+                        "on-tertiary-fixed": "#001f24",
+                        "surface": "#131313",
+                        "on-tertiary-container": "#006f7c",
+                        "inverse-surface": "#e5e2e1",
+                        "primary": "#ffffff",
+                        "tertiary-fixed-dim": "#00daf3",
+                        "secondary-fixed-dim": "#ffb1c4",
+                        "on-background": "#e5e2e1",
+                        "on-secondary-container": "#590028",
+                        "inverse-primary": "#576500",
+                        "outline-variant": "#444933",
+                        "on-tertiary": "#00363d",
+                        "on-surface": "#e5e2e1",
+                        "on-primary-fixed": "#191e00",
+                        "on-primary": "#2c3400",
+                        "error": "#ffb4ab",
+                        "on-error": "#690005",
+                        "tertiary-fixed": "#9cf0ff",
+                        "tertiary-container": "#9cf0ff",
+                        "error-container": "#93000a",
+                        "surface-dim": "#131313",
+                        "surface-container-highest": "#353534",
+                        "on-surface-variant": "#c4c9ac",
+                        "surface-bright": "#3a3939",
+                        "on-primary-container": "#5d6b00",
+                        "tertiary": "#ffffff",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#004f58",
+                        "primary-fixed": "#d2f000",
+                        "on-secondary-fixed-variant": "#8f0044",
+                        "outline": "#8e9379",
+                        "surface-variant": "#353534",
+                        "background": "#131313",
+                        "surface-tint": "#b8d300",
+                        "secondary-fixed": "#ffd9e1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+::-webkit-scrollbar {
+    width: 2px
+    }
+::-webkit-scrollbar-track {
+    background: #131313
+    }
+::-webkit-scrollbar-thumb {
+    background: #D2F000
+    }
+.grain-overlay {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuD53oW3AP3EPHL6gGb0PG6rEoOVv_F9lA5BarBH2yhG_g0T_QpNNIwd7fQBvlG-9hqn733AmcPMLrE2r9hShvixdEgyhBef8seZVaiIsMUdXxrhXDBd5CkX7aw0qWX7CClRpHCwQ-rg6JI7GSTXbEi_kMASG32ZkWCeC5jbYE60NyL2nWjbm-N43JxDEnvFfSrKYmLZ_wxM8DGkJmk4BbTD-9_Y9LA0CCGU4EfpOw4dzXQD_v9USN2lS4MQLcsMnAqbPMzyFJ8pyO8);
+    opacity: 0.05
+    }</style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body overflow-hidden">
+<div class="fixed inset-0 pointer-events-none grain-overlay z-50"></div>
+<!-- SideNavBar (Collapsed Rail) -->
+<aside class="fixed left-0 top-0 h-full z-50 flex flex-col items-center py-8 bg-zinc-950 dark:bg-[#0E0E0E] h-screen w-20 flex flex-col border-r-0 transition-all duration-300 ease-in-out font-['Manrope'] tracking-tight font-medium">
+<!-- Brand Logo Area -->
+<div class="mb-10 text-lg font-bold text-white tracking-widest uppercase">
+<span class="text-primary-fixed">N</span>
+</div>
+<!-- Navigation Icons -->
+<nav class="flex flex-col gap-8 flex-1">
+<button class="group flex flex-col items-center gap-1 text-[#D2F000] scale-110 transition-transform border-l-2 border-[#D2F000] pl-1">
+<span class="material-symbols-outlined" data-icon="today">today</span>
+</button>
+<button class="group flex flex-col items-center gap-1 text-zinc-500 hover:text-white transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+</button>
+<button class="group flex flex-col items-center gap-1 text-zinc-500 hover:text-white transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="folder_open">folder_open</span>
+</button>
+<button class="group flex flex-col items-center gap-1 text-zinc-500 hover:text-white transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+</button>
+<button class="group flex flex-col items-center gap-1 text-zinc-500 hover:text-white transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+</button>
+</nav>
+<!-- Footer Actions -->
+<div class="flex flex-col gap-6 pt-6 mt-auto">
+<button class="text-zinc-500 hover:text-white transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<button class="text-zinc-500 hover:text-white transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="keyboard_double_arrow_right">keyboard_double_arrow_right</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Shell -->
+<div class="ml-20 min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-12 py-6 bg-zinc-950 dark:bg-[#0E0E0E]">
+<div class="flex items-center gap-8">
+<h1 class="text-3xl font-bold font-['Manrope'] tracking-tight text-white">Today</h1>
+<nav class="hidden md:flex gap-6">
+<a class="text-xs uppercase tracking-[0.1em] font-['Inter'] text-[#D2F000] border-b-2 border-[#D2F000] pb-1" href="#">Overview</a>
+<a class="text-xs uppercase tracking-[0.1em] font-['Inter'] text-zinc-400 hover:text-white transition-opacity" href="#">Updates</a>
+<a class="text-xs uppercase tracking-[0.1em] font-['Inter'] text-zinc-400 hover:text-white transition-opacity" href="#">Analytics</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 text-sm" data-icon="search">search</span>
+<input class="bg-surface-container border-none text-xs rounded-lg pl-10 pr-4 py-2 w-64 focus:ring-1 focus:ring-primary-fixed text-on-surface" placeholder="Search workspace..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-zinc-400 hover:text-white"><span class="material-symbols-outlined" data-icon="notifications">notifications</span></button>
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center overflow-hidden border border-outline-variant/20">
+<img alt="Iago" class="w-full h-full object-cover" data-alt="Portrait of a creative professional man with a minimalist aesthetic, soft studio lighting, high fashion style, dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJ7mIo9pLdWM27wFLeA3Q6Cf2FDE4vOmM74w1Cs38BUnnQ2LV_54f51lTVY5gQWfNFfIgqWzVnDc4ATmLDvSALSCPweS6_xHd8rnHpjmP4a9NDh9Xq1lzVHGXl48M83_i5dO_7rufu3t4prBH0vms4fBPQV-HzhcDV6K9tcr2eGWI3NBmteJDYa7nWPF9t0wlr_HIt22TpWNNQZFezzMh6Qb6NQqE2VCrWRtY_dhJfxotPiooSK42wGdp5xpnF1JFBtFHJqWhsEBY"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Dashboard Canvas -->
+<main class="flex-1 p-12 overflow-y-auto">
+<div class="max-w-7xl mx-auto">
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-8">
+<!-- Hero Morning Greeting -->
+<div class="col-span-12 lg:col-span-8 flex flex-col justify-end p-12 bg-surface-container rounded-xl min-h-[320px] relative overflow-hidden">
+<div class="absolute top-0 right-0 p-8">
+<span class="text-secondary font-bold text-6xl opacity-20 select-none">08:42</span>
+</div>
+<div class="relative z-10">
+<div class="flex items-center gap-3 mb-4">
+<span class="w-2 h-2 rounded-full bg-primary-fixed"></span>
+<span class="text-xs uppercase tracking-widest text-on-surface-variant font-label">Status: Active Thinking</span>
+</div>
+<h2 class="text-5xl font-extrabold font-headline mb-6 leading-tight">Good morning, Iago.<br/>You have <span class="text-primary-fixed underline decoration-2 underline-offset-8">3 high-priority</span> targets today.</h2>
+<button class="bg-surface-container-highest text-primary px-6 py-3 rounded-lg text-sm font-medium hover:text-primary-fixed border-b-2 border-transparent hover:border-primary-fixed transition-all">
+                                Review Daily Brief
+                            </button>
+</div>
+<div class="absolute bottom-0 right-0 w-1/2 h-full opacity-30 pointer-events-none">
+<img alt="abstract shape" class="w-full h-full object-cover" data-alt="minimalist abstract 3D fluid shape with smooth matte texture in monochromatic dark grey with one sharp acid yellow highlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTST5tZxl7wScKSLapbKineN8lE0tvXO45AB12MWbEm6Pj8ghM_w-QbVkhyk9d3T7dGNjYnJ7DbCipDB8GW0MSPTEUocyBMknLPj4ZWALz0dILO3hO9KwmvR2uqCD64fXzE5CYdC4aMZvMDUswPD0-OQGNdj5KlcdjPKWgNLvu7F2V730_-ADLAOZSIHkWxVFs-IsN-GavNg2DbNDWf6TyU1k6aGXbmMVgZGaUQZVES85AHmjKHG78IX9e3JtwgdcMGBRVmtUzEa4"/>
+</div>
+</div>
+<!-- AI Reasoning Terminal -->
+<div class="col-span-12 lg:col-span-4 bg-surface-container-high rounded-xl p-8 flex flex-col border border-outline-variant/10">
+<div class="flex justify-between items-center mb-8">
+<h3 class="text-xs uppercase tracking-widest font-label text-tertiary-fixed-dim">Nousio Intelligence</h3>
+<span class="material-symbols-outlined text-tertiary-fixed-dim text-sm" data-icon="bolt">bolt</span>
+</div>
+<div class="flex-1 space-y-6">
+<div class="p-4 bg-surface-container-lowest rounded-lg border-l-2 border-secondary">
+<p class="text-sm text-on-surface-variant leading-relaxed">Analyzing <span class="text-white">Project Orion</span> feedback. I suggest rescheduling the sync to 4PM to accommodate the London team's delay.</p>
+</div>
+<div class="p-4 bg-surface-container-lowest rounded-lg">
+<p class="text-sm text-on-surface-variant leading-relaxed">Knowledge extraction complete for <span class="text-white">"Q3 Deliverables"</span>. 12 new action items identified.</p>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-outline-variant/10">
+<div class="flex items-center gap-2 text-xs text-zinc-500">
+<span class="material-symbols-outlined text-xs" data-icon="auto_awesome">auto_awesome</span>
+<span>Press <kbd class="bg-zinc-800 px-1 rounded">⌘</kbd> + <kbd class="bg-zinc-800 px-1 rounded">K</kbd> to prompt</span>
+</div>
+</div>
+</div>
+<!-- Task Landscape -->
+<div class="col-span-12 lg:col-span-5 space-y-8">
+<div class="flex justify-between items-end">
+<h3 class="text-2xl font-bold font-headline">Projects</h3>
+<a class="text-xs uppercase tracking-widest text-primary-fixed hover:opacity-80 transition-opacity" href="#">View all</a>
+</div>
+<div class="space-y-4">
+<div class="group bg-surface-container-low hover:bg-surface-container transition-colors p-6 rounded-lg flex items-center justify-between cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-zinc-400" data-icon="rocket_launch">rocket_launch</span>
+</div>
+<div>
+<h4 class="font-medium text-white">Nova Brand Identity</h4>
+<p class="text-xs text-zinc-500">Due in 2 days • 85% complete</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-zinc-700 group-hover:text-primary-fixed transition-colors" data-icon="chevron_right">chevron_right</span>
+</div>
+<div class="group bg-surface-container-low hover:bg-surface-container transition-colors p-6 rounded-lg flex items-center justify-between cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-zinc-400" data-icon="architecture">architecture</span>
+</div>
+<div>
+<h4 class="font-medium text-white">Core UX Framework</h4>
+<p class="text-xs text-zinc-500">Stalled • Waiting for Iago</p>
+</div>
+</div>
+<div class="w-1.5 h-1.5 rounded-full bg-secondary"></div>
+</div>
+</div>
+</div>
+<!-- Deliverables Visualization -->
+<div class="col-span-12 lg:col-span-7 bg-surface-container-low rounded-xl p-8 relative overflow-hidden group">
+<div class="flex justify-between items-start mb-8">
+<div>
+<h3 class="text-xs uppercase tracking-widest font-label text-zinc-500 mb-1">Deliverables Pipeline</h3>
+<p class="text-xl font-bold">Execution Velocity</p>
+</div>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-zinc-800 text-[10px] uppercase font-bold tracking-tighter rounded">W-14</span>
+<span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed text-[10px] uppercase font-bold tracking-tighter rounded">Active</span>
+</div>
+</div>
+<div class="h-48 flex items-end gap-2 px-4">
+<!-- Architectural Graph Bars -->
+<div class="flex-1 bg-zinc-800/40 h-[40%] rounded-t-sm hover:bg-primary-fixed/20 transition-colors"></div>
+<div class="flex-1 bg-zinc-800/40 h-[65%] rounded-t-sm hover:bg-primary-fixed/20 transition-colors"></div>
+<div class="flex-1 bg-zinc-800/40 h-[50%] rounded-t-sm hover:bg-primary-fixed/20 transition-colors"></div>
+<div class="flex-1 bg-primary-fixed h-[90%] rounded-t-sm shadow-[0_0_20px_rgba(210,240,0,0.2)]"></div>
+<div class="flex-1 bg-zinc-800/40 h-[30%] rounded-t-sm hover:bg-primary-fixed/20 transition-colors"></div>
+<div class="flex-1 bg-zinc-800/40 h-[55%] rounded-t-sm hover:bg-primary-fixed/20 transition-colors"></div>
+<div class="flex-1 bg-zinc-800/40 h-[75%] rounded-t-sm hover:bg-primary-fixed/20 transition-colors"></div>
+<div class="flex-1 bg-zinc-800/40 h-[45%] rounded-t-sm hover:bg-primary-fixed/20 transition-colors"></div>
+<div class="flex-1 bg-zinc-800/40 h-[80%] rounded-t-sm hover:bg-primary-fixed/20 transition-colors"></div>
+<div class="flex-1 bg-zinc-800/40 h-[60%] rounded-t-sm hover:bg-primary-fixed/20 transition-colors"></div>
+</div>
+<div class="absolute inset-0 border border-white/5 pointer-events-none rounded-xl"></div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Floating Action - Contextual -->
+<button class="fixed bottom-10 right-10 w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform group">
+<span class="material-symbols-outlined group-hover:rotate-90 transition-transform" data-icon="add">add</span>
+<div class="absolute bottom-full right-0 mb-4 bg-surface-container-high px-4 py-2 rounded-lg text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity border border-outline-variant/20">
+            New Thread
+        </div>
+</button>
+</body></html>

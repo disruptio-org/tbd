@@ -1,0 +1,683 @@
+/* ═══════════════════════════════════════════════════════
+   NOUSIO TABLE SYSTEM — Dark OS Design System
+   Rounded cards, dark surfaces, 1px subtle borders
+   ═══════════════════════════════════════════════════════ */
+
+/* ─── Table Shell (outer container) ─────────────────── */
+
+.nousio-table-card {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.75rem;
+    background: #1c1b1b;
+    overflow: hidden;
+    transition: border-color 0.2s;
+}
+
+.nousio-table-card:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.nousio-table-card--primary {
+    border-width: 1px;
+    border-color: rgba(210, 240, 0, 0.15);
+}
+
+.nousio-table-card--flush {
+    border-radius: 0;
+}
+
+/* ─── Table Grid ────────────────────────────────────── */
+
+.nousio-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+}
+
+.nousio-table--fixed {
+    table-layout: fixed;
+}
+
+/* ─── Header Row ────────────────────────────────────── */
+
+.nousio-table thead th {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #71717a;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: left;
+    background: rgba(255, 255, 255, 0.02);
+    white-space: nowrap;
+    user-select: none;
+}
+
+.nousio-table thead th.align-right {
+    text-align: right;
+}
+
+.nousio-table thead th.align-center {
+    text-align: center;
+}
+
+/* Sortable column header */
+.nousio-table thead th.sortable {
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+
+.nousio-table thead th.sortable:hover {
+    color: #e5e2e1;
+}
+
+.nousio-table thead th .sort-icon {
+    display: inline-flex;
+    margin-left: 4px;
+    opacity: 0.4;
+    transition: opacity 0.15s ease;
+}
+
+.nousio-table thead th.sorted .sort-icon {
+    opacity: 1;
+    color: #D2F000;
+}
+
+/* ─── Body Rows ─────────────────────────────────────── */
+
+.nousio-table tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    transition: background 0.15s ease;
+}
+
+.nousio-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.nousio-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.nousio-table tbody tr.selected {
+    background: rgba(210, 240, 0, 0.04);
+}
+
+.nousio-table tbody td {
+    padding: 12px 16px;
+    color: #e5e2e1;
+    vertical-align: middle;
+}
+
+.nousio-table tbody td.align-right {
+    text-align: right;
+}
+
+.nousio-table tbody td.align-center {
+    text-align: center;
+}
+
+/* Primary cell (row identifier — bold) */
+.nousio-table tbody td.cell-primary {
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* Muted cell (dates, secondary metadata) */
+.nousio-table tbody td.cell-muted {
+    color: #71717a;
+    font-size: 12px;
+}
+
+/* Two-line cell pattern */
+.nousio-cell-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.nousio-cell-stack .cell-line-1 {
+    font-weight: 600;
+    color: #ffffff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nousio-cell-stack .cell-line-2 {
+    font-size: 11px;
+    color: #71717a;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Clickable row */
+.nousio-table tbody tr.clickable {
+    cursor: pointer;
+}
+
+.nousio-table tbody tr.clickable:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+/* ─── Checkbox Column ───────────────────────────────── */
+
+.nousio-table thead th.col-checkbox,
+.nousio-table tbody td.col-checkbox {
+    width: 44px;
+    padding: 12px 12px;
+    text-align: center;
+}
+
+.nousio-table .row-checkbox {
+    width: 16px;
+    height: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    accent-color: #D2F000;
+    cursor: pointer;
+    margin: 0;
+    border-radius: 3px;
+}
+
+/* ─── Actions Column ────────────────────────────────── */
+
+.nousio-table thead th.col-actions,
+.nousio-table tbody td.col-actions {
+    width: 120px;
+    text-align: right;
+    padding-right: 16px;
+}
+
+/* ─── Compact Variant ───────────────────────────────── */
+
+.nousio-table--compact thead th {
+    padding: 8px 12px;
+    font-size: 9px;
+}
+
+.nousio-table--compact tbody td {
+    padding: 8px 12px;
+    font-size: 12px;
+}
+
+/* ─── Workflow Variant ──────────────────────────────── */
+
+.nousio-table--workflow tbody td {
+    padding: 14px 16px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   TOOLBAR
+   ═══════════════════════════════════════════════════════ */
+
+.nousio-table-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: transparent;
+}
+
+.nousio-toolbar-left {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+}
+
+.nousio-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+/* Search input */
+.nousio-toolbar-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    padding: 0 12px;
+    min-width: 200px;
+    max-width: 320px;
+    border-radius: 8px;
+    transition: border-color 0.15s ease;
+}
+
+.nousio-toolbar-search:focus-within {
+    border-color: rgba(210, 240, 0, 0.4);
+    box-shadow: 0 0 0 3px rgba(210, 240, 0, 0.06);
+}
+
+.nousio-toolbar-search .search-icon {
+    color: #71717a;
+    flex-shrink: 0;
+}
+
+.nousio-toolbar-search input {
+    border: none;
+    background: none;
+    outline: none;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    padding: 8px 0;
+    width: 100%;
+    color: #e5e2e1;
+}
+
+.nousio-toolbar-search input::placeholder {
+    color: #71717a;
+}
+
+/* Filter chips */
+.nousio-toolbar-filter {
+    padding: 6px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
+    color: #a1a1aa;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    border-radius: 6px;
+}
+
+.nousio-toolbar-filter:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #e5e2e1;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.nousio-toolbar-filter.active {
+    background: rgba(210, 240, 0, 0.1);
+    color: #D2F000;
+    border-color: rgba(210, 240, 0, 0.25);
+}
+
+/* Result count */
+.nousio-toolbar-count {
+    font-size: 11px;
+    font-weight: 500;
+    color: #71717a;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+}
+
+/* Bulk action bar */
+.nousio-toolbar-bulk {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    background: rgba(210, 240, 0, 0.08);
+    color: #D2F000;
+    border-bottom: 1px solid rgba(210, 240, 0, 0.15);
+}
+
+.nousio-toolbar-bulk .bulk-count {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.nousio-toolbar-bulk .bulk-action {
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: rgba(255, 255, 255, 0.06);
+    color: #e5e2e1;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.15s ease;
+}
+
+.nousio-toolbar-bulk .bulk-action:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.nousio-toolbar-bulk .bulk-action--danger {
+    background: rgba(239, 68, 68, 0.12);
+    border-color: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+}
+
+.nousio-toolbar-bulk .bulk-action--danger:hover {
+    background: rgba(239, 68, 68, 0.2);
+}
+
+/* ═══════════════════════════════════════════════════════
+   STATUS BADGE
+   ═══════════════════════════════════════════════════════ */
+
+.nousio-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 3px 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    background: transparent;
+    color: #a1a1aa;
+    white-space: nowrap;
+    line-height: 1.3;
+}
+
+.nousio-badge--success {
+    border-color: rgba(22, 163, 74, 0.3);
+    color: #4ade80;
+    background: rgba(22, 163, 74, 0.08);
+}
+
+.nousio-badge--warning {
+    border-color: rgba(217, 119, 6, 0.3);
+    color: #fbbf24;
+    background: rgba(217, 119, 6, 0.08);
+}
+
+.nousio-badge--error {
+    border-color: rgba(220, 38, 38, 0.3);
+    color: #fca5a5;
+    background: rgba(220, 38, 38, 0.08);
+}
+
+.nousio-badge--info {
+    border-color: rgba(210, 240, 0, 0.2);
+    color: #D2F000;
+    background: rgba(210, 240, 0, 0.06);
+}
+
+.nousio-badge--neutral {
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #71717a;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ROW ACTION BUTTONS
+   ═══════════════════════════════════════════════════════ */
+
+.nousio-row-actions {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.nousio-action-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #71717a;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+}
+
+.nousio-action-btn:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #e5e2e1;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.nousio-action-btn:active {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nousio-action-btn--danger:hover {
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #fca5a5;
+    background: rgba(239, 68, 68, 0.08);
+}
+
+.nousio-action-btn--primary:hover {
+    border-color: rgba(210, 240, 0, 0.3);
+    color: #D2F000;
+    background: rgba(210, 240, 0, 0.06);
+}
+
+/* Overflow dropdown */
+.nousio-overflow-menu {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background: #2a2a2a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    min-width: 180px;
+    z-index: 100;
+    animation: nousioMenuIn 0.12s ease;
+    overflow: hidden;
+}
+
+.nousio-overflow-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #e5e2e1;
+    text-align: left;
+    transition: background 0.1s ease;
+}
+
+.nousio-overflow-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.nousio-overflow-item--danger {
+    color: #fca5a5;
+}
+
+.nousio-overflow-item--danger:hover {
+    background: rgba(239, 68, 68, 0.08);
+}
+
+.nousio-overflow-divider {
+    height: 0;
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    margin: 4px 0;
+}
+
+@keyframes nousioMenuIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════════════════
+   EMPTY STATE
+   ═══════════════════════════════════════════════════════ */
+
+.nousio-empty-state {
+    text-align: center;
+    padding: 64px 24px;
+    border: 1px dashed rgba(255, 255, 255, 0.08);
+    border-radius: 0.75rem;
+    background: transparent;
+}
+
+.nousio-empty-icon {
+    display: inline-flex;
+    margin-bottom: 16px;
+    color: #71717a;
+    opacity: 0.5;
+}
+
+.nousio-empty-state h3 {
+    margin: 0 0 6px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #e5e2e1;
+    font-family: 'Manrope', sans-serif;
+}
+
+.nousio-empty-state p {
+    margin: 0 0 20px;
+    font-size: 13px;
+    color: #71717a;
+    line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════════════
+   LOADING STATE (skeleton rows)
+   ═══════════════════════════════════════════════════════ */
+
+.nousio-loading-state {
+    padding: 0;
+}
+
+.nousio-skeleton-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.nousio-skeleton-row:last-child {
+    border-bottom: none;
+}
+
+.nousio-skeleton-cell {
+    height: 12px;
+    background: linear-gradient(90deg, #2a2a2a 25%, #353534 50%, #2a2a2a 75%);
+    background-size: 200% 100%;
+    animation: nousioShimmer 1.5s ease infinite;
+    border-radius: 4px;
+}
+
+@keyframes nousioShimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   PAGINATION
+   ═══════════════════════════════════════════════════════ */
+
+.nousio-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    background: transparent;
+    font-size: 12px;
+}
+
+.nousio-pagination-info {
+    font-size: 11px;
+    font-weight: 500;
+    color: #71717a;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.nousio-pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nousio-pagination-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #e5e2e1;
+    font-weight: 600;
+    font-size: 12px;
+    transition: all 0.15s ease;
+}
+
+.nousio-pagination-btn:hover:not(:disabled) {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.nousio-pagination-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.nousio-pagination-btn.active {
+    background: rgba(210, 240, 0, 0.1);
+    color: #D2F000;
+    border-color: rgba(210, 240, 0, 0.25);
+}
+
+.nousio-pagination-select {
+    padding: 6px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    background: #1c1b1b;
+    color: #e5e2e1;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+}
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+    .nousio-table-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .nousio-toolbar-search {
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .nousio-table thead th,
+    .nousio-table tbody td {
+        padding: 10px 12px;
+    }
+
+    .nousio-pagination {
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+    }
+}

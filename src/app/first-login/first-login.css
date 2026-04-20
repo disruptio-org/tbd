@@ -1,0 +1,126 @@
+/* ─── First Login — Password Reset Page — Dark OS ─── */
+
+.first-login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0f0f0f;
+    padding: 20px;
+}
+
+.first-login-card {
+    width: 100%;
+    max-width: 440px;
+    background: #1c1b1b;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+    padding: 40px 36px;
+}
+
+.first-login-brand {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.first-login-logo {
+    height: 32px;
+    opacity: 0.85;
+}
+
+.first-login-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.first-login-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.first-login-header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--color-text-primary, #e8e8ed);
+    margin: 0 0 8px 0;
+}
+
+.first-login-header p {
+    font-size: 14px;
+    color: var(--color-text-secondary, #9898a6);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.first-login-error {
+    background: rgba(215, 58, 58, 0.15);
+    color: #fca5a5;
+    border: 1px solid rgba(215, 58, 58, 0.3);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    margin-bottom: 16px;
+}
+
+.first-login-card .form-group {
+    margin-bottom: 16px;
+}
+
+.first-login-card .label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text-secondary, #9898a6);
+    margin-bottom: 6px;
+}
+
+.first-login-card .input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--color-text-primary, #e8e8ed);
+    transition: border-color 0.15s;
+    box-sizing: border-box;
+}
+
+.first-login-card .input:focus {
+    outline: none;
+    border-color: rgba(215, 58, 58, 0.4);
+    box-shadow: 0 0 0 3px rgba(215, 58, 58, 0.1);
+}
+
+.first-login-submit {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 15px;
+    font-weight: 700;
+    margin-top: 8px;
+    border-radius: 8px;
+    border: none;
+    text-transform: uppercase;
+    background: var(--color-accent-red, #d73a3a);
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.15s;
+    box-shadow: 0 2px 12px rgba(215, 58, 58, 0.2);
+}
+
+.first-login-submit:hover {
+    background: #c53030;
+    box-shadow: 0 4px 20px rgba(215, 58, 58, 0.35);
+}
+
+.first-login-footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.first-login-footer p {
+    font-size: 12px;
+    color: var(--color-text-muted, #5a5a6e);
+    margin: 0;
+}

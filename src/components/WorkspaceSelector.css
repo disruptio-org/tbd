@@ -1,0 +1,197 @@
+/* ═══════════════════════════════════════════════════════
+   WorkspaceSelector — Dark OS Dropdown
+   ═══════════════════════════════════════════════════════ */
+
+.workspace-selector {
+    position: relative;
+    z-index: 100;
+}
+
+.workspace-selector-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    width: auto;
+    cursor: pointer;
+    transition: color 0.15s ease;
+    text-align: left;
+    color: #71717a;
+}
+
+.workspace-selector-btn:hover,
+.workspace-selector-btn.active {
+    color: #e5e2e1;
+}
+
+.ws-icon {
+    display: none;
+}
+
+.ws-text {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ws-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #71717a;
+    letter-spacing: 0.08em;
+}
+
+.ws-value {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: inherit;
+}
+
+.ws-chevron {
+    font-size: 12px;
+    color: inherit;
+    transition: transform 0.2s ease;
+    margin-left: 2px;
+}
+
+.workspace-selector-btn.active .ws-chevron {
+    transform: rotate(180deg);
+}
+
+.workspace-dropdown {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 0;
+    width: 320px;
+    z-index: 9999;
+    background: #2a2a2a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    animation: ws-fade-in 0.15s ease-out;
+}
+
+@keyframes ws-fade-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.ws-dropdown-header {
+    padding: 12px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #71717a;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: transparent;
+}
+
+.ws-dropdown-list {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 8px;
+}
+
+.ws-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    color: #e5e2e1;
+}
+
+.ws-option:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.ws-option.selected {
+    background: rgba(210, 240, 0, 0.06);
+}
+
+.ws-option .ws-icon {
+    font-size: 18px;
+    margin-top: 2px;
+}
+
+.ws-details {
+    flex: 1;
+}
+
+.ws-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 2px;
+}
+
+.ws-desc {
+    font-size: 12px;
+    color: #71717a;
+    line-height: 1.4;
+}
+
+.ws-check {
+    color: #D2F000;
+    font-weight: bold;
+}
+
+.ws-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.06);
+    margin: 8px 0;
+}
+
+.ws-dropdown-subheader {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #71717a;
+    letter-spacing: 0.05em;
+    padding: 8px 12px 4px;
+}
+
+.ws-dropdown-footer {
+    padding: 10px 16px;
+    background: transparent;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: center;
+}
+
+.ws-manage-link {
+    font-size: 13px;
+    font-weight: 500;
+    color: #71717a;
+    text-decoration: none;
+    transition: color 0.15s;
+}
+
+.ws-manage-link:hover {
+    color: #D2F000;
+}
+
+.ws-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-top-color: #e5e2e1;
+    border-radius: 50%;
+    animation: ws-spin 0.8s linear infinite;
+    margin-right: 8px;
+}
+
+@keyframes ws-spin {
+    to { transform: rotate(360deg); }
+}

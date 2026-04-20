@@ -1,0 +1,271 @@
+/* ═══════════════════════════════════════════════════════════════
+   Member Chat Modal — Dark OS
+   ═══════════════════════════════════════════════════════════════ */
+
+.mcm-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(8px);
+    animation: mcm-fade-in 0.2s ease;
+}
+
+@keyframes mcm-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.mcm-modal {
+    width: 820px;
+    max-width: 95vw;
+    height: 640px;
+    max-height: 90vh;
+    background: #1c1b1b;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: mcm-slide-up 0.25s ease;
+}
+
+@keyframes mcm-slide-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Header ──────────────────────────────────────── */
+
+.mcm-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.02);
+    flex-shrink: 0;
+}
+
+.mcm-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mcm-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #131313;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.mcm-header-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.mcm-header-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #e5e2e1;
+    font-family: 'Manrope', sans-serif;
+}
+
+.mcm-header-context {
+    font-size: 10px;
+    color: #71717a;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.mcm-header-context .mcm-task-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 1px 6px;
+    font-size: 9px;
+    font-weight: 600;
+    color: #D2F000;
+    background: rgba(210, 240, 0, 0.1);
+    border: 1px solid rgba(210, 240, 0, 0.2);
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.mcm-close-btn {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #a1a1aa;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    transition: all 0.15s;
+}
+.mcm-close-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #e5e2e1;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ─── Messages Area ───────────────────────────────── */
+
+.mcm-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 0;
+}
+
+.mcm-messages-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex: 1;
+    gap: 8px;
+    color: #71717a;
+    padding: 40px;
+}
+.mcm-messages-empty p { margin: 0; font-size: 13px; }
+
+/* ─── Message bubbles — reuse mw-* classes ─────── */
+/* Messages use .mw-msg, .mw-msg-body, .mw-msg-text etc.
+   from ai-member-workspace.css which is imported by the component */
+
+/* ─── Skill chips row ─────────────────────────────── */
+
+.mcm-skill-chips {
+    display: flex;
+    gap: 6px;
+    padding: 8px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex-shrink: 0;
+}
+.mcm-skill-chips::-webkit-scrollbar { display: none; }
+
+/* ─── Compose area ─────────────────────────────────── */
+
+.mcm-compose-area {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    flex-shrink: 0;
+}
+
+.mcm-attached-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px 12px 0;
+}
+
+.mcm-composer-row {
+    display: flex;
+    gap: 8px;
+    padding: 12px;
+    align-items: flex-end;
+}
+
+/* Reuse .mw-attach-btn, .mw-doc-picker, .mw-composer-input, .mw-send-btn */
+
+/* ─── Scrollbar ───────────────────────────────────── */
+
+.mcm-messages::-webkit-scrollbar { width: 4px; }
+.mcm-messages::-webkit-scrollbar-track { background: transparent; }
+.mcm-messages::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.08); border-radius: 4px; }
+
+/* ─── Delegate Card ───────────────────────────────── */
+
+.mcm-delegate-card {
+    background: rgba(210, 240, 0, 0.04);
+    border: 1px solid rgba(210, 240, 0, 0.15);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mcm-delegate-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #D2F000;
+}
+
+.mcm-delegate-params {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.mcm-delegate-chip {
+    display: inline-flex;
+    padding: 3px 8px;
+    font-size: 10px;
+    font-weight: 500;
+    color: #a1a1aa;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    text-transform: capitalize;
+}
+
+.mcm-delegate-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #131313;
+    background: #D2F000;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Manrope', sans-serif;
+}
+.mcm-delegate-btn:hover {
+    background: #e0ff33;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(210, 240, 0, 0.3);
+}
+.mcm-delegate-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.mcm-delegate-hint {
+    font-size: 10px;
+    color: #71717a;
+    line-height: 1.4;
+}
+

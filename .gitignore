@@ -39,3 +39,25 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/src/generated/prisma
+
+# Custom Project Exclusions
+tmp/
+*.zip
+*_output.txt
+*_error.txt
+*err*.txt
+tsc.log
+page_fetches*.txt
+resumo*.txt
+*.bat
+*.ps1
+prisma_push.txt
+seed_out.txt
+recovered_page.tsx
+
+# Allow specific docs
+!brd.md
+!docs/
+!Disruptio_Design_Principles.md

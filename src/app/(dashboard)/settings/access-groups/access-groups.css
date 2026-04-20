@@ -1,0 +1,466 @@
+/* ═══════════════════════════════════════════════════════
+   Access Groups Page — Dark OS
+   ═══════════════════════════════════════════════════════ */
+
+.ag-page {
+    padding: 32px 48px;
+    animation: leadsPageIn 0.4s ease;
+}
+
+.ag-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 28px;
+    gap: 16px;
+}
+.ag-header h1 { font-size: 22px; font-weight: 700; margin: 0 0 4px; color: var(--color-text-primary); }
+.ag-header p { margin: 0; color: var(--color-text-secondary); font-size: 14px; }
+
+/* ─── Empty State ─────────────────────── */
+.ag-empty {
+    text-align: center;
+    padding: 64px 24px;
+    border: 1px dashed var(--color-stroke-subtle);
+    border-radius: var(--radius-card);
+    background: var(--color-bg-base);
+}
+.ag-empty-icon { font-size: 48px; display: block; margin-bottom: 12px; }
+.ag-empty h3 { margin: 0 0 8px; color: var(--color-text-primary); font-size: 18px; }
+.ag-empty p { margin: 0 0 20px; color: var(--color-text-muted); font-size: 14px; }
+
+/* ─── Card Grid ──────────────────────── */
+.ag-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 20px;
+}
+
+.ag-card {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-stroke-subtle);
+    border-radius: var(--radius-card);
+    padding: 24px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.ag-card:hover { border-color: var(--color-stroke-medium); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+
+.ag-card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.ag-card-header h3 { font-size: 16px; font-weight: 700; margin: 0; color: var(--color-text-primary); }
+.ag-card-actions { display: flex; gap: 4px; }
+
+.ag-card-desc { margin: 8px 0 0; font-size: 13px; color: var(--color-text-muted); line-height: 1.4; }
+
+.ag-card-stats {
+    display: flex; gap: 16px; margin-top: 14px;
+    font-size: 12px; color: var(--color-text-secondary);
+}
+.ag-stat { display: flex; align-items: center; gap: 4px; }
+
+.ag-card-features { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 12px; }
+.ag-feature-tag {
+    padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 600;
+    background: rgba(99, 102, 241, 0.1); color: #6366f1;
+}
+.ag-more { background: rgba(255, 255, 255, 0.04); color: var(--color-text-muted); }
+
+/* ═══════════════════════════════════════════════════════
+   Editor Modal — Dark OS
+   ═══════════════════════════════════════════════════════ */
+.ag-editor {
+    background: var(--color-bg-surface);
+    border-radius: var(--radius-card);
+    border: 1px solid var(--color-stroke-subtle);
+    width: 100%;
+    max-width: 680px;
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    animation: agModalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+}
+
+/* ─── Modal Header ───────────────────── */
+.ag-editor-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 28px 20px;
+    border-bottom: 1px solid var(--color-stroke-subtle);
+    background: linear-gradient(to bottom, rgba(99, 102, 241, 0.04), transparent);
+}
+.ag-editor-header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.ag-editor-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-card);
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+.ag-editor-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+.ag-editor-subtitle {
+    font-size: 13px;
+    color: var(--color-text-muted);
+    margin: 2px 0 0;
+}
+.ag-editor-close {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-button);
+    border: 1px solid var(--color-stroke-subtle);
+    background: var(--color-bg-base);
+    color: var(--color-text-muted);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+}
+.ag-editor-close:hover {
+    background: var(--color-bg-surface2);
+    color: var(--color-text-primary);
+    border-color: var(--color-stroke-medium);
+}
+
+/* ─── Modal Body (scrollable) ────────── */
+.ag-editor-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 28px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-stroke-subtle) transparent;
+}
+.ag-editor-body::-webkit-scrollbar {
+    width: 6px;
+}
+.ag-editor-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+.ag-editor-body::-webkit-scrollbar-thumb {
+    background: var(--color-stroke-subtle);
+    border-radius: 3px;
+}
+
+/* ─── Sections ───────────────────────── */
+.ag-editor-section {
+    margin-bottom: 24px;
+}
+.ag-editor-section:last-child {
+    margin-bottom: 0;
+}
+.ag-section-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    margin: 0 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--color-stroke-subtle);
+}
+.ag-section-icon {
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+/* ─── Form Fields ────────────────────── */
+.ag-field {
+    margin-bottom: 14px;
+}
+.ag-field:last-child {
+    margin-bottom: 0;
+}
+.ag-field-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    margin-bottom: 6px;
+}
+.ag-field-label .ag-required {
+    color: var(--color-state-error);
+    margin-left: 2px;
+}
+.ag-field input[type="text"],
+.ag-field textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--color-stroke-subtle);
+    border-radius: var(--radius-button);
+    background: var(--color-bg-surface2);
+    color: var(--color-text-primary);
+    font-size: 14px;
+    font-family: var(--font-family);
+    transition: all 0.15s ease;
+    outline: none;
+}
+.ag-field input[type="text"]:focus,
+.ag-field textarea:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+    background: var(--color-bg-base);
+}
+.ag-field input[type="text"]::placeholder,
+.ag-field textarea::placeholder {
+    color: var(--color-text-muted);
+}
+.ag-field textarea {
+    min-height: 64px;
+    resize: vertical;
+}
+
+/* ─── Permission Grid ────────────────── */
+.ag-perm-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+}
+.ag-perm-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.ag-perm-group-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #6366f1;
+    margin-bottom: 6px;
+    padding: 4px 0;
+}
+
+/* ─── Custom Checkboxes ──────────────── */
+.ag-perm-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--color-text-primary);
+    transition: all 0.15s ease;
+    user-select: none;
+    position: relative;
+}
+.ag-perm-item:hover {
+    background: rgba(99, 102, 241, 0.05);
+}
+
+/* Hide the native checkbox/radio */
+.ag-perm-item input[type="checkbox"],
+.ag-perm-item input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--color-stroke-medium);
+    background: var(--color-bg-base);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.15s ease;
+    position: relative;
+}
+
+.ag-perm-item input[type="checkbox"] {
+    border-radius: 4px;
+}
+
+.ag-perm-item input[type="radio"] {
+    border-radius: 50%;
+}
+
+/* Checkbox checked state */
+.ag-perm-item input[type="checkbox"]:checked {
+    background: #6366f1;
+    border-color: #6366f1;
+}
+.ag-perm-item input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 5px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Radio checked state */
+.ag-perm-item input[type="radio"]:checked {
+    background: var(--color-bg-base);
+    border-color: #6366f1;
+    border-width: 2px;
+}
+.ag-perm-item input[type="radio"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 8px;
+    height: 8px;
+    background: #6366f1;
+    border-radius: 50%;
+}
+
+/* Focus ring */
+.ag-perm-item input[type="checkbox"]:focus-visible,
+.ag-perm-item input[type="radio"]:focus-visible {
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.ag-perm-item-label {
+    font-size: 13px;
+    line-height: 1.3;
+}
+
+/* ─── Scope Options ──────────────────── */
+.ag-scope-options {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 12px;
+}
+
+.ag-scope-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: var(--radius-button);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border: 1px solid transparent;
+}
+.ag-scope-item:hover {
+    background: rgba(99, 102, 241, 0.04);
+}
+.ag-scope-item.active {
+    background: rgba(99, 102, 241, 0.06);
+    border-color: rgba(99, 102, 241, 0.2);
+}
+.ag-scope-item-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.ag-scope-item-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+.ag-scope-item-desc {
+    font-size: 12px;
+    color: var(--color-text-muted);
+}
+
+/* ─── Project List ───────────────────── */
+.ag-project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid var(--color-stroke-subtle);
+    border-radius: var(--radius-button);
+    background: var(--color-bg-surface2);
+    margin-top: 8px;
+}
+
+.ag-scope-summary { font-size: 14px; color: var(--color-text-secondary); margin: 0; }
+
+/* ─── Modal Footer ───────────────────── */
+.ag-editor-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 28px 20px;
+    border-top: 1px solid var(--color-stroke-subtle);
+    background: var(--color-bg-surface2);
+}
+.ag-editor-footer .btn {
+    border-radius: var(--radius-button);
+    padding: 10px 20px;
+    font-size: 13px;
+}
+.ag-editor-footer .btn-primary {
+    box-shadow: 0 2px 8px rgba(215, 58, 58, 0.2);
+}
+.ag-editor-footer .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* ─── Members List ───────────────────── */
+.ag-members-list { display: flex; flex-direction: column; gap: 6px; }
+.ag-member-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 12px; border-radius: var(--radius-button); background: var(--color-bg-surface2);
+    font-size: 13px;
+    border: 1px solid var(--color-stroke-subtle);
+}
+.ag-member-name { font-weight: 600; color: var(--color-text-primary); }
+.ag-member-email { color: var(--color-text-muted); font-size: 12px; }
+
+/* ─── Detail View Tags ───────────────── */
+.ag-detail-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+.ag-detail-tag {
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    background: rgba(99, 102, 241, 0.08);
+    color: #6366f1;
+    border: 1px solid rgba(99, 102, 241, 0.15);
+}
+.ag-detail-empty {
+    color: var(--color-text-muted);
+    font-size: 13px;
+    font-style: italic;
+    padding: 12px 0;
+}
+
+/* ─── Animations ─────────────────────── */
+@keyframes agModalIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes slideUpFade {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}

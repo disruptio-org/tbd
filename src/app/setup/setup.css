@@ -1,0 +1,663 @@
+/* ─── Setup Wizard — Dark OS ─── */
+
+/* Layout */
+.setup-loading {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0f0f0f;
+}
+
+.setup-layout {
+    min-height: 100vh;
+    background: #0f0f0f;
+    display: flex;
+    flex-direction: column;
+}
+
+.setup-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 32px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: transparent;
+}
+
+.setup-logo {
+    height: 26px;
+    opacity: 0.9;
+}
+
+.setup-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 60px;
+}
+
+/* ─── Progress Stepper ─── */
+.setup-progress {
+    width: 100%;
+    max-width: 540px;
+    margin-bottom: 36px;
+}
+
+.setup-progress-bar {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.setup-progress-step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.setup-progress-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.setup-progress-step.completed .setup-progress-dot {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+    color: var(--color-text-primary);
+}
+
+.setup-progress-step.active .setup-progress-dot {
+    background: var(--color-accent-red, #d73a3a);
+    border-color: var(--color-accent-red, #d73a3a);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(215, 58, 58, 0.3);
+}
+
+.setup-progress-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.25);
+    margin-top: 8px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.setup-progress-step.active .setup-progress-label {
+    color: var(--color-accent-red, #d73a3a);
+    font-weight: 800;
+}
+
+.setup-progress-step.completed .setup-progress-label {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.setup-progress-line {
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.06);
+    margin: 0 -4px;
+    margin-top: -16px;
+    z-index: 0;
+}
+
+.setup-progress-line.completed {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* ─── Card ─── */
+.setup-card {
+    width: 100%;
+    max-width: 540px;
+    background: #1c1b1b;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+    padding: 40px 36px;
+    animation: setup-fadeIn 0.35s ease;
+}
+
+@keyframes setup-fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.setup-card-icon {
+    text-align: center;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
+    color: var(--color-text-primary);
+}
+
+.setup-card h2 {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--color-text-primary, #e8e8ed);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 0 0 8px 0;
+}
+
+.setup-card > p,
+.setup-card-subtitle {
+    font-size: 13px;
+    color: var(--color-text-secondary, #9898a6);
+    text-align: center;
+    line-height: 1.7;
+    margin: 0 0 28px 0;
+}
+
+/* ─── Info / Hint Box ─── */
+.setup-info-box {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-bottom: 8px;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.setup-info-box strong {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-primary);
+}
+
+.setup-info-box ul {
+    padding-left: 16px;
+    margin: 10px 0 0;
+}
+
+.setup-info-box li {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+}
+
+.setup-info-box .setup-time {
+    margin: 12px 0 0;
+    font-size: 11px;
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ─── Form Fields ─── */
+.setup-form-section {
+    margin-bottom: 24px;
+}
+
+.setup-form-section-title {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.setup-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.setup-form-grid .full-width {
+    grid-column: 1 / -1;
+}
+
+.setup-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.setup-field label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-text-muted, #5a5a6e);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+}
+
+.setup-field label .required {
+    color: var(--color-accent-red, #d73a3a);
+    margin-left: 2px;
+}
+
+.setup-field input,
+.setup-field textarea,
+.setup-field select {
+    padding: 10px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: inherit;
+    transition: border-color 0.15s;
+    box-sizing: border-box;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--color-text-primary);
+}
+
+.setup-field input:focus,
+.setup-field textarea:focus,
+.setup-field select:focus {
+    outline: none;
+    border-color: rgba(215, 58, 58, 0.4);
+    box-shadow: 0 0 0 3px rgba(215, 58, 58, 0.1);
+}
+
+.setup-field textarea {
+    resize: vertical;
+    min-height: 72px;
+}
+
+/* ─── Actions ─── */
+.setup-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 28px;
+    gap: 12px;
+}
+
+.setup-actions .btn {
+    min-width: 140px;
+    padding: 11px 20px;
+    font-size: 11px;
+    font-weight: 800;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.15s;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.setup-actions .btn-secondary {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--color-text-primary);
+}
+
+.setup-actions .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.setup-actions .btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* ─── Upload Zone ─── */
+.setup-upload-zone {
+    border: 2px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 32px 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.setup-upload-zone:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.setup-upload-zone.dragging {
+    border-color: var(--color-accent-red, #d73a3a);
+    background: rgba(215, 58, 58, 0.04);
+}
+
+.setup-upload-icon {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    color: var(--color-text-secondary);
+}
+
+.setup-upload-zone h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0 0 4px 0;
+}
+
+.setup-upload-zone p {
+    font-size: 11px;
+    color: var(--color-text-muted);
+    margin: 0;
+}
+
+/* ─── File List ─── */
+.setup-file-list {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.setup-file-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.setup-file-item .file-icon {
+    color: var(--color-text-secondary);
+    flex-shrink: 0;
+}
+
+.setup-file-item .file-name {
+    flex: 1;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.setup-file-item .file-status {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 3px 10px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.setup-file-item .file-status.uploading {
+    background: rgba(251, 191, 36, 0.1);
+    color: #fbbf24;
+}
+
+.setup-file-item .file-status.done {
+    background: rgba(74, 222, 128, 0.1);
+    color: #4ade80;
+}
+
+.setup-file-item .file-status.error {
+    background: rgba(239, 68, 68, 0.1);
+    color: #fca5a5;
+}
+
+.setup-file-remove {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-muted);
+    padding: 2px;
+    transition: color 0.15s;
+}
+
+.setup-file-remove:hover {
+    color: #ef4444;
+}
+
+/* ─── Suggestion / Warning Boxes ─── */
+.setup-suggestion {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 3px solid var(--color-accent-red, #d73a3a);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin-bottom: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.setup-suggestion .suggestion-icon {
+    color: var(--color-accent-red, #d73a3a);
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.setup-warning {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 3px solid #f59e0b;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin-top: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.setup-warning .warning-icon {
+    color: #f59e0b;
+    flex-shrink: 0;
+}
+
+/* ─── Review Summary ─── */
+.setup-review-section {
+    margin-bottom: 24px;
+}
+
+.setup-review-title {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+}
+
+.setup-review-content {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--color-text-primary);
+    line-height: 1.6;
+}
+
+.setup-review-stat {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.setup-review-stat:last-child {
+    border-bottom: none;
+}
+
+.setup-review-stat .label {
+    color: var(--color-text-secondary);
+    font-size: 13px;
+}
+
+.setup-review-stat .value {
+    font-weight: 700;
+    color: var(--color-text-primary);
+    font-size: 13px;
+}
+
+/* ─── Guide Generation Status ─── */
+.setup-guide-section {
+    margin-bottom: 8px;
+}
+
+.setup-guide-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    margin-top: 12px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.setup-guide-status.generating {
+    background: rgba(167, 139, 250, 0.1);
+    color: #a78bfa;
+    border-color: rgba(167, 139, 250, 0.2);
+}
+
+.setup-guide-status.ready {
+    background: rgba(74, 222, 128, 0.1);
+    color: #4ade80;
+    border-color: rgba(74, 222, 128, 0.2);
+}
+
+.setup-guide-status.failed {
+    background: rgba(239, 68, 68, 0.1);
+    color: #fca5a5;
+    border-color: rgba(239, 68, 68, 0.2);
+}
+
+/* ─── Complete Step ─── */
+.setup-complete-icon {
+    text-align: center;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
+    color: var(--color-accent-red, #d73a3a);
+}
+
+.setup-shortcuts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.setup-shortcut {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 20px 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-decoration: none;
+    color: inherit;
+}
+
+.setup-shortcut:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+}
+
+.setup-shortcut-icon {
+    color: var(--color-text-primary);
+}
+
+.setup-shortcut-label {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-primary);
+}
+
+/* ─── Prompt Suggestions ─── */
+.setup-prompts {
+    margin-top: 16px;
+}
+
+.setup-prompts h4 {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+}
+
+.setup-prompt-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin-bottom: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-decoration: none;
+}
+
+.setup-prompt-item:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    color: var(--color-text-primary);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.setup-prompt-item .prompt-icon {
+    color: var(--color-accent-red, #d73a3a);
+    flex-shrink: 0;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 640px) {
+    .setup-card {
+        padding: 28px 20px;
+    }
+    .setup-form-grid {
+        grid-template-columns: 1fr;
+    }
+    .setup-shortcuts {
+        grid-template-columns: 1fr;
+    }
+    .setup-progress-label {
+        display: none;
+    }
+}

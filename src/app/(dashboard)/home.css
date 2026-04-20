@@ -1,0 +1,99 @@
+.dashboard-home {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.dashboard-home .greeting {
+    font-size: var(--font-size-h2);
+    font-weight: var(--font-weight-h2);
+}
+
+.dashboard-home .greeting-sub {
+    color: var(--color-text-secondary);
+    margin-top: var(--space-xs);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--grid-gutter);
+}
+
+.stat-card {
+    background: var(--color-bg-surface2);
+    border-radius: var(--radius-card);
+    padding: var(--space-md);
+    box-shadow: var(--shadow-card);
+}
+
+.stat-card .stat-icon {
+    font-size: 28px;
+    margin-bottom: var(--space-sm);
+}
+
+.stat-card .stat-value {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.stat-card .stat-label {
+    font-size: var(--font-size-small);
+    color: var(--color-text-secondary);
+    margin-top: var(--space-xs);
+}
+
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--grid-gutter);
+}
+
+.quick-action-card {
+    background: var(--color-bg-surface2);
+    border-radius: var(--radius-card);
+    padding: var(--space-md);
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    cursor: pointer;
+    transition: box-shadow var(--transition-normal),
+        transform var(--transition-normal);
+    text-decoration: none;
+    color: inherit;
+}
+
+.quick-action-card:hover {
+    box-shadow: 0 12px 32px 0 rgba(17, 17, 17, 0.1);
+    transform: translateY(-2px);
+}
+
+.quick-action-icon {
+    font-size: 32px;
+}
+
+.quick-action-title {
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-h3);
+}
+
+.quick-action-desc {
+    font-size: var(--font-size-small);
+    color: var(--color-text-secondary);
+}
+
+@media (max-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+
+    .stats-grid,
+    .quick-actions {
+        grid-template-columns: 1fr;
+    }
+}
