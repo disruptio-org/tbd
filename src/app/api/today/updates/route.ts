@@ -133,7 +133,7 @@ export async function GET(req: Request) {
                         where: { companyId, createdAt: { gte: since }, status: 'completed' },
                         take: 10,
                         orderBy: { createdAt: 'desc' },
-                        select: { id: true, title: true, contentType: true, createdAt: true },
+                        select: { id: true, title: true, taskType: true, createdAt: true },
                     }),
                 ]);
 
@@ -141,11 +141,12 @@ export async function GET(req: Request) {
                     ...(mktRuns.status === 'fulfilled' ? mktRuns.value.map(r => ({ ...r, module: 'marketing' })) : []),
                     ...(salesRuns.status === 'fulfilled' ? salesRuns.value.map(r => ({ ...r, module: 'sales' })) : []),
                 ];
-                for (const c of allContent) {
+                for (const c of allContent as any[]) {
+                    const cType = c.contentType || c.taskType;
                     events.push({
                         id: c.id,
                         type: 'content_created',
-                        title: `${c.contentType?.replace(/_/g, ' ') || 'Content'}: ${c.title || 'Untitled'}`,
+                        title: `${cType?.replace(/_/g, ' ') || 'Content'}: ${c.title || 'Untitled'}`,
                         agentName: c.module,
                         status: 'success',
                         timestamp: c.createdAt.toISOString(),

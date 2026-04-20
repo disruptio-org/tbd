@@ -55,8 +55,8 @@ export async function GET(req: Request) {
             prisma.salesGenerationRun.count({ where: { companyId, createdAt: { gte: since }, status: 'completed' } }).catch(() => 0),
             prisma.salesGenerationRun.count({ where: { companyId, createdAt: { gte: prevSince, lt: since }, status: 'completed' } }).catch(() => 0),
             // AI conversations
-            prisma.assistantSession.count({ where: { companyId, createdAt: { gte: since } } }).catch(() => 0),
-            prisma.assistantSession.count({ where: { companyId, createdAt: { gte: prevSince, lt: since } } }).catch(() => 0),
+            prisma.assistantSession.count({ where: { companyId, startedAt: { gte: since } } }).catch(() => 0),
+            prisma.assistantSession.count({ where: { companyId, startedAt: { gte: prevSince, lt: since } } }).catch(() => 0),
             // Pending approvals (current only)
             prisma.approvalRequest.count({ where: { status: 'PENDING', initiative: { companyId } } }).catch(() => 0),
             // Blocked items
