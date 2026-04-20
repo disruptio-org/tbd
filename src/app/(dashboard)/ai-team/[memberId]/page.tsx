@@ -1601,7 +1601,7 @@ export default function AIMemberWorkspacePage() {
                                         .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
                                         .replace(/\*(.+?)\*/g, '<em>$1</em>')
                                         .replace(/^- (.+)$/gm, '<li>$1</li>')
-                                        .replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>')
+                                        .replace(/(<li>[\s\S]*<\/li>)/g, '<ul>$1</ul>')
                                         .replace(/\n{2,}/g, '<br/><br/>')
                                         .replace(/\n/g, '<br/>')
                                 }} />
