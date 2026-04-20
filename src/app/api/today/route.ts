@@ -102,12 +102,12 @@ export async function GET() {
                 }),
             ]);
             needsAttention = [
-                ...pendingApprovalsList.map((a) => ({
+                ...pendingApprovalsList.map((a: any) => ({
                     id: a.id, entityId: a.id, type: 'approval', title: a.title,
                     projectName: a.initiative?.project?.name || undefined,
                     priority: 'high', actionUrl: `/projects`,
                 })),
-                ...urgentTasks.map((t) => ({
+                ...urgentTasks.map((t: any) => ({
                     id: t.id, entityId: t.id, type: 'task', title: t.title,
                     projectName: t.board?.project?.name || undefined,
                     boardId: t.boardId,
@@ -124,7 +124,7 @@ export async function GET() {
                 where: { companyId },
                 select: { id: true },
             });
-            const initIds = companyInits.map((i) => i.id);
+            const initIds = companyInits.map((i: any) => i.id);
             if (initIds.length > 0) {
                 const events = await prisma.initiativeEvent.findMany({
                     where: { initiativeId: { in: initIds } },
@@ -132,7 +132,7 @@ export async function GET() {
                     orderBy: { createdAt: 'desc' },
                     include: { initiative: { select: { title: true, project: { select: { name: true } } } } },
                 });
-                teamUpdates = events.map((e) => ({
+                teamUpdates = events.map((e: any) => ({
                     id: e.id,
                     type: e.action === 'completed' ? 'completed' : e.action === 'blocked' ? 'blocked' : e.action === 'comment' ? 'clarification' : 'handoff',
                     agentName: e.actorLabel || 'System',
@@ -164,11 +164,11 @@ export async function GET() {
                     },
                 },
             });
-            activeWork = projects.map((proj) => {
+            activeWork = projects.map((proj: any) => {
                 // Aggregate task completion across all boards
-                const allTasks = proj.taskBoards.flatMap((b) => b.tasks);
+                const allTasks = proj.taskBoards.flatMap((b: any) => b.tasks);
                 const total = allTasks.length;
-                const completed = allTasks.filter((t) => t.isCompleted).length;
+                const completed = allTasks.filter((t: any) => t.isCompleted).length;
                 // Check if any initiative is blocked
                 const latestInit = proj.initiatives[0];
                 const execState = (latestInit as Record<string, unknown>)?.executionState as string
@@ -220,7 +220,7 @@ export async function GET() {
             });
 
             pendingActions = [
-                ...actionTasks.map((t) => ({
+                ...actionTasks.map((t: any) => ({
                     id: t.id,
                     type: t.status === 'READY_FOR_REVIEW' ? 'approve_task'
                         : t.status === 'OUTPUT_READY' ? 'review_output'
@@ -229,10 +229,10 @@ export async function GET() {
                     initiativeTitle: t.initiative?.title || null,
                     projectName: t.initiative?.project?.name || null,
                     initiativeId: t.initiative?.id || null,
-                    assignedBrainName: (t as Record<string, unknown>).assignedBrainName || null,
+                    assignedBrainName: t.assignedBrainName || null,
                     updatedAt: t.updatedAt?.toISOString() || null,
                 })),
-                ...planReviews.map((i) => ({
+                ...planReviews.map((i: any) => ({
                     id: i.id,
                     type: 'validate_plan',
                     title: i.title,
