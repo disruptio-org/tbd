@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef, type ReactNode } from 'react';
+import { useState, useEffect, useCallback, useRef, Suspense, type ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
@@ -583,7 +583,9 @@ function DashboardLayoutInner({
 export default function DashboardLayoutWrapper({ children }: { children: React.ReactNode }) {
     return (
         <LanguageProvider>
-            <DashboardLayoutInner>{children}</DashboardLayoutInner>
+            <Suspense fallback={<div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0F0F14' }}><div className="spinner" /></div>}>
+                <DashboardLayoutInner>{children}</DashboardLayoutInner>
+            </Suspense>
         </LanguageProvider>
     );
 }

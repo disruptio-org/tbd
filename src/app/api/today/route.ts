@@ -75,7 +75,7 @@ export async function GET() {
                 orderBy: { dueDate: 'asc' },
                 include: { board: { include: { project: true } } },
             });
-            todayAgenda = todayTasks.map((t) => ({
+            todayAgenda = todayTasks.map((t: any) => ({
                 id: t.id,
                 time: t.dueDate ? new Date(t.dueDate).toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }) : undefined,
                 title: t.title,
