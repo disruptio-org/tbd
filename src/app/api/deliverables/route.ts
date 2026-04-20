@@ -98,7 +98,7 @@ export async function GET(request: Request) {
             total,
             page,
             totalPages: Math.ceil(total / limit),
-            typeCounts: typeCounts.map((tc) => ({
+            typeCounts: typeCounts.map((tc: any) => ({
                 type: tc.artifactType,
                 count: tc._count.artifactType,
             })),
