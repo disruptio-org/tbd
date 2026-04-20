@@ -114,10 +114,10 @@ export async function GET(req: Request) {
                     },
                 },
             });
-            projectHealth = projects.map(p => {
-                const allTasks = p.taskBoards.flatMap(b => b.tasks);
+            projectHealth = projects.map((p: any) => {
+                const allTasks = p.taskBoards.flatMap((b: any) => b.tasks);
                 const total = allTasks.length;
-                const completed = allTasks.filter(t => t.isCompleted).length;
+                const completed = allTasks.filter((t: any) => t.isCompleted).length;
                 return {
                     name: p.name,
                     tasksTotal: total,
