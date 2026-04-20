@@ -79,7 +79,7 @@ export async function GET(request: Request) {
             orderBy: { name: 'asc' },
         });
 
-        const items = artifacts.map((a) => ({
+        const items = artifacts.map((a: any) => ({
             id: a.id,
             title: a.title,
             artifactType: a.artifactType,
